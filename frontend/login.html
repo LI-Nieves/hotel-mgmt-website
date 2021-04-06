@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class="wrapper fadeInDown">
+		<div id="formContent">
+		  <!-- Tabs Titles -->
+		  <h2 class="active"> Sign In </h2>
+		  <h2 class="inactive underlineHover" id="click-signup" onclick="document.location.href='./signup.html'">Sign Up </h2>
+	  
+		  <!-- Login Form -->
+		  <form>
+			<input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+			<input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+			<input type="submit" id="click-login" class="fadeIn fourth" value="Log In" onclick= "init()">
+			 
+		  </form>
+	  
+		
+	  
+		</div>
+	  </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="./index.js"></script>
+<script src="./start.js"></script>
+</html> 
