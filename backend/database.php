@@ -6,8 +6,6 @@
 
     $conn;
 
-    //print "here 1";
-
     function connect() {
         global $host;
         global $user;
@@ -15,8 +13,6 @@
         global $db;
 
         global $conn;
-
-        //print "here 2";
 
         $conn = mysqli_connect($host, $user, $pwd, $db);
 
@@ -30,7 +26,5 @@
 
         return $conn;
     }
-
-    //connect();
 
 ?>

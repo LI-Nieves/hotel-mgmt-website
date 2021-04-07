@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Employee</title>
+<title>Admin: View Employees</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,13 +10,13 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\listEmployees.php';
+                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
 
                 echo "Files included.<br>"; // for debugging
 
                 $conn = connect();
 
-                $result = getEmployees($conn);
+                $result = empAdminRead($conn);
 
                 #print $result;
 
@@ -51,8 +51,6 @@
 		</div>
 	  </div>
 </body>
-
-
 
 </html> 
 
