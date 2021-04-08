@@ -1,29 +1,27 @@
 <!DOCTYPE html>
-
-<?php session_start(); ?>
 <html>
 <head>
-<title>Guest: Log In</title>
+<title>Receptionist: Log In</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            Guest Username: <input type = "text" name = "guestUser"/>
-            Guest Password: <input type = "text" name = "guestPass"/>
+            Receptionist Username: <input type = "text" name = "eUser"/>
+            Receptionist Password: <input type = "text" name = "ePass"/>
             <input type = "submit" />
         </form>
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
 
-                $gUser = $_POST["guestUser"];
-                $gPass = $_POST["guestPass"];
+                $eUser = $_POST["eUser"];
+                $ePass = $_POST["ePass"];
 
                 $conn = connect();
 
-                $result = guestAccountRead($conn,$gUser,$gPass);
+                $result = recepAccountRead($conn,$eUser,$ePass);
                 
                 if ($result) {
                     header("Content-Type: JSON");
@@ -31,10 +29,10 @@
                     $output = array();
     
                     while ($row = mysqli_fetch_array($result)) {
-                        $output[$rowNumber]['GuestID'] = $row['GuestID'];
+                        $output[$rowNumber]['SSN'] = $row['SSN'];
                         $rowNumber++;
                     }
-
+                    
                     if (count($output) > 0) {
                         echo "Successfully logged in.<br>";
                     }
