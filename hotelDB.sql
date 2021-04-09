@@ -7,13 +7,8 @@ CREATE TABLE Guest (
     CreditCard varchar(16),
     PhoneNo varchar(11),
     GuestName varchar(100),
+    Address varchar(100),
     PRIMARY KEY (GuestID)
-);
-
-CREATE TABLE GuestAddress (
-	GuestID varchar(10) NOT NULL,
-    Address varchar(100) NOT NULL,
-    PRIMARY KEY (GuestID, Address)
 );
 
 CREATE TABLE Employee (
@@ -30,6 +25,7 @@ CREATE TABLE Employee (
     BusiPhone varchar(11),
     BusiEmail varchar (50),
     ERole varchar(50),
+    NumHrWeek int,
     AdminLogin varchar(50),
     AdminPass varchar(50),
     RecepLogin varchar(50),
@@ -43,17 +39,9 @@ CREATE TABLE Employee (
 
 CREATE TABLE Floors (
 	FloorNo int NOT NULL,
+    FAmenities varchar(100),
     NumUtilities int,
     PRIMARY KEY (FloorNo)
-);
-
-CREATE TABLE FloorAmenities (
-	FloorNo int NOT NULL,
-    FAmenities varchar(100) NOT NULL,
-    PRIMARY KEY (FloorNo, FAmenities),
-	FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE MaintHandling (
@@ -92,16 +80,6 @@ CREATE TABLE Room (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE RoomAmenities (
-	FloorNo int NOT NULL,
-    RoomNo INT UNSIGNED NOT NULL,
-    RAmenities varchar(100),
-    PRIMARY KEY (FloorNo, RoomNo),
-    FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
 CREATE TABLE PhoneCall (
 	CallID varchar(10) NOT NULL,
     Duration int,
@@ -126,7 +104,7 @@ CREATE TABLE Reservation (
     EndDate date,
     ConfirmNo varchar(10),
     NumPeople int,
-    RecepSSN varchar(9),
+    EmpSSN varchar(9),
     PRIMARY KEY (GuestID, FloorNo, RoomNo, ResID),
     FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
 		ON DELETE CASCADE
@@ -144,7 +122,6 @@ CREATE TABLE Transactions (
     TransDate datetime,
     PaymentType varchar(50),
     Cost int, 
-    Deposit int, 
     GuestID varchar(10),
     MgrSSN varchar(10),
     RecepSSN varchar(10),
@@ -161,8 +138,8 @@ CREATE TABLE Transactions (
 );
 
 CREATE TABLE Dependent (
-	EmpSSN varchar(10) NOT NULL,
-	DepSSN varchar(10) NOT NULL,
+	EmpSSN varchar(9) NOT NULL,
+	DepSSN varchar(9) NOT NULL,
     DepName varchar(50),
     PRIMARY KEY (EmpSSN, DepSSN),
     FOREIGN KEY (EmpSSN) REFERENCES Employee(SSN)
@@ -171,8 +148,8 @@ CREATE TABLE Dependent (
 );
 
 CREATE TABLE DepBenefits (
-	EmpSSN varchar(10) NOT NULL,
-	DepSSN varchar(10) NOT NULL,
+	EmpSSN varchar(9) NOT NULL,
+	DepSSN varchar(9) NOT NULL,
     DepBenefits varchar(500) NOT NULL,
     PRIMARY KEY (EmpSSN, DepSSN, DepBenefits),
     FOREIGN KEY (EmpSSN, DepSSN) REFERENCES Dependent(EmpSSN, DepSSN)
@@ -180,35 +157,28 @@ CREATE TABLE DepBenefits (
         ON UPDATE CASCADE
 );
 
-INSERT INTO Guest VALUES ('1111111111', 'GuestLoginA', 'GuestPassA', '1234567890123456', '14031234567','Guest A');
-INSERT INTO Guest VALUES ('2222222222', 'GuestLoginB', 'GuestPassB', '1234567890123457', '14031234568','Guest B');
-INSERT INTO Guest VALUES ('3333333333', 'GuestLoginC', 'GuestPassC', '1234567890123458', '14031234569','Guest C');
+INSERT INTO Guest VALUES ('1111111111', 'GuestLoginA', 'GuestPassA', '1234567890123456', '14031234567','Guest A', 'GuestA Address');
+INSERT INTO Guest VALUES ('2222222222', 'GuestLoginB', 'GuestPassB', '1234567890123457', '14031234568','Guest B', 'GuestB Address');
+INSERT INTO Guest VALUES ('3333333333', 'GuestLoginC', 'GuestPassC', '1234567890123458', '14031234569','Guest C', 'GuestC Address');
 
-INSERT INTO GuestAddress VALUES ('1111111111', 'Calgary, AB');
-INSERT INTO GuestAddress VALUES ('1111111111', 'Edmonton, AB');
-INSERT INTO GuestAddress VALUES ('2222222222', 'Vancouver, BC');
-INSERT INTO GuestAddress VALUES ('3333333333', 'Toronto, ON');
+INSERT INTO Employee VALUES ('444444444', 'Marion', 'Moseby', 'Boston, PA', 53000, 'Male', '1990-01-01', 'EmpLoginA', 'EmpPassA', '444444444', '14031234560', 'bossemail@hotel.com', NULL, NULL, 'AdminLogin', 'AdminPass', NULL, NULL, 'Admin');
+INSERT INTO Employee VALUES ('555555555', 'Maddie', 'Fitzpatrick', 'Boston, PA', 40000, 'Female', '1995-01-01', 'EmpLoginB', 'EmpPassB', '444444444', '14031234511', 'maddyemail@hotel.com', NULL, NULL, NULL, NULL, 'RecepLogin', 'RecepPass', 'Receptionist');
+INSERT INTO Employee VALUES ('666666666', 'Esteban', 'Ramirez', 'Boston, PA', 30000, 'Male', '1992-01-01', 'EmpLoginC', 'EmpPassC', '444444444', NULL, NULL, 'Housekeeper', 30, NULL, NULL, NULL, NULL, 'Maintenance');
 
-INSERT INTO Employee VALUES ('444444444', 'Marion', 'Moseby', 'Boston, PA', 53000, 'Male', '1990-01-01', 'EmpLoginA', 'EmpPassA', '444444444', '14031234560', 'bossemail@hotel.com', NULL, 'AdminLogin', 'AdminPass', NULL, NULL, 'Admin');
-INSERT INTO Employee VALUES ('555555555', 'Maddie', 'Fitzpatrick', 'Boston, PA', 40000, 'Female', '1995-01-01', 'EmpLoginB', 'EmpPassB', '444444444', '14031234511', 'maddyemail@hotel.com', NULL, NULL, NULL, 'RecepLogin', 'RecepPass', 'Receptionist');
-INSERT INTO Employee VALUES ('666666666', 'Esteban', 'Ramirez', 'Boston, PA', 30000, 'Male', '1992-01-01', 'EmpLoginC', 'EmpPassC', '444444444', NULL, NULL, 'Housekeeper', NULL, NULL, NULL, NULL, 'Maintenance');
+INSERT INTO Floors VALUES (1, 'Parking lot', 3);
+INSERT INTO Floors VALUES (2, 'Rec room', 1);
+INSERT INTO Floors VALUES (3, 'Gymnasium', 1);
 
-INSERT INTO Floors VALUES (1, 3);
-INSERT INTO Floors VALUES (2, 1);
-INSERT INTO Floors VALUES (3, 1);
+INSERT INTO Room VALUES (2, 1, 500, 2, true, true, 'Regular', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 1, 500, 2, false, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
 
-INSERT INTO FloorAmenities VALUES (1, "Swimming pool");
-INSERT INTO FloorAmenities VALUES (1, "Parking lot");
-INSERT INTO FloorAmenities VALUES (2, "Gymnasium");
+INSERT INTO Reservation VALUES ('1111111111',2,1,'1234567890','1999-01-01','1999-01-05','1234567890',2,NULL);
 
-CREATE TABLE MaintHandling (
-	MaintSSN varchar(9) NOT NULL,
-    FloorNo int NOT NULL,
-    PRIMARY KEY (MaintSSN, FloorNo),
-	FOREIGN KEY (MaintSSN) REFERENCES Employee(SSN)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
+UPDATE Reservation SET StartDate = "$1999-01-02", EndDate = "1999-01-02", NumPeople = "5", ConfirmNo = "8794561230" WHERE GuestID = "1111111111" AND ResID = "1234567890";
+
+INSERT INTO Transactions VALUES ('7894561230','2021-01-01','Visa',3000,'1111111111',NULL,'555555555');
+
+INSERT INTO Dependent VALUES ("555555555","789456123","Michael");
+INSERT INTO DepBenefits VALUES ("555555555","789456123","Health insurance");
+
+SELECT * FROM Employee;

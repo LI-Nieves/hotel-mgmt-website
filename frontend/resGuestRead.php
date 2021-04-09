@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guest: View Rooms</title>
+<title>Guest: View My Reservations</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,31 +12,32 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
 
-                echo "Files included.<br>"; // for debugging
-
                 $conn = connect();
 
-                $result = roomGuestRead($conn);
-                
+                $result = resGuestRead($conn);
+
                 if ($result) {
                     header("Content-Type: JSON");
                     $rowNumber = 0;
                     $output = array();
     
                     while ($row = mysqli_fetch_array($result)) {
+                        $output[$rowNumber]['GuestID'] = $row['GuestID'];
                         $output[$rowNumber]['FloorNo'] = $row['FloorNo'];
                         $output[$rowNumber]['RoomNo'] = $row['RoomNo'];
-                        $output[$rowNumber]['Cost'] = $row['Cost'];
-                        $output[$rowNumber]['Beds'] = $row['Beds'];
-                        $output[$rowNumber]['Availability'] = $row['Availability'];
-                        $output[$rowNumber]['CleanStatus'] = $row['CleanStatus'];
-                        $output[$rowNumber]['RoomType'] = $row['RoomType'];
+                        $output[$rowNumber]['ResID'] = $row['ResID'];
+                        $output[$rowNumber]['StartDate'] = $row['StartDate'];
+                        $output[$rowNumber]['EndDate'] = $row['EndDate'];
+                        $output[$rowNumber]['ConfirmNo'] = $row['ConfirmNo'];
+                        $output[$rowNumber]['NumPeople'] = $row['NumPeople'];
+                        $output[$rowNumber]['RecepSSN'] = $row['RecepSSN'];
                         $rowNumber++;
                     }
                     echo json_encode($output, JSON_PRETTY_PRINT);
                 }
+
                 else {
-                    echo "Failed to retrieve data from the database.<br>";
+                    echo "Failed to retrieve data from database.<br>";
                 }
 
             ?>
@@ -45,5 +46,4 @@
 	  </div>
 </body>
 
-</html> 
-
+</html>

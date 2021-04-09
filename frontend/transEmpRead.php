@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guest: View Rooms</title>
+<title>Admin/Receptionist: View Transactions</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,11 +12,9 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
 
-                echo "Files included.<br>"; // for debugging
-
                 $conn = connect();
 
-                $result = roomGuestRead($conn);
+                $result = transEmpRead($conn);
                 
                 if ($result) {
                     header("Content-Type: JSON");
@@ -24,13 +22,13 @@
                     $output = array();
     
                     while ($row = mysqli_fetch_array($result)) {
-                        $output[$rowNumber]['FloorNo'] = $row['FloorNo'];
-                        $output[$rowNumber]['RoomNo'] = $row['RoomNo'];
+                        $output[$rowNumber]['TransID'] = $row['TransID'];
+                        $output[$rowNumber]['TransDate'] = $row['TransDate'];
+                        $output[$rowNumber]['PaymentType'] = $row['PaymentType'];
                         $output[$rowNumber]['Cost'] = $row['Cost'];
-                        $output[$rowNumber]['Beds'] = $row['Beds'];
-                        $output[$rowNumber]['Availability'] = $row['Availability'];
-                        $output[$rowNumber]['CleanStatus'] = $row['CleanStatus'];
-                        $output[$rowNumber]['RoomType'] = $row['RoomType'];
+                        $output[$rowNumber]['GuestID'] = $row['GuestID'];
+                        $output[$rowNumber]['MgrSSN'] = $row['MgrSSN'];
+                        $output[$rowNumber]['RecepSSN'] = $row['RecepSSN'];
                         $rowNumber++;
                     }
                     echo json_encode($output, JSON_PRETTY_PRINT);
