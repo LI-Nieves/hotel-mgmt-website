@@ -14,7 +14,7 @@
 
                 $conn = connect();
 
-                $result = roomGuestRead($conn);
+                $result = roomEmpRead($conn);
                 
                 if ($result) {
                     header("Content-Type: JSON");
@@ -29,6 +29,10 @@
                         $output[$rowNumber]['Availability'] = $row['Availability'];
                         $output[$rowNumber]['CleanStatus'] = $row['CleanStatus'];
                         $output[$rowNumber]['RoomType'] = $row['RoomType'];
+                        $output[$rowNumber]['GCheckIn'] = $row['GCheckIn'];
+                        $output[$rowNumber]['ChkInDate'] = $row['ChkInDate'];
+                        $output[$rowNumber]['GCheckOut'] = $row['GCheckOut'];
+                        $output[$rowNumber]['ChkOutDate'] = $row['ChkOutDate'];
                         $rowNumber++;
                     }
                     echo json_encode($output, JSON_PRETTY_PRINT);

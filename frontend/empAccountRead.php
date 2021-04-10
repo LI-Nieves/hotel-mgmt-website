@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Receptionist: Log In</title>
+<title>Employee: Log In</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            Receptionist Username: <input type = "text" name = "eUser"/>
-            Receptionist Password: <input type = "text" name = "ePass"/>
+            Employee Username: <input type = "text" name = "eUser"/>
+            Employee Password: <input type = "text" name = "ePass"/>
             <input type = "submit" />
         </form>
         <p> <?php 
@@ -21,7 +21,7 @@
 
                 $conn = connect();
 
-                $result = recepAccountRead($conn,$eUser,$ePass);
+                $result = empAccountRead($conn,$eUser,$ePass);
                 
                 if ($result) {
                     header("Content-Type: JSON");

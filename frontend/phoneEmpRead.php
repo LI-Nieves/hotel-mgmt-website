@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin/Employee: View Rooms</title>
+<title>Admin/Receptionist: View Phone Call Records</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
                 $conn = connect();
 
-                $result = roomGuestRead($conn);
+                $result = phoneEmpRead($conn);
                 
                 if ($result) {
                     header("Content-Type: JSON");
@@ -22,13 +22,11 @@
                     $output = array();
     
                     while ($row = mysqli_fetch_array($result)) {
-                        $output[$rowNumber]['FloorNo'] = $row['FloorNo'];
-                        $output[$rowNumber]['RoomNo'] = $row['RoomNo'];
-                        $output[$rowNumber]['Cost'] = $row['Cost'];
-                        $output[$rowNumber]['Beds'] = $row['Beds'];
-                        $output[$rowNumber]['Availability'] = $row['Availability'];
-                        $output[$rowNumber]['CleanStatus'] = $row['CleanStatus'];
-                        $output[$rowNumber]['RoomType'] = $row['RoomType'];
+                        $output[$rowNumber]['CallID'] = $row['CallID'];
+                        $output[$rowNumber]['Duration'] = $row['Duration'];
+                        $output[$rowNumber]['CallDate'] = $row['CallDate'];
+                        $output[$rowNumber]['GuestID'] = $row['GuestID'];
+                        $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
                         $rowNumber++;
                     }
                     echo json_encode($output, JSON_PRETTY_PRINT);

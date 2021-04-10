@@ -81,6 +81,10 @@
                 echo "Only up to 6 people may stay in a room.<br>";
                 return false;
             }
+            else if (($numPeople + 0) < 0) {
+                echo "The number of guests can't be negative.<br>";
+                return false;
+            }
             if (isset($_COOKIE["user"])) {
                 $guestID = $_COOKIE["user"];
             }
@@ -90,9 +94,9 @@
             }
 
             // generate Reservation ID
-            $rID = rand(0000000000,9999999999);
+            $rID = rand(1000000000,9999999999);
             //generate Confirmation number
-            $cNo = rand(0000000000,9999999999);
+            $cNo = rand(1000000000,9999999999);
 
             $sql = "INSERT INTO Reservation VALUES (\"$guestID\",\"$resFloor\",\"$resRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",NULL)";
             $result1 = mysqli_query($conn, $sql);
@@ -130,6 +134,11 @@
                 echo "Only up to 6 people may stay in a room.<br>";
                 return false;
             }
+            else if (($numPeople + 0) < 0) {
+                echo "The number of guests can't be negative.<br>";
+                return false;
+            }
+            
             if (isset($_COOKIE["user"])) {
                 $guestID = $_COOKIE["user"];
             }
@@ -139,7 +148,7 @@
             }
 
             //generate Confirmation number
-            $cNo = rand(0000000000,9999999999);
+            $cNo = rand(1000000000,9999999999);
 
             $sql = "UPDATE Reservation SET StartDate = \"$aDate\", EndDate = \"$dDate\", NumPeople = \"$numPeople\", ConfirmNo = \"$cNo\" WHERE GuestID = \"$guestID\" AND ResID = \"$rID\"";
             $result1 = mysqli_query($conn, $sql);
@@ -260,9 +269,13 @@
             // input catching SSNs
             gettype($tCost + 0);
             strtotime($tDate);
+            if (($tCost + 0) < 0) {
+                echo "The cost can't be negative.<br>";
+                return false;
+            }
 
             // generate Transaction ID
-            $tID = rand(0000000000,9999999999);
+            $tID = rand(1000000000,9999999999);
 
             $sql = "";
             if ($tMgrSSN == NULL && $tRecSSN != NULL) {
@@ -318,6 +331,11 @@
                 echo "Only up to 6 people may stay in a room.<br>";
                 return false;
             }
+            else if (($numPeople + 0) < 0) {
+                echo "The number of guests can't be negative.<br>";
+                return false;
+            }
+
             if (isset($_COOKIE["user"])) {
                 $eSSN = $_COOKIE["user"];
             }
@@ -327,9 +345,9 @@
             }
 
             // generate Reservation ID
-            $rID = rand(0000000000,9999999999);
+            $rID = rand(1000000000,9999999999);
             //generate Confirmation number
-            $cNo = rand(0000000000,9999999999);
+            $cNo = rand(1000000000,9999999999);
 
             $sql = "INSERT INTO Reservation VALUES (\"$gID\",\"$resFloor\",\"$resRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",\"$eSSN\")";
             $result1 = mysqli_query($conn, $sql);
@@ -353,6 +371,297 @@
         }
     } 
 
+    // Admin/Receptionist endpoint 4; used to modify a reservation for a room
+    function resEmpWrite($conn,$rID,$aDate,$dDate,$numPeople,$gID) {
+        $toReturn = false;
+        try {
+            $eSSN = 0;
+            // input catching SSNs
+            gettype($rID + 0);
+            strtotime($aDate);
+            strtotime($dDate);
+            gettype($numPeople + 0);
+            if (($numPeople + 0) > 6) {
+                echo "Only up to 6 people may stay in a room.<br>";
+                return false;
+            }
+            else if (($numPeople + 0) < 0) {
+                echo "The number of guests can't be negative.<br>";
+                return false;
+            }
+
+            if (isset($_COOKIE["user"])) {
+                $eSSN = $_COOKIE["user"];
+            }
+            else {
+                echo "Cookies have not been set.<br>";
+                return false;
+            }
+
+            //generate Confirmation number
+            $cNo = rand(1000000000,9999999999);
+
+            $sql = "UPDATE Reservation SET StartDate = \"$aDate\", EndDate = \"$dDate\", NumPeople = \"$numPeople\", ConfirmNo = \"$cNo\", EmpSSN = \"$eSSN\" WHERE GuestID = \"$gID\" AND ResID = \"$rID\"";
+            $result1 = mysqli_query($conn, $sql);
+
+            if($result1) {
+                echo "Successfully updated reservation.<br>Here's the info:<br>";
+                $sql3 = "SELECT * FROM Reservation WHERE ResID = \"$rID\"";
+                $result = mysqli_query($conn, $sql3);
+                return $result;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (TypeError $e) {
+            echo "Ensure that the floor number, room number, and number of people staying are numbers.<br>
+                Please also ensure that the arrival date and departure date are valid dates.<br>";
+            return false;
+        }
+    } 
+
+    // Admin/Receptionist endpoint 5; used to view all phone calls
+    function phoneEmpRead($conn) {
+        $sql = "SELECT * FROM PhoneCall";
+        $result = mysqli_query($conn, $sql);
+        return $result;
+    }
+
+    // Admin/Receptionist endpoint 6; used to create a phone call record
+    function phoneEmpNew($conn,$gID,$duration,$pDate) {
+        $toReturn = false;
+        try {
+            $eSSN = 0;
+            // handling user input
+            // date can be from before today
+            gettype($gID + 0);
+            gettype($duration + 0);
+            strtotime($pDate);
+            if ($duration < 0) {
+                echo "The duration cannot be negative.<br>";
+                return false;
+            }
+
+            // setting the EmpSSN on record to be the currently logged in employee
+            if (isset($_COOKIE["user"])) {
+                $eSSN = $_COOKIE["user"];
+            }
+            else {
+                echo "Cookies have not been set.<br>";
+                return false;
+            }
+
+            //generate CallID
+            $cID = rand(1000000000,9999999999);
+
+            $sql = "INSERT INTO PhoneCall VALUES (\"$cID\", $duration, \"$pDate\", \"$gID\", \"$eSSN\")";
+            $result1 = mysqli_query($conn, $sql);
+
+            if($result1) {
+                echo "Successfully created phone call record.<br>Here's the info:<br>";
+                $sql3 = "SELECT * FROM PhoneCall WHERE CallID = \"$cID\"";
+                $result = mysqli_query($conn, $sql3);
+                return $result;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (TypeError $e) {
+            echo "Please ensure that the duration is a number.<br>
+                Please also ensure that the call date is a valid date.<br>";
+            return false;
+        }
+    }
+
+    // Admin/Employee endpoint 1; used to view all rooms
+    function roomEmpRead($conn) {
+        $sql = "SELECT * FROM Room";
+        $result = mysqli_query($conn, $sql);
+        return $result;
+    }
+
+    // Employee endpoint 2; used to modify clean status of room
+    // I'm gonna have this one method update both the Room table and the MaintSSN table
+    function roomEmpWrite($conn,$fNo,$rNo) {//,$stat) {
+        $toReturn = false;
+        try {
+            $eSSN = 0;
+            // input catching SSNs
+            gettype($fNo + 0);
+            gettype($rNo + 0);
+            if (($fNo + 0) < 0) {
+                echo "The floor number cannot be negative.<br>";
+                return false;
+            }
+            if (($rNo + 0) < 0) {
+                echo "The room number cannot be negative.<br>";
+                return false;
+            }
+
+            if (isset($_COOKIE["user"])) {
+                $eSSN = $_COOKIE["user"];
+            }
+            else {
+                echo "Cookies have not been set.<br>";
+                return false;
+            };
+
+            $sql = "UPDATE Room SET CleanStatus = TRUE WHERE FloorNo = $fNo AND RoomNo = $rNo";
+            $result1 = mysqli_query($conn, $sql);
+
+            if($result1) {
+                echo "Successfully set the room as clean.<br>";
+                maintEmpWrite($conn,$fNo,$eSSN);
+                return $result1;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (TypeError $e) {
+            echo "Ensure that the floor number, room number, and number of people staying are numbers.<br>
+                Please also ensure that the arrival date and departure date are valid dates.<br>";
+            return false;
+        }
+    }
+
+    function maintEmpWrite($conn,$fNo,$eSSN) {
+        $sqlTry = "SELECT * FROM MaintHandling WHERE MaintSSN = \"$eSSN\" AND FloorNo = $fNo";
+        $resultTry = mysqli_query($conn, $sqlTry);
+
+        if ($resultTry) {
+            $count = 0;
+            while ($row = mysqli_fetch_array($resultTry)) {
+                $count++;
+            }
+            if ($count == 0) {
+                $sql = "INSERT INTO MaintHandling VALUES (\"$eSSN\",$fNo)";
+                $result = mysqli_query($conn, $sql);
+        
+                if ($result) {
+                    echo "Successfully documented this floor as one you're maintaining.<br>";
+                }
+                else {
+                    echo "Failed to documented this floor as one you're maintaining.<br>";
+                }
+            }
+            else {
+                echo "This is the floor you're assigned to clean. Good job!<br>";
+            }
+        }
+    }
+
+    // Admin/Receptionist 2; used to create room
+    function roomRecepWrite($conn,$fNo,$rNo,$gID,$iDate,$oDate) {
+        $toReturn = false;
+        try {
+            // handling user input
+            gettype($fNo + 0);
+            gettype($rNo + 0);
+            strtotime($iDate);
+            if (($fNo + 0) < 0) {
+                echo "The floor number cannot be negative.<br>";
+                return false;
+            }
+            if (($rNo + 0) < 0) {
+                echo "The room number cannot be negative.<br>";
+                return false;
+            }
+
+            if ($oDate == NULL) {
+                $sql = "UPDATE Room SET Availability = 0, CleanStatus = 0, GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = NULL, ChkOutDate = NULL WHERE FloorNo = $fNo AND RoomNo = $rNo";
+                $result = mysqli_query($conn, $sql);
+                return $result;
+            }
+            else {
+                $sql = "UPDATE Room SET Availability = TRUE, GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = \"$gID\", ChkOutDate = \"$oDate\" WHERE FloorNo = $fNo AND RoomNo = $rNo";
+                $result = mysqli_query($conn, $sql);
+                return $result;
+            }
+        }
+        catch (TypeError $e) {
+            echo "Ensure that the floor number and room number are numbers.<br>
+                Please also ensure that the check-in date and check-out date are valid dates.<br>";
+            return false;
+        }
+    }
+
+    // Admin endpoint 2; used to create room
+    function roomAdminNew($conn,$fNo,$rNo,$cost,$bed,$rType) {
+        $toReturn = false;
+        try {
+            // handling user input
+            gettype($fNo + 0);
+            gettype($rNo + 0);
+            gettype($cost + 0);
+            gettype($bed + 0);
+            if (($fNo + 0) < 0) {
+                echo "The floor number cannot be negative.<br>";
+                return false;
+            }
+            if (($rNo + 0) < 0) {
+                echo "The room number cannot be negative.<br>";
+                return false;
+            }
+            if (($cost + 0) < 0) {
+                echo "The cost cannot be negative.<br>";
+                return false;
+            }
+            if (($bed + 0) < 0) {
+                echo "The number of beds cannot be negative.<br>";
+                return false;
+            }
+
+            $sql = "INSERT INTO Room VALUES ($fNo,$rNo,$cost,$bed,TRUE,TRUE,\"$rType\",NULL,NULL,NULL,NULL)";
+            $result = mysqli_query($conn, $sql);
+            return $result;
+               
+        }
+        catch (TypeError $e) {
+            echo "Ensure that the floor number, room number, cost, and number of beds are numbers.<br>";
+            return false;
+        }
+    }
+
+    // Admin endpoint 2; used to modify room details
+    function roomAdminWrite($conn,$fNo,$rNo,$cost,$bed,$rType) {
+        $toReturn = false;
+        try {
+            // handling user input
+            gettype($fNo + 0);
+            gettype($rNo + 0);
+            gettype($cost + 0);
+            gettype($bed + 0);
+            if (($fNo + 0) < 0) {
+                echo "The floor number cannot be negative.<br>";
+                return false;
+            }
+            if (($rNo + 0) < 0) {
+                echo "The room number cannot be negative.<br>";
+                return false;
+            }
+            if (($cost + 0) < 0) {
+                echo "The cost cannot be negative.<br>";
+                return false;
+            }
+            if (($bed + 0) < 0) {
+                echo "The number of beds cannot be negative.<br>";
+                return false;
+            }
+
+            $sql = "UPDATE Room SET Cost = $cost, Beds = $bed, RoomType = \"$rType\" WHERE FloorNo = $fNo AND RoomNo = $rNo";
+            $result = mysqli_query($conn, $sql);
+            return $result;
+               
+        }
+        catch (TypeError $e) {
+            echo "Ensure that the floor number, room number, cost, and number of beds are numbers.<br>";
+            return false;
+        }
+    }
+
     // Admin endpoint 4; used when an admin creates new dependents
     function depAdminNew($conn,$eSSN, $dSSN, $dName) {
         try {
@@ -372,8 +681,6 @@
             return false;
         }
     }    
-
-
 
     // Admin endpoint 4; used when an admin modifies dependents
     function depAdminWrite($conn,$eSSN, $dSSN, $dName) {
