@@ -10,15 +10,11 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
-
-                echo "Files included.<br>"; // for debugging
+                include 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
 
                 $conn = connect();
 
                 $result = empAdminRead($conn);
-
-                #print $result;
 
                 header("Content-Type: JSON");
                 $rowNumber = 0;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guest: Book a Room</title>
+<title>Employee: Change Clean Status of Room</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -9,8 +9,8 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            Floor number:               <input type = "text" name = "fNo"/>
-            Room number:                <input type = "text" name = "rNo"/>       
+            <input type = "text" name = "fNo" placeholder = "Floor number"/><br>
+            <input type = "text" name = "rNo" placeholder = "Room number"/><br>
             <!--    Clean status (true, false): <input type = "text" name = "stat" /> 
                     I'm thinking there could be a button that just says "Set to clean
                     just so they don't have to manually type it in? Up to you tho       -->
@@ -19,14 +19,13 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
                 $fNo    = $_POST["fNo"];
                 $rNo    = $_POST["rNo"];
-                //$stat   = $_POST["stat"];
 
-/*                 // for debugging?
-                echo 
+                // for debugging?
+/*                 echo 
                     "You'd like to change data for Floor ".$_POST["resFloor"].
                     "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
                     "<br>Number of utilities: ".$_POST["aDate"].

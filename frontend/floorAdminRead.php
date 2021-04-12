@@ -10,11 +10,10 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\floorQueries.php';
 
                 $conn = connect();
 
-                // for Floor
                 $result = floorAdminRead($conn);
 
                 if ($result) {
@@ -31,6 +30,24 @@
                     echo json_encode($output, JSON_PRETTY_PRINT);
                 }
 
+                else {
+                    echo "Failed to retrieve data from database.<br>";
+                }
+
+                $result2 = maintAdminRead($conn);
+
+                if ($result2) {
+                    header("Content-Type: JSON");
+                    $rowNumber = 0;
+                    $output = array();
+    
+                    while ($row = mysqli_fetch_array($result2)) {
+                        $output[$rowNumber]['MaintSSN'] = $row['MaintSSN'];
+                        $output[$rowNumber]['FloorNo'] = $row['FloorNo'];
+                        $rowNumber++;
+                    }
+                    echo json_encode($output, JSON_PRETTY_PRINT);
+                }
                 else {
                     echo "Failed to retrieve data from database.<br>";
                 }

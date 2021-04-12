@@ -9,19 +9,20 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            Floor number of room?           <input type = "text" name = "fNo"/><br>
-            Room number of room?            <input type = "text" name = "rNo"/><br>
+            <input type = "text" name = "fNo" placeholder = "Floor number of room?"/><br>
+            <input type = "text" name = "rNo" placeholder = "Room number of room?"/><br>
             WRITE NEW DETAILS BELOW:<br>
-            ID of Guest staying in room:    <input type = "text" name = "gID" /><br>
-            Check-in date:                  <input type = "text" name = "iDate" /><br>
-            Check-out date (if applicable): <input type = "text" name = "oDate" /><br>
+            <input type = "text" name = "gID" placeholder = "ID of Guest staying in room"/><br>
+            <input type = "text" name = "iDate" placeholder = "Check-in date"/><br>
+            <input type = "text" name = "oDate" placeholder = "Check-out date (if applicable)"/><br>
             <input type = "submit" />
-            <!-- Note that Availability and Clean Status will remain what they currently are. -->
+            <!--    Note that Clean Status will remain what it currently is. 
+                    When checking in, Availability = FALSE and when checking out, vice versa. -->
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
                 $fNo    = $_POST["fNo"];
                 $rNo    = $_POST["rNo"];
@@ -29,8 +30,8 @@
                 $iDate  = $_POST["iDate"];
                 $oDate  = $_POST["oDate"];
 
-/*                 // for debugging?
-                echo 
+                // for debugging?
+/*                 echo 
                     "You'd like to change data for Floor ".$_POST["resFloor"].
                     "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
                     "<br>Number of utilities: ".$_POST["aDate"].

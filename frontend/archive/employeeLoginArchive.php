@@ -14,7 +14,7 @@
         </form>
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\queries.php';
 
                 $eUser = $_POST["eUser"];
                 $ePass = $_POST["ePass"];

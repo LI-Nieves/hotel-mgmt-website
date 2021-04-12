@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Employee: View My Dependents and Benefits</title>
+<title>Admin: View All Dependents and Benefits</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
                 $conn = connect();
 
                 //$result = depEmpRead($conn);
-                $result = depEmp($conn,'000000000','000000000','',0);
+                $result = depAdminRead($conn,0);
                 
                 if ($result) {
                     header("Content-Type: JSON");
@@ -36,7 +36,7 @@
 
 
                 //$result2 = depBenEmpRead($conn);
-                $result2 = depEmp($conn,'000000000','000000000','',3);
+                $result2 = depAdminRead($conn,3);
 
                 if ($result2) {
                     header("Content-Type: JSON");

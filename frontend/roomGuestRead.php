@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin/Employee: View Rooms</title>
+<title>Guest: View Rooms</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,7 +10,7 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
                 $conn = connect();
 

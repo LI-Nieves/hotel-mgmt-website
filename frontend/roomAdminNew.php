@@ -9,11 +9,11 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            Floor number:                                   <input type = "text" name = "fNo"/>
-            Room number:                                    <input type = "text" name = "rNo"/>       
-            Cost:                                           <input type = "text" name = "cost" />
-            Beds:                                           <input type = "text" name = "bed" />
-            Room type:                                      <input type = "text" name = "rType" />
+            <input type = "text" name = "fNo" placeholder = "Floor number"/>
+            <input type = "text" name = "rNo" placeholder = "Room number"/>       
+            <input type = "text" name = "cost" placeholder = "Cost"/>
+            <input type = "text" name = "bed" placeholder = "Beds"/>
+            <input type = "text" name = "rType" placeholder = "Room type"/>
             <input type = "submit" />
             <!-- Note that Availability and Clean Status will be automatically True,
                     since the room is newly created. -->
@@ -21,7 +21,7 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
                 $fNo        = $_POST["fNo"];
                 $rNo        = $_POST["rNo"];
@@ -29,8 +29,8 @@
                 $bed        = $_POST["bed"];
                 $rType      = $_POST["rType"];
 
-/*                 // for debugging?
-                echo 
+                // for debugging?
+/*                 echo 
                     "You'd like to change data for Floor ".$_POST["resFloor"].
                     "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
                     "<br>Number of utilities: ".$_POST["aDate"].
@@ -40,7 +40,7 @@
 
                 $conn = connect();
 
-                $result = roomAdminNew($conn,$fNo,$rNo,$cost,$bed,$rType);
+                $result = roomAdmin($conn,$fNo,$rNo,$cost,$bed,$rType,0);
 
                 if ($result) {
                     echo "Successfully created room.<br>";
