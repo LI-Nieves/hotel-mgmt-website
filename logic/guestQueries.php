@@ -1,7 +1,7 @@
 <?php
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Guest endpoint 1; used when a guest logs in
+    // Guest endpoint: used when a guest logs in
     function guestLogin($conn,$gUser,$gPass) {
         // SQL statement
         $sql = "SELECT * FROM Guest WHERE GuestLogin = \"$gUser\" AND GuestPass = \"$gPass\"";
@@ -26,7 +26,7 @@
         return $result;
     }
 
-    // Guest endpoint 2; used when a guest creates account
+    // Guest endpoint: used when a guest creates account
     function guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress) {
         try {
             // handling user input
@@ -80,14 +80,14 @@
         }
     }
 
-    // Admin endpoint 7: used when admin views all guests
+    // Admin endpoint: used when admin views all guests
     function guestAdminRead($conn) {
         $sql = "SELECT * FROM Guest";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
     
-    // Admin endpoint 7: used when admin modifies guest
+    // Admin endpoint: used when admin modifies guest
     function guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress) {
         try {
             // handling user input

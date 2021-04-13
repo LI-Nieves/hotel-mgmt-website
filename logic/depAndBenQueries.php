@@ -1,7 +1,7 @@
 <?php
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Employee endpoint 4.1; used when an employee modifies their own dependents
+    // Employee endpoints: used when an employee views+modifies+creates their own dependents
     function depEmp($conn,$dSSN1,$dSSN,$dName,$func) {
         try {
             // handling user input
@@ -13,15 +13,15 @@
             // setting the Employee SSN to be the same of the currently logged in user's
             $eSSN = assignCookie();
 
-            // Employee endpoint 3.1; used when an employee views their own dependents
+            // Employee endpoint; used when an employee views their own dependents
             if ($func == 0) {
                 $sql = "SELECT * FROM Dependent WHERE EmpSSN = \"$eSSN\"";
             }
-            // Employee endpoint 3.2; used when an employee modifies their own dependents
+            // Employee endpoint; used when an employee modifies their own dependents
             else if ($func == 1) {
                 $sql = "UPDATE Dependent SET DepSSN = \"$dSSN\", DepName = \"$dName\" WHERE EmpSSN = \"$eSSN\" and DepSSN = \"$dSSN1\"";
             }
-            // Employee endpoint 3.3; used when an employee creates new dependents
+            // Employee endpoint; used when an employee creates new dependents
             else if ($func == 2) {
                 $sql = "INSERT INTO Dependent VALUES (\"$eSSN\",\"$dSSN\",\"$dName\")";
             }
@@ -40,7 +40,7 @@
         }
     }
 
-    // Admin endpoint 3; used when an admin views all dependents
+    // Admin endpoint: used when an admin views all dependents
     function depAdminRead($conn,$func) {
         if ($func == 0) {
             $sql = "SELECT * FROM Dependent";
@@ -52,6 +52,7 @@
         return $result;
     }
 
+    // Admin endpoint: used when admin creates+modifies dependents
     function depAdmin($conn,$eSSN,$dSSN1,$dSSN,$dName,$func) {
         try {
             // handling user input
@@ -60,10 +61,11 @@
                 throw new TypeError(); 
             }
 
-            // Admin endpoint 4; used when an admin creates new dependents
+            // Admin endpoint: used when an admin creates new dependents
             if ($func == 0) {
                 $sql = "INSERT INTO Dependent VALUES (\"$eSSN\",\"$dSSN\",\"$dName\")";
             }
+            // Admin endpoint: used when an admin modifies dependents
             else if ($func == 1) {
                 $sql = "UPDATE Dependent SET DepSSN = \"$dSSN\", DepName = \"$dName\" WHERE EmpSSN = \"$eSSN\" AND DepSSN = \"$dSSN1\"";
             }
@@ -77,7 +79,7 @@
         }
     } 
 
-    // Admin endpoint 4; used when an admin creates new dependents
+    // Admin endpoint 4; used when an admin creates new dependent benefits
     function depBenAdminNew($conn,$eSSN, $dSSN, $dBen) {
         try {
             // handling user input

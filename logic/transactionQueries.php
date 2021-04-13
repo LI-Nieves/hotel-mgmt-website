@@ -1,14 +1,14 @@
 <?php
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Admin/Receptionist endpoint 1; used to view all transactions
+    // Admin/Receptionist endpoint: used to view all transactions
     function transEmpRead($conn) {
         $sql = "SELECT * FROM Transactions";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
 
-    // Admin/Receptionist endpoint 2; used to create transactions
+    // Admin/Receptionist endpoint: used to create transactions
     function transEmpNew($conn,$tDate,$tType,$tCost,$tGuestID) {
         try {
             // handle user input

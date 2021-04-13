@@ -1,26 +1,26 @@
 CREATE DATABASE hotelDB;
 
 CREATE TABLE Guest (
-	GuestID varchar(10),
-    GuestLogin varchar(50),
-    GuestPass varchar(50),
-    CreditCard varchar(16),
-    PhoneNo varchar(11),
-    GuestName varchar(100),
-    Address varchar(100),
+	GuestID varchar(10) NOT NULL,
+    GuestLogin varchar(50) NOT NULL,
+    GuestPass varchar(50) NOT NULL,
+    CreditCard varchar(16) NOT NULL,
+    PhoneNo varchar(11) NOT NULL,
+    GuestName varchar(100) NOT NULL,
+    Address varchar(100) NOT NULL,
     PRIMARY KEY (GuestID)
 );
 
 CREATE TABLE Employee (
 	SSN varchar(9) NOT NULL,
-    Fname varchar(50),
-    Lname varchar(50),
-    Address varchar(100),
-    Salary int,
-    Sex varchar(10),
-    DoB date,
-    EmpLogin varchar(50),
-    EmpPass varchar(50),
+    Fname varchar(50) NOT NULL,
+    Lname varchar(50) NOT NULL,
+    Address varchar(100) NOT NULL,
+    Salary int NOT NULL,
+    Sex varchar(10) NOT NULL,
+    DoB date NOT NULL,
+    EmpLogin varchar(50) NOT NULL,
+    EmpPass varchar(50) NOT NULL,
     SuperSSN varchar(9),
     BusiPhone varchar(11),
     BusiEmail varchar (50),
@@ -30,7 +30,7 @@ CREATE TABLE Employee (
     AdminPass varchar(50),
     RecepLogin varchar(50),
     RecepPass varchar(50),
-    EmpFlag varchar(50),
+    EmpFlag varchar(50) NOT NULL,
     PRIMARY KEY (SSN),
 	FOREIGN KEY (SuperSSN) REFERENCES Employee(SSN)
 		ON DELETE SET NULL
@@ -59,10 +59,9 @@ CREATE TABLE MaintHandling (
 CREATE TABLE Room (
 	FloorNo int NOT NULL,
     RoomNo INT UNSIGNED NOT NULL,
-    Cost int,
-    Beds int,
-    Availability boolean,
-    CleanStatus boolean, 
+    Cost int NOT NULL,
+    Beds int NOT NULL,
+    CleanStatus boolean NOT NULL, 
     RoomType varchar(100),
     GCheckIn varchar(10),
     ChkInDate datetime,
@@ -83,7 +82,7 @@ CREATE TABLE Room (
 CREATE TABLE PhoneCall (
 	CallID varchar(10) NOT NULL,
     Duration int,
-    CallDate datetime,
+    CallDate datetime NOT NULL,
     GuestID varchar(10),
     EmpSSN varchar(10),
     PRIMARY KEY (CallID),
@@ -116,6 +115,18 @@ CREATE TABLE Reservation (
 		ON DELETE SET NULL
         ON UPDATE CASCADE
 );
+
+SELECT FloorNo, RoomNo
+FROM Room as r1
+WHERE r1.Beds = 2 and (FloorNo, RoomNo) NOT IN
+	(SELECT FloorNo, RoomNo
+	FROM Reservation as r2
+	WHERE ('1999-01-02' <= r2.EndDate) and ('1999-01-06' >= r2.StartDate));
+
+-- All rooms where reservations overlap
+SELECT FloorNo, RoomNo
+FROM Reservation as r
+WHERE ('1999-01-02' <= r.EndDate) and ('1999-01-06' >= r.StartDate);
 
 CREATE TABLE Transactions (
 	TransID varchar(10) NOT NULL,
@@ -164,18 +175,16 @@ INSERT INTO Employee VALUES ('666666666', 'Esteban', 'Ramirez', 'Boston, PA', 30
 INSERT INTO Floors VALUES (1, 'Parking lot', 3);
 INSERT INTO Floors VALUES (2, 'Rec room', 1);
 INSERT INTO Floors VALUES (3, 'Gymnasium', 1);
-INSERT INTO FLOORS VALUES (5, "NULL", "NULL");
+INSERT INTO FLOORS VALUES (5, NULL, NULL);
 
-INSERT INTO Room VALUES (2, 1, 500, 2, true, true, 'Regular', NULL, NULL, NULL, NULL);
-INSERT INTO Room VALUES (3, 1, 500, 2, false, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
-UPDATE Room SET Availability = FALSE, CleanStatus = FALSE, GCheckIn = '1111111111', ChkInDate = '2021-01-01' WHERE FloorNo = 2 AND RoomNo = 1;
+INSERT INTO Room VALUES (2, 1, 500, 2, true, 'Regular', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 1, 500, 2, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
+UPDATE Room SET CleanStatus = FALSE, GCheckIn = '1111111111', ChkInDate = '2021-01-01' WHERE FloorNo = 2 AND RoomNo = 1;
 
 INSERT INTO Reservation VALUES ('1111111111',2,1,'1234567890','1999-01-01','1999-01-05','1234567890',2,NULL);
 
-UPDATE Reservation SET StartDate = "$1999-01-02", EndDate = "1999-01-02", NumPeople = "5", ConfirmNo = "8794561230" WHERE GuestID = "1111111111" AND ResID = "1234567890";
-
-INSERT INTO Transactions VALUES ('7894561230','2021-01-01','Visa',3000,'1111111111',NULL,'555555555');
-INSERT INTO Transactions VALUES ('7894561231',NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO Transactions VALUES ('7894561231',NULL,NULL,5000,NULL,NULL);
+INSERT INTO Transactions VALUES ('7894561230','2021-01-01','Visa',3000,'1111111111','555555555');
 
 INSERT INTO Dependent VALUES ("555555555","789456123","Michael");
 INSERT INTO DepBenefits VALUES ("555555555","789456123","Health insurance");

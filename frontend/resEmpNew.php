@@ -9,11 +9,10 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            <input type = "text" name = "resFloor" placeholder = "Which floor is the room on?"/>
-            <input type = "text" name = "resRoom" placeholder = "Which room is it?"/>
             <input type = "text" name = "aDate" placeholder = "Arrival date"/>
             <input type = "text" name = "dDate" placeholder = "Departure date"/>
             <input type = "text" name = "numPeople" placeholder = "Number of people staying"/>
+            <input type = "text" name = "numBeds" placeholder = "Number of beds preferred?"/>
             <input type = "text" name = "gID" placeholder = "Guest's ID"/>
             <input type = "submit" />
         </form>
@@ -22,11 +21,10 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
-                $resFloor   = $_POST["resFloor"];
-                $resRoom    = $_POST["resRoom"];
                 $aDate      = $_POST["aDate"];
                 $dDate      = $_POST["dDate"];
                 $numPeople  = $_POST["numPeople"];
+                $numBeds    = $_POST["numBeds"];
                 $gID        = $_POST["gID"];
 
                 // for debugging?
@@ -40,7 +38,7 @@
 
                 $conn = connect();
 
-                $result = resEmpNew($conn,$resFloor,$resRoom,$aDate,$dDate,$numPeople,$gID);
+                $result = resEmpNew($conn,$aDate,$dDate,$numPeople,$numBeds,$gID);
 
                 if ($result) {
                     header("Content-Type: JSON");

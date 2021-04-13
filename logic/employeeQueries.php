@@ -1,7 +1,7 @@
 <?php
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Admin endpoint 1; used when an admin logs in
+    // Admin endpoint: used when an admin logs in
     function adminLogin($conn,$aUser,$aPass) {
         $sql = "SELECT * FROM Employee WHERE AdminLogin = \"$aUser\" AND AdminPass = \"$aPass\"";
         $result = mysqli_query($conn, $sql);
@@ -24,7 +24,7 @@
         return $result;
     }
 
-    // Receptionist endpoint 1; used when a receptionist logs in
+    // Receptionist endpoint: used when a receptionist logs in
     function recepLogin($conn,$user,$pass) {
         $sql = "SELECT * FROM Employee WHERE RecepLogin = \"$user\" AND RecepPass = \"$pass\"";
         $result = mysqli_query($conn, $sql);
@@ -47,7 +47,7 @@
         return $result;
     }
 
-    // Employee endpoint 1; used when an employee logs in
+    // Employee endpoint: used when an employee logs in
     function employeeLogin($conn,$user,$pass) {
         $sql = "SELECT * FROM Employee WHERE EmpLogin = \"$user\" AND EmpPass = \"$pass\"";
         $result = mysqli_query($conn, $sql);
@@ -70,14 +70,14 @@
         return $result;
     }
 
-    // Admin endpoint 9; used when an admin views all employees
+    // Admin endpoint; used when an admin views all employees
     function empAdminRead($conn) {
         $sql = "SELECT * FROM Employee";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
     
-    // Admin endpoint 7: used when admin creates/modifies employees
+    // Admin endpoint: used when admin creates+modifies employees
     function empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,$func) {
         try {
             // handling user input

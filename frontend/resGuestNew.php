@@ -9,11 +9,10 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            <input type = "text" name = "resFloor" placeholder = "Floor number"/>
-            <input type = "text" name = "resRoom" placeholder = "Room number"/>
             <input type = "text" name = "aDate" placeholder = "Arrival date"/>
             <input type = "text" name = "dDate" placeholder = "Departure date"/>
             <input type = "text" name = "numPeople" placeholder = "Number of people staying"/>
+            <input type = "text" name = "numBeds" placeholder = "Number of beds preferred?"/>
             <input type = "submit" />
         </form>
 		
@@ -21,11 +20,10 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
-                $resFloor   = $_POST["resFloor"];
-                $resRoom    = $_POST["resRoom"];
                 $aDate      = $_POST["aDate"];
                 $dDate      = $_POST["dDate"];
                 $numPeople  = $_POST["numPeople"];
+                $numBeds    = $_POST["numBeds"];
 
                 // for debugging?
 /*                 echo 
@@ -38,7 +36,7 @@
 
                 $conn = connect();
 
-                $result = resGuestNew($conn,$resFloor,$resRoom,$aDate,$dDate,$numPeople);
+                $result = resGuestNew($conn,$aDate,$dDate,$numPeople,$numBeds);
 
                 if ($result) {
                     header("Content-Type: JSON");

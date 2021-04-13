@@ -1,20 +1,21 @@
 <?php
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Admin endpoint 5; used when an admin views all floors
+    // Admin endpoint: used when an admin views all floors
     function floorAdminRead($conn) {
         $sql = "SELECT * FROM Floors";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
 
-    // Admin endpoint 5; used when an admin views all floors
+    // Admin endpoint: used when an admin views who's maintaining the floors
     function maintAdminRead($conn) {
         $sql = "SELECT * FROM MaintHandling";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
 
+    // Admin endpoint: used when an admin creates a new record for a floor
     function floorAdminNew($conn,$floorNo,$numUtilities,$fAmenities) {
         try {
             // handling user input
@@ -45,7 +46,7 @@
         }
     }
 
-    // Admin endpoint 6.1; used when an admin modifies floors
+    // Admin endpoint; used when an admin modifies floor record
     function floorAdminWrite($conn,$desiredFloor,$floorNo,$fAmenities,$numUtilities) {
         try {
         
@@ -56,6 +57,10 @@
             }
             if ($desiredFloor < 0 or $floorNo < 0) {
                 echo "The floor number cannot be negative.<br>";
+                return false;
+            }
+            if ($numUtilities < 0 and $numUtilities != '') {
+                echo "The number of utilities cannot be negative.<br>";
                 return false;
             }
 

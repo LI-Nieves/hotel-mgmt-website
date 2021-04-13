@@ -21,9 +21,9 @@
                 return false;
             }
 
-            $gID = !empty($gID) ? "'$gID'" : "NULL";
+            $gID = !empty($gID) ? "'$gID'";
             $duration = !empty($duration) ? "'$duration'" : "NULL";
-            $pDate = !empty($pDate) ? "'$pDate'" : "NULL";
+            $pDate = !empty($pDate) ? "'$pDate'";
 
             // setting the EmpSSN on record to be the currently logged in employee
             $eSSN = assignCookie();

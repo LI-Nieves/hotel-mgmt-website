@@ -2,21 +2,21 @@
 
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Guest endpoint 3; used when a guest views all available rooms
+    // Guest endpoint: used when a guest views all rooms
     function roomGuestRead($conn) {
-        $sql = "SELECT * FROM Room WHERE Availability = true";
+        $sql = "SELECT * FROM Room";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
 
-    // Admin/Employee endpoint 1; used to view all rooms
+    // Admin/Employee endpoint: used to view all rooms
     function roomEmpRead($conn) {
         $sql = "SELECT * FROM Room";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
 
-    // Employee endpoint 2; used to modify clean status of room
+    // Employee endpoint: used to modify clean status of room
     // I'm gonna have this one method update both the Room table and the MaintSSN table
     function roomEmpWrite($conn,$fNo,$rNo) {
         try {
@@ -67,6 +67,7 @@
         }
     }
 
+    // When Employee cleans a room on a floor, that floor is recorded in the database
     function maintEmpWrite($conn,$fNo,$eSSN) {
         $sqlTry = "SELECT * FROM MaintHandling WHERE MaintSSN = \"$eSSN\" AND FloorNo = $fNo";
         $resultTry = mysqli_query($conn, $sqlTry);
@@ -93,7 +94,7 @@
         }
     }
 
-    // Receptionist 2; used to check guests in/out
+    // Receptionist ednpoint: used to check guests in/out
     function roomRecepWrite($conn,$fNo,$rNo,$gID,$iDate,$oDate) {
         try {
             // handling user input
@@ -112,7 +113,7 @@
             }
 
             if ($oDate == NULL) {
-                $sql = "UPDATE Room SET Availability = 0, CleanStatus = 0, GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = NULL, ChkOutDate = NULL WHERE FloorNo = $fNo AND RoomNo = $rNo";
+                $sql = "UPDATE Room SET CleanStatus = 0, GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = NULL, ChkOutDate = NULL WHERE FloorNo = $fNo AND RoomNo = $rNo";
                 $result = mysqli_query($conn, $sql);
                 return $result;
             }
@@ -121,7 +122,7 @@
                 if (!$check3) {
                     throw new TypeError;
                 }
-                $sql = "UPDATE Room SET Availability = TRUE, GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = \"$gID\", ChkOutDate = \"$oDate\" WHERE FloorNo = $fNo AND RoomNo = $rNo";
+                $sql = "UPDATE Room SET GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = \"$gID\", ChkOutDate = \"$oDate\" WHERE FloorNo = $fNo AND RoomNo = $rNo";
                 $result = mysqli_query($conn, $sql);
                 return $result;
             }
@@ -133,7 +134,7 @@
         }
     }
 
-
+    // Admin endpoint: creating+modifying new room record
     function roomAdmin($conn,$fNo,$rNo,$cost,$bed,$rType,$func) {
         try {
             // handling user input
@@ -157,13 +158,16 @@
                 echo "The number of beds cannot be negative.<br>";
                 return false;
             }
-            // Admin endpoint 2; used to create rooms
+
+            $rType = !empty($rType) ? "'$rType'" : "NULL";
+            
+            // Admin endpoint: used to create rooms
             if ($func == 0) {
-                $sql = "INSERT INTO Room VALUES ($fNo,$rNo,$cost,$bed,TRUE,TRUE,\"$rType\",NULL,NULL,NULL,NULL)";
+                $sql = "INSERT INTO Room VALUES ($fNo,$rNo,$cost,$bed,TRUE,TRUE,$rType,NULL,NULL,NULL,NULL)";
             }
-            // Admin endpoint 3; used to modify room details
+            // Admin endpoint: used to modify room details
             else if ($func == 1) {
-                $sql = "UPDATE Room SET Cost = $cost, Beds = $bed, RoomType = \"$rType\" WHERE FloorNo = $fNo AND RoomNo = $rNo";
+                $sql = "UPDATE Room SET Cost = $cost, Beds = $bed, RoomType = $rType WHERE FloorNo = $fNo AND RoomNo = $rNo";
             }
             
             $result = mysqli_query($conn, $sql);
