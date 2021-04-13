@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guest: Book a Room</title>
+<title>Admin/Receptionist: Create Phone Call Records</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -9,15 +9,15 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            Guest ID of caller: <input type = "text" name = "gID"/>
-            Duration (in mins): <input type = "text" name = "duration"/>
-            Call date:          <input type = "text" name = "pDate" />
+            <input type = "text" name = "gID" placeholder = "Guest ID of caller"/>
+            <input type = "text" name = "duration" placeholder = "Duration (in mins)"/>
+            <input type = "text" name = "pDate" placeholder = "Call date" />
             <input type = "submit" />
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\phoneQueries.php';
 
                 $gID        = $_POST["gID"];
                 $duration   = $_POST["duration"];

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guest: Book a Room</title>
+<title>Admin/Receptionist: Create a Reservation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -9,18 +9,18 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-        Which floor is the room on? <input type = "text" name = "resFloor"/>
-        Which room is it?           <input type = "text" name = "resRoom"/>
-        Arrival date:               <input type = "text" name = "aDate" />
-        Departure date:             <input type = "text" name = "dDate" />
-        Number of people staying:   <input type = "text" name = "numPeople" />
-        Guest's ID:                 <input type = "text" name = "gID" />
-         <input type = "submit" />
+            <input type = "text" name = "resFloor" placeholder = "Which floor is the room on?"/>
+            <input type = "text" name = "resRoom" placeholder = "Which room is it?"/>
+            <input type = "text" name = "aDate" placeholder = "Arrival date"/>
+            <input type = "text" name = "dDate" placeholder = "Departure date"/>
+            <input type = "text" name = "numPeople" placeholder = "Number of people staying"/>
+            <input type = "text" name = "gID" placeholder = "Guest's ID"/>
+            <input type = "submit" />
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
                 $resFloor   = $_POST["resFloor"];
                 $resRoom    = $_POST["resRoom"];
@@ -30,13 +30,13 @@
                 $gID        = $_POST["gID"];
 
                 // for debugging?
-                echo 
+/*                 echo 
                     "You'd like to change data for Floor ".$_POST["resFloor"].
                     "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
                     "<br>Number of utilities: ".$_POST["aDate"].
                     "<br>Floor amenities: ".$_POST["dDate"].
                     "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>";
+                    "<br>"; */
 
                 $conn = connect();
 

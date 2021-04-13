@@ -10,7 +10,7 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
 
                 $conn = connect();
 
@@ -27,8 +27,7 @@
                         $output[$rowNumber]['PaymentType'] = $row['PaymentType'];
                         $output[$rowNumber]['Cost'] = $row['Cost'];
                         $output[$rowNumber]['GuestID'] = $row['GuestID'];
-                        $output[$rowNumber]['MgrSSN'] = $row['MgrSSN'];
-                        $output[$rowNumber]['RecepSSN'] = $row['RecepSSN'];
+                        $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
                         $rowNumber++;
                     }
                     echo json_encode($output, JSON_PRETTY_PRINT);

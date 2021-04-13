@@ -8,29 +8,25 @@
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-        Transaction date:                   <input type = "text" name = "tDate"/>
-        Payment type:                       <input type = "text" name = "tType" />
-        Cost:                               <input type = "text" name = "tCost" />
-        Guest's ID:                         <input type = "text" name = "tGuestID" />
-        Manager's SSN (if applicable):      <input type = "text" name = "tMgrSSN" />
-        Receptionist's SSN (if applicable): <input type = "text" name = "tRecSSN" />
-         <input type = "submit" />
+            <input type = "text" name = "tDate" placeholder = "Transaction date (optional)"/>
+            <input type = "text" name = "tType" placeholder = "Payment type (optional)"/>
+            <input type = "text" name = "tCost" placeholder = "Cost"/>
+            <input type = "text" name = "tGuestID" placeholder = "Guest's ID (optional)"/>
+            <input type = "submit" />
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
 
                 $tDate      = $_POST["tDate"];
                 $tType      = $_POST["tType"];
                 $tCost      = $_POST["tCost"];
                 $tGuestID   = $_POST["tGuestID"];
-                $tMgrSSN    = $_POST["tMgrSSN"];
-                $tRecSSN    = $_POST["tRecSSN"];
 
                 $conn = connect();
 
-                $result = transEmpNew($conn,$tDate,$tType,$tCost,$tGuestID,$tMgrSSN,$tRecSSN);
+                $result = transEmpNew($conn,$tDate,$tType,$tCost,$tGuestID);
                 if ($result) {
                     header("Content-Type: JSON");
                     $rowNumber = 0;
@@ -44,8 +40,7 @@
                 }
                 else {
                     echo "Failed to add data to the database. 
-                        Ensure the Employee SSN, Manager SSN, and Receptionist SSN all exist in the database.<br>
-                        Note that at least one of the Manager SSN and the Receptionist SSN must be entered in.";
+                        Ensure the Employee SSN, Manager SSN, and Receptionist SSN all exist in the database.<br>";
                 }
 
             ?>

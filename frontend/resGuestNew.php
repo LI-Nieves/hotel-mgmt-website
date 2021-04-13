@@ -9,17 +9,17 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-        Which floor is the room on? <input type = "text" name = "resFloor"/>
-        Which room is it?           <input type = "text" name = "resRoom"/>
-        Arrival date:               <input type = "text" name = "aDate" />
-        Departure date:             <input type = "text" name = "dDate" />
-        Number of people staying:   <input type = "text" name = "numPeople" />
-         <input type = "submit" />
+            <input type = "text" name = "resFloor" placeholder = "Floor number"/>
+            <input type = "text" name = "resRoom" placeholder = "Room number"/>
+            <input type = "text" name = "aDate" placeholder = "Arrival date"/>
+            <input type = "text" name = "dDate" placeholder = "Departure date"/>
+            <input type = "text" name = "numPeople" placeholder = "Number of people staying"/>
+            <input type = "submit" />
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
                 $resFloor   = $_POST["resFloor"];
                 $resRoom    = $_POST["resRoom"];
@@ -27,8 +27,8 @@
                 $dDate      = $_POST["dDate"];
                 $numPeople  = $_POST["numPeople"];
 
-/*                 // for debugging?
-                echo 
+                // for debugging?
+/*                 echo 
                     "You'd like to change data for Floor ".$_POST["resFloor"].
                     "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
                     "<br>Number of utilities: ".$_POST["aDate"].

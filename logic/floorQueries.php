@@ -45,4 +45,36 @@
         }
     }
 
+    // Admin endpoint 6.1; used when an admin modifies floors
+    function floorAdminWrite($conn,$desiredFloor,$floorNo,$fAmenities,$numUtilities) {
+        try {
+        
+            // handling user input
+            $check = handleInputInteger($desiredFloor,$floorNo,$numUtilities);
+            if (!$check) {
+                throw new TypeError;
+            }
+            if ($desiredFloor < 0 or $floorNo < 0) {
+                echo "The floor number cannot be negative.<br>";
+                return false;
+            }
+
+            $numUtilities = !empty($numUtilities) ? "'$numUtilities'" : "NULL";
+            $fAmenities = !empty($fAmenities) ? "'$fAmenities'" : "NULL";
+
+            // setting the EmpSSN on record to be the currently logged in employee
+            $eSSN = assignCookie();
+
+            $sql1 = "UPDATE Floors SET FloorNo = $floorNo, FAmenities = $fAmenities, NumUtilities = $numUtilities WHERE FloorNo = $desiredFloor";
+            $result = mysqli_query($conn, $sql1);
+            
+            return $result;
+
+        }
+        catch (TypeError $e) {
+            echo "Please ensure that the floor number and number of utilities is a number.<br>";
+            return false;
+        }
+    }
+
 ?>

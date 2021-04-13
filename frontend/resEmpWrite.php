@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guest: Book a Room</title>
+<title>Admin/Receptionist: Modify a Reservation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -9,17 +9,17 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-        Reservation ID:             <input type = "text" name = "rID"/>
-        Guest ID:                   <input type = "text" name = "gID"/>       
-        Arrival date:               <input type = "text" name = "aDate" />
-        Departure date:             <input type = "text" name = "dDate" />
-        Number of people staying:   <input type = "text" name = "numPeople" />
-         <input type = "submit" />
+            <input type = "text" name = "rID" placeholder = "Reservation ID"/>
+            <input type = "text" name = "gID" placeholder = "Guest ID"/>       
+            <input type = "text" name = "aDate" placeholder = "Arrival date"/>
+            <input type = "text" name = "dDate" placeholder = "Departure date"/>
+            <input type = "text" name = "numPeople" placeholder = "Number of people staying"/>
+            <input type = "submit" />
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
                 $rID        = $_POST["rID"];
                 $gID        = $_POST["gID"];

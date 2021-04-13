@@ -100,10 +100,10 @@ CREATE TABLE Reservation (
     FloorNo int NOT NULL,
     RoomNo INT UNSIGNED NOT NULL,
     ResID varchar(10) NOT NULL,
-    StartDate date,
-    EndDate date,
+    StartDate date NOT NULL,
+    EndDate date NOT NULL,
     ConfirmNo varchar(10),
-    NumPeople int,
+    NumPeople int NOT NULL,
     EmpSSN varchar(9),
     PRIMARY KEY (GuestID, FloorNo, RoomNo, ResID),
     FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
@@ -121,18 +121,14 @@ CREATE TABLE Transactions (
 	TransID varchar(10) NOT NULL,
     TransDate datetime,
     PaymentType varchar(50),
-    Cost int, 
+    Cost int NOT NULL, 
     GuestID varchar(10),
-    MgrSSN varchar(10),
-    RecepSSN varchar(10),
+    EmpSSN varchar(10),
     PRIMARY KEY (TransID),
     FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
 		ON DELETE SET NULL
         ON UPDATE CASCADE,
-    FOREIGN KEY (MgrSSN) REFERENCES Employee(SSN)
-		ON DELETE SET NULL
-        ON UPDATE CASCADE,
-    FOREIGN KEY (RecepSSN) REFERENCES Employee(SSN)
+    FOREIGN KEY (EmpSSN) REFERENCES Employee(SSN)
 		ON DELETE SET NULL
         ON UPDATE CASCADE
 );
@@ -168,19 +164,20 @@ INSERT INTO Employee VALUES ('666666666', 'Esteban', 'Ramirez', 'Boston, PA', 30
 INSERT INTO Floors VALUES (1, 'Parking lot', 3);
 INSERT INTO Floors VALUES (2, 'Rec room', 1);
 INSERT INTO Floors VALUES (3, 'Gymnasium', 1);
+INSERT INTO FLOORS VALUES (5, "NULL", "NULL");
 
 INSERT INTO Room VALUES (2, 1, 500, 2, true, true, 'Regular', NULL, NULL, NULL, NULL);
 INSERT INTO Room VALUES (3, 1, 500, 2, false, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
+UPDATE Room SET Availability = FALSE, CleanStatus = FALSE, GCheckIn = '1111111111', ChkInDate = '2021-01-01' WHERE FloorNo = 2 AND RoomNo = 1;
 
 INSERT INTO Reservation VALUES ('1111111111',2,1,'1234567890','1999-01-01','1999-01-05','1234567890',2,NULL);
 
 UPDATE Reservation SET StartDate = "$1999-01-02", EndDate = "1999-01-02", NumPeople = "5", ConfirmNo = "8794561230" WHERE GuestID = "1111111111" AND ResID = "1234567890";
 
 INSERT INTO Transactions VALUES ('7894561230','2021-01-01','Visa',3000,'1111111111',NULL,'555555555');
+INSERT INTO Transactions VALUES ('7894561231',NULL,NULL,NULL,NULL,NULL,NULL);
 
 INSERT INTO Dependent VALUES ("555555555","789456123","Michael");
 INSERT INTO DepBenefits VALUES ("555555555","789456123","Health insurance");
 
 INSERT INTO PhoneCall VALUES ("1234567890","15","2021-01-10","1111111111","555555555");
-
-SELECT * FROM Employee;

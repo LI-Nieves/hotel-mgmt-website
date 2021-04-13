@@ -10,7 +10,7 @@
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\businessLogic\queries.php';
+                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
                 $conn = connect();
 
@@ -30,7 +30,6 @@
                         $output[$rowNumber]['EndDate'] = $row['EndDate'];
                         $output[$rowNumber]['ConfirmNo'] = $row['ConfirmNo'];
                         $output[$rowNumber]['NumPeople'] = $row['NumPeople'];
-                        $output[$rowNumber]['RecepSSN'] = $row['RecepSSN'];
                         $rowNumber++;
                     }
                     echo json_encode($output, JSON_PRETTY_PRINT);

@@ -37,7 +37,9 @@ function handleInputDate() {
         $numArgs = func_num_args();
         $argList = func_get_args();
         for ($i = 0; $i < $numArgs; $i++) {
-            strtotime($argList[$i]);
+            if ($argList[$i] != '') {
+                strtotime($argList[$i]);
+            }
         }
         return true;
     }
