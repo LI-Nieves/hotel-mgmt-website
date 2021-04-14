@@ -20,9 +20,6 @@
         if (mysqli_connect_errno()) {
             print "Connection to $db failed.<br>";
         }
-        else {
-            print "Connection successfully established to $db database.<br>";
-        }
 
         return $conn;
     }

@@ -17,11 +17,11 @@
             <input type = "text" name = "eSex" placeholder = "Employee's sex"/><br>
             <input type = "text" name = "eDOB" placeholder = "Employee's birthdate"/><br>
             <input type = "text" name = "eLogin" placeholder = "Employee's login"/><br>
-            <input type = "text" name = "eFlag" placeholder = "Employee type (Receptionist, Maintenance, Other)"/><br>
-            FILL THIS SECTION OUT ONLY IF THEY'RE A RECEPTIONIST:<br>
+            <input type = "text" name = "eFlag" placeholder = "Employee type (Admin, Receptionist, Maintenance, Other)"/><br>
+            FILL THIS SECTION OUT ONLY IF THEY'RE AN ADMIN OR A RECEPTIONIST:<br>
             <input type = "text" name = "rPhone" placeholder = "Employee's business phone"/><br>
             <input type = "text" name = "rEmail" placeholder = "Employee's business email"/><br>
-            <input type = "text" name = "rLogin" placeholder = "Employee's Receptionist Account login"/><br>
+            <input type = "text" name = "rLogin" placeholder = "Employee's Admin/Receptionist Account login"/><br>
             FILL THIS SECTION OUT ONLY IF THEY'RE MAINTENANCE:<br>
             <input type = "text" name = "mRole" placeholder = "Employee's role"/><br>
             <input type = "text" name = "mHr" placeholder = "Employee's work hours per week"/><br>
@@ -67,26 +67,14 @@
                 else if ($eFlag == "Other") {
                     $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,2);
                 }
+                else if ($eFlag == "Admin") {
+                    $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,3);
+                }
                 else {
                     echo "Employee type is invalid.<br>";
                     $result = false;
                 }
 
-/*                 if ($result) {
-                    echo "Successfully created new employee.<br>";
-
-                    header("Content-Type: JSON");
-                    $rowNumber = 0;
-                    $output = array();
-    
-                    while ($row = mysqli_fetch_array($result)) {
-                        $output[$rowNumber]['EmpPass'] = $row['EmpPass'];
-                        $rowNumber++;
-                    }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
-                } */
-
-                //else {
                 if (!$result) {
                     echo "Failed to create a new employee. Please ensure that the username is unique.<br>";
                 }

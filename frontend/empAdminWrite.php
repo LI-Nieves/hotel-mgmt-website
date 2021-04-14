@@ -19,10 +19,10 @@
             <input type = "text" name = "eDOB" placeholder = "Employee's birthdate"/><br>
             <input type = "text" name = "eLogin" placeholder = "Employee's login"/><br>
             <input type = "text" name = "eFlag" placeholder = "Employee type (Receptionist, Maintenance, Other)"/><br>
-            FILL THIS SECTION OUT ONLY IF THEY'RE A RECEPTIONIST:<br>
+            FILL THIS SECTION OUT ONLY IF THEY'RE AN ADMIN OR A RECEPTIONIST:<br>
             <input type = "text" name = "rPhone" placeholder = "Employee's business phone"/><br>
             <input type = "text" name = "rEmail" placeholder = "Employee's business email"/><br>
-            <input type = "text" name = "rLogin" placeholder = "Employee's Receptionist Account login"/><br>
+            <input type = "text" name = "rLogin" placeholder = "Employee's Admin/Receptionist Account login"/><br>
             FILL THIS SECTION OUT ONLY IF THEY'RE MAINTENANCE:<br>
             <input type = "text" name = "mRole" placeholder = "Employee's role"/><br>
             <input type = "text" name = "mHr" placeholder = "Employee's work hours per week"/><br>
@@ -60,13 +60,16 @@
                 $conn = connect();
 
                 if ($eFlag == "Receptionist") {
-                    $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,3);
-                }
-                else if ($eFlag == "Maintenance") {
                     $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,4);
                 }
-                else if ($eFlag == "Other") {
+                else if ($eFlag == "Maintenance") {
                     $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,5);
+                }
+                else if ($eFlag == "Other") {
+                    $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,6);
+                }
+                else if ($eFlag == "Admin") {
+                    $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,7);
                 }
                 else {
                     echo "Employee type is invalid.<br>";
@@ -88,7 +91,6 @@
                     else {
                         echo "Failed to updated employee information.<br>";
                     }
-
                 }
                 else {
                     echo "Failed to updated employee information.<br>";

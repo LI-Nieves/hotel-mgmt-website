@@ -75,7 +75,7 @@
     function empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,$func) {
         try {
             // handling user input
-            $output = handleInputInteger($eSSN,$eSal,);
+            $output = handleInputInteger($eSSN,$eSal,$mHr);
             $output2 = handleInputDate($eDOB);
             if (!($output and $output2)) {
                 throw new TypeError(); 
@@ -114,9 +114,19 @@
                 $sql = "INSERT INTO Employee VALUES (\"$eSSN\",\"$eFname\",\"$eLname\",\"$eAddress\",\"$eSal\",\"$eSex\",\"$eDOB\",
                     \"$eLogin\",\"$ePass\",\"$superSSN\",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,\"Other\")";                
             }
+            // For new employee that's an admin
+            if ($func == 3) {
+                if (!handleInputInteger($rPhone) or strlen($rPhone) != 11) {
+                    echo "Invalid phone number.<br>";
+                    return false;
+                }
+                $aPass = rand(1000000000,9999999999);
+                $sql = "INSERT INTO Employee VALUES (\"$eSSN\",\"$eFname\",\"$eLname\",\"$eAddress\",\"$eSal\",\"$eSex\",\"$eDOB\",
+                    \"$eLogin\",\"$ePass\",\"$superSSN\",\"$rPhone\",\"$rEmail\",NULL,NULL,'$rLogin','$aPass',NULL,NULL,\"Admin\")";
+            }
 
             // For modify employee that's a receptionist
-            if ($func == 3) {
+            if ($func == 4) {
                 if (!handleInputInteger($rPhone) or strlen($rPhone) != 11) {
                     echo "Invalid phone number.<br>";
                     return false;
@@ -126,7 +136,7 @@
                     EmpFlag = \"Receptionist\" WHERE SSN = \"$eSSN\"";
             }
             // For modify employee that's maintenance
-            else if ($func == 4) {
+            else if ($func == 5) {
                 if (!(handleInputInteger($mHr)) or ($mHr+0) > 168) {
                     echo "Invalid number of hours per week.<br>";
                     return false;
@@ -135,14 +145,24 @@
                     Sex = \"$eSex\", DoB = \"$eDOB\", EmpLogin = \"$eLogin\", ERole = \"$mRole\", NumHrWeek = \"$mHr\" WHERE SSN = \"$eSSN\"";
             }
             // For modify employee that's other 
-            else if ($func == 5) {
+            else if ($func == 6) {
                 $sql = "UPDATE Employee SET Fname = \"$eFname\", Lname = \"$eLname\", Address = \"$eAddress\", Salary = \"$eSal\",
                     Sex = \"$eSex\", DoB = \"$eDOB\", EmpLogin = \"$eLogin\" WHERE SSN = \"$eSSN\"";              
+            }
+            // For modify employee that's an admin
+            if ($func == 7) {
+                if (!handleInputInteger($rPhone) or strlen($rPhone) != 11) {
+                    echo "Invalid phone number.<br>";
+                    return false;
+                }
+                $sql = "UPDATE Employee SET Fname = \"$eFname\", Lname = \"$eLname\", Address = \"$eAddress\", Salary = \"$eSal\",
+                    Sex = \"$eSex\", DoB = \"$eDOB\", EmpLogin = \"$eLogin\", BusiPhone = \"$rPhone\", BusiEmail = \"$rEmail\", AdminLogin = \"$rLogin\",
+                    EmpFlag = \"Admin\" WHERE SSN = \"$eSSN\"";
             }
 
             $result = mysqli_query($conn, $sql);
 
-            if ($result && ($func >= 0) && ($func <= 2)) {
+            if ($result && ($func >= 0) && ($func <= 3)) {
                 echo "Successfully created new employee.<br>";
 
                 $sqlPass = "SELECT EmpPass FROM Employee WHERE SSN = '$eSSN'";
@@ -165,14 +185,14 @@
                 
         }
         catch (TypeError $e) {
-            echo "Ensure that the Employee's SSN is valid.<br>";
+            echo "Please ensure that the Employee's SSN, the salary, and the number of hours per week (if entered) are valid numbers.<br>
+                Please also ensure that the date of birth is a valid date.<br>";
             return false;
         }
     }
 
     // Admin endpoint: used when an admin deletes an employee record
     function empAdminDel($conn,$eSSN) {
-
         $sql = "DELETE FROM Employee WHERE SSN = $eSSN";
         $result = mysqli_query($conn,$sql);
 
@@ -181,7 +201,29 @@
 
     // Employee endpoint: used when an employee changes their password
     function empChangePass($conn,$ePass,$rPass,$aPass) {
+        if (empty($ePass)) {
+            echo "The Employee password cannot be empty.<br>";
+            return false;
+        }
+
         $eSSN = assignCookie();
+
+        // check to see what kind of Employee they are
+        $eType = checkEmpType($conn,$eSSN);
+
+        if ($eType == 'Admin') {
+            if (empty($aPass)) {
+                echo "The Admin password cannot be empty since you are an Admin.<br>";
+                return false;
+            }
+
+        }
+        else if ($eType == 'Receptionist') {
+            if (empty($rPass)) {
+                echo "The Receptionist password cannot be empty since you are a Receptionist.<br>";
+                return false;
+            }
+        }
 
         $rPass = !empty($rPass) ? "'$rPass'" : "NULL";
         $aPass = !empty($aPass) ? "'$aPass'" : "NULL";
@@ -191,5 +233,22 @@
 
         return $result;
     } 
+
+    function checkEmpType($conn,$eSSN) {
+        $sql = "SELECT EmpFlag FROM Employee WHERE SSN = '$eSSN'";
+        $result = mysqli_query($conn,$sql);
+
+        $returning = '';
+
+        if ($result) {
+            $rowNumber = 0;
+            $output = array();
+            while ($row = mysqli_fetch_array($result)) {
+                $returning = $row['EmpFlag'];
+                $rowNumber++;
+            }
+        }
+        return $returning;
+    }
 
 ?>
