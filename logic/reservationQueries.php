@@ -1,7 +1,7 @@
 <?php
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Guest endpoint 5; used when a guest views all their reservations
+    // Guest endpoint: used when a guest views all their reservations
     function resGuestRead($conn) {
         $guestID = assignCookie();
 
@@ -10,7 +10,7 @@
         return $result;
     }
 
-    // Guest endpoint 4; used when a guest modifies a reservation for a room
+    // Guest endpoint: used when a guest cancels a reservation
     function resGuestDel($conn,$rID,$floorNo,$roomNo) {
         // getting ID of currently logged in Guest
         $guestID = assignCookie();
@@ -21,7 +21,7 @@
         return $result;
     } 
 
-    // Guest endpoint 4; used when a guest creates reservations for a room
+    // Guest endpoint: used when a guest creates reservations for a room
     function resGuestNew($conn,$aDate,$dDate,$numPeople,$numBeds) {
         try {
             // handling user input
@@ -71,14 +71,14 @@
         }
     } 
 
-    // Admin/Receptionist endpoint 3; used to view all reservations
+    // Admin/Receptionist endpoint: used to view all reservations
     function resEmpRead($conn) {
         $sql = "SELECT * FROM Reservation";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
 
-    // Admin/Receptionist endpoint 4; used to create a reservation for a room
+    // Admin/Receptionist endpoint: used to create a reservation for a room
     function resEmpNew($conn,$aDate,$dDate,$numPeople,$numBeds,$gID) {
         try {
             // handling user input
@@ -127,7 +127,7 @@
         }
     } 
 
-    // Admin/Receptionist endpoint 4; used to modify a reservation for a room
+    // Admin/Receptionist endpoint: used to cancel a reservation
     function resEmpDel($conn,$rID,$floorNo,$roomNo,$gID) {
         $sql = "DELETE FROM Reservation WHERE ResID = $rID AND FloorNo = $floorNo AND RoomNo = $roomNo AND GuestID = $gID";
         $result = mysqli_query($conn,$sql);
@@ -135,6 +135,9 @@
         return $result;
     }  
 
+    //  algorithm used to check which rooms are suitable for reservation
+    //  based on the indicated date range and number of beds
+    //  date ranges cannot overlap and the number of beds should be equal
     function checkAvailable($conn,$aDate,$dDate,$numBeds,$func) {
         $sql =  "SELECT FloorNo, RoomNo FROM Room as r1 WHERE r1.Beds = $numBeds and (FloorNo, RoomNo) NOT IN
                 (SELECT FloorNo, RoomNo FROM Reservation as r2 

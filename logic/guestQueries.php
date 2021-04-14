@@ -119,5 +119,14 @@
             return false;
         }
     }
-    
+
+    // Admin endpoint: used when an admin deletes a guest record
+    function guestAdminDel($conn,$gID) {
+
+        $sql = "DELETE FROM Guest WHERE GuestID = $gID";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    } 
+
 ?>

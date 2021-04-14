@@ -19,7 +19,7 @@ CREATE TABLE Employee (
     Salary int NOT NULL,
     Sex varchar(10) NOT NULL,
     DoB date NOT NULL,
-    EmpLogin varchar(50) NOT NULL,
+    EmpLogin varchar(50) NOT NULL UNIQUE,
     EmpPass varchar(50) NOT NULL,
     SuperSSN varchar(9),
     BusiPhone varchar(11),

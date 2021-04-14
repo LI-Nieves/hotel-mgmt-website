@@ -163,7 +163,7 @@
             
             // Admin endpoint: used to create rooms
             if ($func == 0) {
-                $sql = "INSERT INTO Room VALUES ($fNo,$rNo,$cost,$bed,TRUE,TRUE,$rType,NULL,NULL,NULL,NULL)";
+                $sql = "INSERT INTO Room VALUES ($fNo,$rNo,$cost,$bed,TRUE,$rType,NULL,NULL,NULL,NULL)";
             }
             // Admin endpoint: used to modify room details
             else if ($func == 1) {
@@ -179,5 +179,13 @@
             return false;
         }
     }
+
+    // Admin endpoint: used to delete a room record
+    function roomAdminDel($conn,$fNo,$rNo) {
+        $sql = "DELETE FROM Room WHERE FloorNo = $fNo AND RoomNo = $rNo";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    } 
 
 ?>

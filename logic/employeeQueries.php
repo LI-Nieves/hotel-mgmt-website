@@ -12,8 +12,6 @@
 
         $currentID = 0;
         if ($result1) {
-            header("Content-Type: JSON");
-
             while ($row = mysqli_fetch_array($result1)) {
                 $currentID = $row['SSN'];
             }
@@ -35,8 +33,6 @@
 
         $currentID = 0;
         if ($result1) {
-            header("Content-Type: JSON");
-
             while ($row = mysqli_fetch_array($result1)) {
                 $currentID = $row['SSN'];
             }
@@ -58,9 +54,7 @@
 
         $currentID = 0;
         if ($result1) {
-            header("Content-Type: JSON");
-
-            while ($row = mysqli_fetch_array($result1)) {
+           while ($row = mysqli_fetch_array($result1)) {
                 $currentID = $row['SSN'];
             }
         }
@@ -118,7 +112,7 @@
             // For new employee that's other 
             else if ($func == 2) {
                 $sql = "INSERT INTO Employee VALUES (\"$eSSN\",\"$eFname\",\"$eLname\",\"$eAddress\",\"$eSal\",\"$eSex\",\"$eDOB\",
-                    \"$eLogin\",\"$ePass\",\"$superSSN\",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)";                
+                    \"$eLogin\",\"$ePass\",\"$superSSN\",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,\"Other\")";                
             }
 
             // For modify employee that's a receptionist
@@ -147,6 +141,26 @@
             }
 
             $result = mysqli_query($conn, $sql);
+
+            if ($result && ($func >= 0) && ($func <= 2)) {
+                echo "Successfully created new employee.<br>";
+
+                $sqlPass = "SELECT EmpPass FROM Employee WHERE SSN = '$eSSN'";
+                $resultPass = mysqli_query($conn,$sqlPass);
+
+                $rowNumber = 0;
+                $output = array();
+                $password;
+
+                while ($row = mysqli_fetch_array($resultPass)) {
+                    $password = $row['EmpPass'];
+                    $rowNumber++;
+                }
+
+                echo "Here is the auto-generated password to the employee: $password.<br>";
+                
+            }
+
             return $result;
                 
         }
@@ -155,5 +169,27 @@
             return false;
         }
     }
+
+    // Admin endpoint: used when an admin deletes an employee record
+    function empAdminDel($conn,$eSSN) {
+
+        $sql = "DELETE FROM Employee WHERE SSN = $eSSN";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    } 
+
+    // Employee endpoint: used when an employee changes their password
+    function empChangePass($conn,$ePass,$rPass,$aPass) {
+        $eSSN = assignCookie();
+
+        $rPass = !empty($rPass) ? "'$rPass'" : "NULL";
+        $aPass = !empty($aPass) ? "'$aPass'" : "NULL";
+
+        $sql = "UPDATE Employee SET EmpPass = '$ePass', AdminPass = $aPass, RecepPass = $rPass WHERE SSN = $eSSN";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    } 
 
 ?>

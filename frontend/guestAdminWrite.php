@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Employee: Modify Guest Information</title>
+<title>Admin: Modify Guest Information</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

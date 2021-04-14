@@ -52,4 +52,12 @@
         }
     }
 
+    // Admin endpoint: used to delete transaction record
+    function transAdminDel($conn,$tID) {
+        $sql = "DELETE FROM Transactions WHERE TransID = $tID";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    }  
+
 ?>

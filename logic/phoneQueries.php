@@ -21,9 +21,7 @@
                 return false;
             }
 
-            $gID = !empty($gID) ? "'$gID'";
             $duration = !empty($duration) ? "'$duration'" : "NULL";
-            $pDate = !empty($pDate) ? "'$pDate'";
 
             // setting the EmpSSN on record to be the currently logged in employee
             $eSSN = assignCookie();
@@ -32,7 +30,7 @@
             $cID = rand(1000000000,9999999999);
 
             //$sql = "INSERT INTO PhoneCall VALUES (\"$cID\", $duration, \"$pDate\", \"$gID\", \"$eSSN\")";
-            $sql = "INSERT INTO PhoneCall VALUES ($cID, $duration,$pDate,$gID,$eSSN)";
+            $sql = "INSERT INTO PhoneCall VALUES ($cID, $duration,'$pDate',$gID,$eSSN)";
             $result1 = mysqli_query($conn, $sql);
 
             if($result1) {
@@ -51,5 +49,13 @@
             return false;
         }
     }
+
+    // Admin/Receptionist endpoint: used to cancel a reservation
+    function phoneAdminDel($conn,$cID) {
+        $sql = "DELETE FROM PhoneCall WHERE CallID = $cID";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    }  
 
 ?>

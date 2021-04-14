@@ -72,11 +72,23 @@
                     $result = false;
                 }
 
-                if ($result) {
+/*                 if ($result) {
                     echo "Successfully created new employee.<br>";
-                }
-                else {
-                    echo "Failed to create new employee.<br>";
+
+                    header("Content-Type: JSON");
+                    $rowNumber = 0;
+                    $output = array();
+    
+                    while ($row = mysqli_fetch_array($result)) {
+                        $output[$rowNumber]['EmpPass'] = $row['EmpPass'];
+                        $rowNumber++;
+                    }
+                    echo json_encode($output, JSON_PRETTY_PRINT);
+                } */
+
+                //else {
+                if (!$result) {
+                    echo "Failed to create a new employee. Please ensure that the username is unique.<br>";
                 }
 
             ?>

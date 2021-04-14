@@ -10,7 +10,7 @@
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "gID" placeholder = "Guest ID of caller"/>
-            <input type = "text" name = "duration" placeholder = "Duration (in mins)"/>
+            <input type = "text" name = "duration" placeholder = "Duration (in mins) (optional)"/>
             <input type = "text" name = "pDate" placeholder = "Call date" />
             <input type = "submit" />
         </form>

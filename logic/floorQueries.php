@@ -82,4 +82,12 @@
         }
     }
 
+    // Admin endpoint: used to delete a floor record
+    function floorAdminDel($conn,$fNo) {
+        $sql = "DELETE FROM Floors WHERE FloorNo = $fNo";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    }  
+
 ?>

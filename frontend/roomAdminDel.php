@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin: Create a Room</title>
+<title>Admin: Delete Room Record</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -9,25 +9,17 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-            <input type = "text" name = "fNo" placeholder = "Floor number"/>
-            <input type = "text" name = "rNo" placeholder = "Room number"/>       
-            <input type = "text" name = "cost" placeholder = "Cost"/>
-            <input type = "text" name = "bed" placeholder = "Beds"/>
-            <input type = "text" name = "rType" placeholder = "Room type (optional)"/>
+            <input type = "text" name = "fNo" placeholder = "Floor number" /><br>    
+            <input type = "text" name = "rNo" placeholder = "Room number" /><br>
             <input type = "submit" />
-            <!-- Note that Availability and Clean Status will be automatically True,
-                    since the room is newly created. -->
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
-                $fNo        = $_POST["fNo"];
-                $rNo        = $_POST["rNo"];
-                $cost       = $_POST["cost"];
-                $bed        = $_POST["bed"];
-                $rType      = $_POST["rType"];
+                $fNo  = $_POST["fNo"];
+                $rNo  = $_POST["rNo"];
 
                 // for debugging?
 /*                 echo 
@@ -37,17 +29,28 @@
                     "<br>Floor amenities: ".$_POST["dDate"].
                     "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
                     "<br>"; */
-
+                
                 $conn = connect();
 
-                $result = roomAdmin($conn,$fNo,$rNo,$cost,$bed,$rType,0);
+                $initial = countEntries($conn,"SELECT * FROM Room");
+
+                $result = roomAdminDel($conn,$fNo,$rNo);
 
                 if ($result) {
-                    echo "Successfully created room.<br>";
+                    // checking if a reservation was truly deleted.
+                    $sqlCheck = "SELECT * FROM Room";
+                    
+                    $final = countEntries($conn,$sqlCheck);
+
+                    if ($initial == $final) {
+                        echo "Failed to delete Room record. Please ensure you entered details for existing Room.<br>";
+                    }
+                    else {
+                        echo "Successfully deleted Room record.<br>";
+                    }
                 }
                 else {
-                    echo "Failed to create the room. 
-                        Please ensure the Floor Number and Room Number are valid.<br>";
+                    echo "Failed to delete Room record.<br>";
                 }
 
             ?>

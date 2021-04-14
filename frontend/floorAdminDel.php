@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin/Receptionist: Delete a Reservation</title>
+<title>Admin: Delete Floor Record</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -9,21 +9,15 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-        <input type = "text" name = "rID" placeholder = "Reservation ID"/><br>
-            <input type = "text" name = "floorNo" placeholder = "Floor number of reserved room"/><br>
-            <input type = "text" name = "roomNo" placeholder = "Room number of reserved room"/><br>
-            <input type = "text" name = "gID" placeholder = "Guest's ID"/>
+            <input type = "text" name = "fNo" placeholder = "Floor number" /><br>
             <input type = "submit" />
         </form>
 		
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
+                include 'C:\xampp\htdocs\Project\logic\floorQueries.php';
 
-                $rID        = $_POST["rID"];
-                $floorNo    = $_POST["floorNo"];
-                $roomNo     = $_POST["roomNo"];
-                $gID        = $_POST["gID"];
+                $fNo  = $_POST["fNo"];
 
                 // for debugging?
 /*                 echo 
@@ -33,28 +27,28 @@
                     "<br>Floor amenities: ".$_POST["dDate"].
                     "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
                     "<br>"; */
-
+                
                 $conn = connect();
 
-                $initial = countEntries($conn,"SELECT * FROM Reservation");
+                $initial = countEntries($conn,"SELECT * FROM Floors");
 
-                $result = resEmpDel($conn,$rID,$floorNo,$roomNo,$gID);
+                $result = floorAdminDel($conn,$fNo);
 
                 if ($result) {
                     // checking if a reservation was truly deleted.
-                    $sqlCheck = "SELECT * FROM Reservation";
+                    $sqlCheck = "SELECT * FROM Floors";
                     
                     $final = countEntries($conn,$sqlCheck);
 
                     if ($initial == $final) {
-                        echo "Failed to delete reservation. Please ensure you entered details for existing reservation.<br>";
+                        echo "Failed to delete Floor record. Please ensure you entered details for existing Floor.<br>";
                     }
                     else {
-                        echo "Successfully deleted reservation.<br>";
+                        echo "Successfully deleted Floor record.<br>";
                     }
                 }
                 else {
-                    echo "Failed to delete reservation.<br>";
+                    echo "Failed to delete Floor record.<br>";
                 }
 
             ?>

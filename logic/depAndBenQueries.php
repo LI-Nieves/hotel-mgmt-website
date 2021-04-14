@@ -92,7 +92,7 @@
                 $sql = "INSERT INTO DepBenefits VALUES (\"$eSSN\",\"$dSSN\",\"$dBen[$i]\")";
                 $result = mysqli_query($conn, $sql);
                 if (!$result) {
-                    echo "Failed to add " .$eSSN. ", " .$dSSN. ", " .$dBen[$i]. " to the database.<br>";
+                    echo "Failed to add Employee SSN:" .$eSSN. ", Dependent SSN:" .$dSSN. ", Benefit name:" .$dBen[$i]. " to the database.<br>";
                 }
             }
             return $result;
@@ -102,5 +102,21 @@
             return false;
         }
     }
+
+    // Admin endpoint: used to remove dependent
+    function depAdminDel($conn,$eSSN,$dSSN) {
+        $sql = "DELETE FROM Dependent WHERE EmpSSN = $eSSN AND DepSSN = $dSSN";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    }  
+
+    // Admin endpoint: used to remove benefit from dependent
+    function depBenAdminDel($conn,$eSSN,$dSSN,$dBen) {
+        $sql = "DELETE FROM DepBenefits WHERE EmpSSN = $eSSN AND DepSSN = $dSSN and DepBenefits = '$dBen'";
+        $result = mysqli_query($conn,$sql);
+
+        return $result;
+    }  
 
 ?>
