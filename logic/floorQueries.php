@@ -24,7 +24,7 @@
                 throw new TypeError;
             }
             if ($floorNo < 0) {
-                echo "The floor number cannot be negative.<br>";
+                echo "Invalid floor number.<br>";
                 return false;
             }
             if ($numUtilities < 0 and $numUtilities != '') {
@@ -41,7 +41,7 @@
 
         }
         catch (TypeError $e) {
-            echo "Please ensure that the floor number and number of utilities is a number.<br>";
+            echo "Please ensure that the floor number and number of utilities is a valid number.<br>";
             return false;
         }
     }
