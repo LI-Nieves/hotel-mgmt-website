@@ -1,5 +1,5 @@
 <?php
-    include 'C:\xampp\htdocs\Project\logic\helper.php';
+    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
 
     // Guest endpoint: used when a guest views all their reservations
     function resGuestRead($conn) {

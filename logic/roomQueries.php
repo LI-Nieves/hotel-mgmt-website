@@ -1,6 +1,6 @@
 <?php
 
-    include 'C:\xampp\htdocs\Project\logic\helper.php';
+    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
 
     // Admin/Employee endpoint: used to view all rooms
     function roomEmpRead($conn) {

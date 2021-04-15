@@ -1,5 +1,5 @@
 <?php
-    include 'C:\xampp\htdocs\Project\logic\helper.php';
+    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
 
     // Admin endpoint: used when an admin logs in
     function adminLogin($conn,$aUser,$aPass) {

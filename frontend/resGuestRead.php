@@ -9,8 +9,8 @@
 		<div id="formContent2">
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
                 $conn = connect();
 
@@ -30,6 +30,9 @@
                         $output[$rowNumber]['EndDate'] = $row['EndDate'];
                         $output[$rowNumber]['ConfirmNo'] = $row['ConfirmNo'];
                         $output[$rowNumber]['NumPeople'] = $row['NumPeople'];
+                        if($output[$rowNumber]['GuestID'] = $row['GuestID']){
+                            $correctRow = $rowNumber;
+                        }
                         $rowNumber++;
                     }
                     echo json_encode($output, JSON_PRETTY_PRINT);
@@ -40,7 +43,20 @@
                 }
 
             ?>
+        <h1>Hello Guest</h1>
+        <h3>This is your Reservation</h3>
+        <p>Guest ID: <?php echo $output[$correctRow]['GuestID']; ?></p>
+        <p>Floor No: <?php echo json_encode($output[$correctRow]['FloorNo']); ?></p>
+        <p>Room No: <?php echo $output[$correctRow]['RoomNo']; ?></p>
+        <p>Reservation No: <?php echo $output[$correctRow]['ResID']; ?></p>
+        <p>Start Date: <?php echo $output[$correctRow]['StartDate']; ?></p>
+        <p>End Date: <?php echo $output[$correctRow]['EndDate']; ?></p>
+        <p>Confirmation No: <?php echo $output[$correctRow]['ConfirmNo']; ?></p>
+        <p>Number of People: <?php echo $output[$correctRow]['NumPeople']; ?></p>       
         </p>
+
+        <input type="submit" id="modRes" class="fadeIn second" value="Modify Reservation"/>
+        <input type="button" id="newRes" class="fadeIn second" value="New Reservation"/>
 		</div>
 	  </div>
 </body>
