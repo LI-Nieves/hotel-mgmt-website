@@ -1,5 +1,5 @@
 <?php
-    include 'C:\xampp\htdocs\Project\logic\helper.php';
+    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
 
     // Employee endpoints: used when an employee views+modifies+creates their own dependents
     function depEmp($conn,$dSSN1,$dSSN,$dName,$func) {
