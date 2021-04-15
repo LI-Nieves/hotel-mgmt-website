@@ -2,13 +2,6 @@
 
     include 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Guest endpoint: used when a guest views all rooms
-    function roomGuestRead($conn) {
-        $sql = "SELECT * FROM Room";
-        $result = mysqli_query($conn, $sql);
-        return $result;
-    }
-
     // Admin/Employee endpoint: used to view all rooms
     function roomEmpRead($conn) {
         $sql = "SELECT * FROM Room";
@@ -115,7 +108,6 @@
             if ($oDate == NULL) {
                 $sql = "UPDATE Room SET CleanStatus = 0, GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = NULL, ChkOutDate = NULL WHERE FloorNo = $fNo AND RoomNo = $rNo";
                 $result = mysqli_query($conn, $sql);
-                return $result;
             }
             else {
                 $check3 = handleInputDate($oDate);
@@ -124,8 +116,9 @@
                 }
                 $sql = "UPDATE Room SET GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = \"$gID\", ChkOutDate = \"$oDate\" WHERE FloorNo = $fNo AND RoomNo = $rNo";
                 $result = mysqli_query($conn, $sql);
-                return $result;
             }
+            
+            return $result;
         }
         catch (TypeError $e) {
             echo "Ensure that the floor number and room number are numbers.<br>

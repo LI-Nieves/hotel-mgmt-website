@@ -9,7 +9,7 @@
 		<div id="formContent2">
 
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
-        <input type = "text" name = "rID" placeholder = "Reservation ID"/><br>
+            <input type = "text" name = "rID" placeholder = "Reservation ID"/><br>
             <input type = "text" name = "floorNo" placeholder = "Floor number of reserved room"/><br>
             <input type = "text" name = "roomNo" placeholder = "Room number of reserved room"/><br>
             <input type = "text" name = "gID" placeholder = "Guest's ID"/>
@@ -24,15 +24,6 @@
                 $floorNo    = $_POST["floorNo"];
                 $roomNo     = $_POST["roomNo"];
                 $gID        = $_POST["gID"];
-
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
 
                 $conn = connect();
 

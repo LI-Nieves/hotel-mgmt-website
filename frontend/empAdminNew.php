@@ -76,7 +76,7 @@
                 }
 
                 if (!$result) {
-                    echo "Failed to create a new employee. Please ensure that the username is unique.<br>";
+                    echo "Failed to create a new employee.<br>";
                 }
 
             ?>

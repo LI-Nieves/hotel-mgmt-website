@@ -24,16 +24,7 @@
                 $dDate      = $_POST["dDate"];
                 $numPeople  = $_POST["numPeople"];
                 $numBeds    = $_POST["numBeds"];
-
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
-
+                
                 $conn = connect();
 
                 $result = resGuestNew($conn,$aDate,$dDate,$numPeople,$numBeds);
@@ -51,7 +42,7 @@
                     echo json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
-                    echo "Failed to create the reservation. Please ensure that the floor number and room number are valid.<br>";    // should I add why?
+                    echo "Failed to create the reservation.<br>";
                 }
 
             ?>

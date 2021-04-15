@@ -2,7 +2,7 @@ CREATE DATABASE hotelDB;
 
 CREATE TABLE Guest (
 	GuestID varchar(10) NOT NULL,
-    GuestLogin varchar(50) NOT NULL,
+    GuestLogin varchar(50) NOT NULL UNIQUE,
     GuestPass varchar(50) NOT NULL,
     CreditCard varchar(16) NOT NULL,
     PhoneNo varchar(11) NOT NULL,
@@ -26,9 +26,9 @@ CREATE TABLE Employee (
     BusiEmail varchar (50),
     ERole varchar(50),
     NumHrWeek int,
-    AdminLogin varchar(50),
+    AdminLogin varchar(50) UNIQUE,
     AdminPass varchar(50),
-    RecepLogin varchar(50),
+    RecepLogin varchar(50) UNIQUE,
     RecepPass varchar(50),
     EmpFlag varchar(50) NOT NULL,
     PRIMARY KEY (SSN),

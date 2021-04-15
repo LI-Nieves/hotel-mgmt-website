@@ -56,7 +56,7 @@
                 throw new TypeError;
             }
             if ($desiredFloor < 0 or $floorNo < 0) {
-                echo "The floor number cannot be negative.<br>";
+                echo "Invalid floor number.<br>";
                 return false;
             }
             if ($numUtilities < 0 and $numUtilities != '') {
@@ -66,9 +66,6 @@
 
             $numUtilities = !empty($numUtilities) ? "'$numUtilities'" : "NULL";
             $fAmenities = !empty($fAmenities) ? "'$fAmenities'" : "NULL";
-
-            // setting the EmpSSN on record to be the currently logged in employee
-            $eSSN = assignCookie();
 
             $sql1 = "UPDATE Floors SET FloorNo = $floorNo, FAmenities = $fAmenities, NumUtilities = $numUtilities WHERE FloorNo = $desiredFloor";
             $result = mysqli_query($conn, $sql1);

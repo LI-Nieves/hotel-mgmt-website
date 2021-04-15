@@ -29,6 +29,13 @@
     // Guest endpoint: used when a guest creates account
     function guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress) {
         try {
+            $table = 'Guest';
+            $dupUsername = dupUsername($conn,$gUser,$table,'');
+            if ($dupUsername) {
+                echo "This username already exists in the database.<br>";
+                return false;
+            }
+
             // handling user input
             $check = handleInputInteger($gCredit,$gPhone);
             if (!$check) {
@@ -75,8 +82,8 @@
             return $result;
         }
         catch (TypeError $e) {
-            echo "Ensure that credit card and phone numbers are valid.<br>";
-            return false;
+            echo "Please ensure that credit card and phone numbers are valid.<br>";
+            return true;
         }
     }
 
