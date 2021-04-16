@@ -54,10 +54,19 @@
         <p>Confirmation No: <?php echo $output[$correctRow]['ConfirmNo']; ?></p>
         <p>Number of People: <?php echo $output[$correctRow]['NumPeople']; ?></p>       
         </p>
+        
+                <form action=""></form>
 
         <input type="submit" id="modRes" class="fadeIn second" value="Modify Reservation"/>
 
         <input type="button" id="newRes" class="fadeIn second" value="New Reservation"/>
+            <script>
+            var btn= document.getElementById('modRes');
+            btn.addEventListener('')
+            
+            </script>    
+
+
 		</div>
 	  </div>
 </body>
