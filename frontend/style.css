@@ -29,6 +29,7 @@ h2 {
   display:inline-block;
   margin: 40px 8px 10px 8px; 
   color: #cccccc;
+  
 }
 
 /* STRUCTURE */
@@ -86,11 +87,13 @@ h2 {
 
 h2.inactive {
   color: #cccccc;
+  cursor: pointer;
 }
 
 h2.active {
   color: #0d0d0d;
   border-bottom: 2px solid #5fbae9;
+  cursor: pointer;
 }
 
 
