@@ -27,20 +27,15 @@
                 $conn = connect();
 
                 $result = transEmpNew($conn,$tDate,$tType,$tCost,$tGuestID);
+
+                
                 if ($result) {
-                    header("Content-Type: JSON");
-                    $rowNumber = 0;
-                    $output = array();
-    
-                    while ($row = mysqli_fetch_array($result)) {
-                        $output[$rowNumber]['TransID'] = $row['TransID'];
-                        $rowNumber++;
-                    }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                    echo "Successfully created transaction.<br>Here's the Transaction ID: $result";
+                    json_encode($result, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to add data to the database. 
-                        Ensure the Employee SSN, Manager SSN, and Receptionist SSN all exist in the database.<br>";
+                        Please ensure the Guest ID exists in the database.<br>";
                 }
 
             ?>

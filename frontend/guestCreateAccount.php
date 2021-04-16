@@ -41,12 +41,14 @@
 
                 $conn = connect();
 
-                guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
-/*                 $result = guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
+                $result = guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
 
-                if (!$result) {
-                    echo "Failed to create account.<br>";
-                } */
+                if ($result) {
+                    echo "Successfully created account with Guest ID ".$result.". Please sign in.<br>";
+                }
+                else {
+                    echo "Failed to create account.<br>"; 
+                }
 
                 ?>
             </p>

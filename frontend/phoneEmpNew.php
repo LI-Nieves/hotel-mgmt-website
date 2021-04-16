@@ -25,9 +25,12 @@
 
                 $conn = connect();
 
-                $result = phoneEmpNew($conn,$gID,$duration,$pDate);
+                $cID = phoneEmpNew($conn,$gID,$duration,$pDate);
 
+                $result = mysqli_query($conn,"CALL checkCall($cID)");
+                
                 if ($result) {
+                    echo "Successfully created phone call record.<br>Here's the info:<br>";
                     header("Content-Type: JSON");
                     $rowNumber = 0;
                     $output = array();
@@ -40,7 +43,7 @@
                     echo json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
-                    echo "Failed to create the phone call record. Please ensure that the Guest ID is valid.<br>";    // should I add why?
+                    echo "Failed to create the phone call record. Please ensure that the Guest ID is valid.<br>";
                 }
 
             ?>

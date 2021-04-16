@@ -2,8 +2,7 @@
     include_once 'C:\xampp\htdocs\Project\logic\helper.php';
     // Admin/Receptionist endpoint 5; used to view all phone calls
     function phoneEmpRead($conn) {
-        $sql = "SELECT * FROM PhoneCall";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($conn,"CALL phoneEmpRead()");
         return $result;
     }
 
@@ -21,7 +20,7 @@
                 return false;
             }
 
-            $duration = !empty($duration) ? "'$duration'" : "NULL";
+            $duration = !empty($duration) ? $duration : NULL;
 
             // setting the EmpSSN on record to be the currently logged in employee
             $eSSN = assignCookie();
@@ -29,8 +28,19 @@
             //generate CallID
             $cID = rand(1000000000,9999999999);
 
-            //$sql = "INSERT INTO PhoneCall VALUES (\"$cID\", $duration, \"$pDate\", \"$gID\", \"$eSSN\")";
-            $sql = "INSERT INTO PhoneCall VALUES ($cID, $duration,'$pDate',$gID,$eSSN)";
+            $stmt = $conn->prepare("CALL phoneEmpNew(?,?,?,?,?)");
+            $stmt->bind_param("sisss",$cID, $duration,$pDate,$gID,$eSSN);
+            $stmt->execute();
+
+            if ($stmt->affected_rows < 1) {
+                return false;
+            }
+            
+            $result = $stmt->get_result();
+
+            return $cID;
+
+/*             $sql = "INSERT INTO PhoneCall VALUES ($cID, $duration,'$pDate',$gID,$eSSN)";
             $result1 = mysqli_query($conn, $sql);
 
             if($result1) {
@@ -41,7 +51,7 @@
             }
             else {
                 return false;
-            }
+            } */
         }
         catch (TypeError $e) {
             echo "Please ensure that the duration is a number.<br>
@@ -52,10 +62,19 @@
 
     // Admin/Receptionist endpoint: used to cancel a reservation
     function phoneAdminDel($conn,$cID) {
-        $sql = "DELETE FROM PhoneCall WHERE CallID = $cID";
-        $result = mysqli_query($conn,$sql);
+        $stmt = $conn->prepare("CALL phoneAdminDel(?)");
+        $stmt->bind_param("s",$cID);
+        $stmt->execute();
 
-        return $result;
+        if ($stmt->affected_rows < 1) {
+            return false;
+        }
+
+        return true;
+
+/*         $sql = "DELETE FROM PhoneCall WHERE CallID = $cID";
+        $result = mysqli_query($conn,$sql);
+        return $result; */
     }  
 
 ?>

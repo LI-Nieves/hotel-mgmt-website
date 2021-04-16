@@ -3,9 +3,11 @@
 
     // Admin/Receptionist endpoint: used to view all transactions
     function transEmpRead($conn) {
-        $sql = "SELECT * FROM Transactions";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($conn,"CALL transEmpRead()");
         return $result;
+/*         $sql = "SELECT * FROM Transactions";
+        $result = mysqli_query($conn, $sql);
+        return $result; */
     }
 
     // Admin/Receptionist endpoint: used to create transactions
@@ -25,14 +27,31 @@
             // generate Transaction ID
             $tID = rand(1000000000,9999999999);
 
-            $eSSN = assignCookie();
+            $tESSN = assignCookie();
 
-            $tDate = !empty($tDate) ? "'$tDate'" : "NULL";
-            $tType = !empty($tType) ? "'$tType'" : "NULL";
-            $tGuestID = !empty($tGuestID) ? "'$tGuestID'" : "NULL";
-            $tESSN = !empty($tESSN) ? "'$tESSN'" : "NULL";
+            $tDate = !empty($tDate) ? $tDate : NULL;
+            $tType = !empty($tType) ? $tType : NULL;
+            $tGuestID = !empty($tGuestID) ? $tGuestID : NULL;
+            $tESSN = !empty($tESSN) ? $tESSN : NULL;
 
-            $sql = "INSERT INTO Transactions VALUES ($tID,$tDate,$tType,$tCost,$tGuestID,$eSSN)";
+            $stmt = $conn->prepare("CALL transEmpNew(?,?,?,?,?,?)");
+            $stmt->bind_param("sssiss",$tID,$tDate,$tType,$tCost,$tGuestID,$tESSN);
+            $stmt->execute();
+            $idk = $stmt->affected_rows;
+
+            if ($stmt->affected_rows < 1) {
+                return false;
+            }
+
+            $result = $stmt->get_result();
+
+            return $tID;
+
+/*             echo "Successfully created transaction.<br>Here's the Transaction ID: $tID"; */
+
+            
+
+/*             $sql = "INSERT INTO Transactions VALUES ($tID,$tDate,$tType,$tCost,$tGuestID,$eSSN)";
             $result1 = mysqli_query($conn, $sql);
 
             if($result1) {
@@ -43,7 +62,7 @@
             }
             else {
                 return false;
-            }
+            } */
         }
         catch (TypeError $e) {
             echo "Ensure that the transaction cost is a valid number.<br>
@@ -54,10 +73,19 @@
 
     // Admin endpoint: used to delete transaction record
     function transAdminDel($conn,$tID) {
-        $sql = "DELETE FROM Transactions WHERE TransID = $tID";
+        $stmt = $conn->prepare("CALL transAdminDel(?)");
+        $stmt->bind_param("s",$tID);
+        $stmt->execute();
+
+        if ($stmt->affected_rows < 1) {
+            return false;
+        }
+
+        return true;
+/*         $sql = "DELETE FROM Transactions WHERE TransID = $tID";
         $result = mysqli_query($conn,$sql);
 
-        return $result;
+        return $result; */
     }  
 
 ?>

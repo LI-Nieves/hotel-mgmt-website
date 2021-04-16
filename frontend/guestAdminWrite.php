@@ -40,7 +40,7 @@
 
                 $count = 0;
                 if ($result) {
-                    while ($row = mysqli_fetch_array($resultCheck)) {
+                    while ($row = mysqli_fetch_array($result)) {
                         $count++;
                     }
                 }
@@ -48,23 +48,15 @@
                     echo "The Guest ID you desire to update data for does not exist in the table.<br>";
                     return false;
                 }
-
-/*                 $check = "SELECT * FROM Guest WHERE GuestID = \"$gID\"";
-                if (countEntries($conn,$check) == 0) {
-                    echo "The Guest ID you desire to update data for does not exist in the table.<br>";
-                    return false;
-                } */
-
-                guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
                 
-/*                 $result = guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
+                $result = guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
 
                 if ($result) {
                     echo "Successfully updated guest information.<br>";
                 }
                 else {
                     echo "Failed to updated guest information.<br>";
-                } */
+                }
 
             ?>
         </p>
