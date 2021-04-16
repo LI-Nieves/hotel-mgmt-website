@@ -66,7 +66,7 @@
                 <input type="submit" id="modEmpDep" class="fadeIn second" value="Modify Employees Dependents"/>
 
                 <input type="submit" id="makeBen" class="fadeIn second" value="Create Dependents Benefits"/>
-                <input type="submit" id="viewTran" class="fadeIn second" value="View Transactions"/>
+                <input type="submit" id="viewTrans" class="fadeIn second" value="View Transactions"/>
 
                 <input type="submit" id="viewRes" class="fadeIn second" value="View Reservations"/>
                 <input type="submit" id="makeRes" class="fadeIn second" value="Create Reservation"/>
@@ -77,7 +77,7 @@
                 <input type="submit" id="makeFl" class="fadeIn second" value="Create Floor"/>
 
                 <input type="submit" id="viewGuest" class="fadeIn second" value="View Guests"/>
-                <input type="submit" id="viewTrans" class="fadeIn second" value="View Transactions"/>
+                
 
 
 
@@ -115,9 +115,16 @@
             btn8.addEventListener('click',function(){
                 document.location.href ='roomAdminDel.php';
             });
-            //var btn3= document.getElementById('modRoom'); here
-            btn3.addEventListener('click',function(){
+            //
+            var btn9= document.getElementById('modRoom');
+            btn9.addEventListener('click',function(){
                 document.location.href ='roomAdminDel.php';
+            });
+
+             //Transaction View 
+             var btn17= document.getElementById('viewTrans');
+            btn17.addEventListener('click',function(){
+                document.location.href ='transEmpRead.php';
             });
 
             //reservation
@@ -147,11 +154,7 @@
             btn13.addEventListener('click',function(){
                 document.location.href ='resEmpRead.php';//Not sure
             });
-            //Transaction View 
-            var btn17= document.getElementById('viewTrans');
-            btn13.addEventListener('click',function(){
-                document.location.href ='transEmpRead.php';
-            });
+           
             
             </script>
 		</div>

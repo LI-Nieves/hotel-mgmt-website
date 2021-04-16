@@ -7,10 +7,10 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-		
+		<h1>List of Employees</h1>
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
 
                 $conn = connect();
 
@@ -38,12 +38,39 @@
                     $output[$rowNumber]['AdminPass'] = $row['AdminPass'];
                     $output[$rowNumber]['RecepLogin'] = $row['RecepLogin'];
                     $output[$rowNumber]['RecepPass'] = $row['RecepPass'];
+                   
+                    echo "SSN: ". $output[$rowNumber]['SSN'] . "<br> First Name: " . $output[$rowNumber]['Fname'] . 
+                        "<br> Last Name: " .$output[$rowNumber]['Lname'] . "<br> Address: " . $output[$rowNumber]['Address'] . 
+                        "<br> Salary: " . $output[$rowNumber]['Salary'] . "<br> Sex: " . 
+                        $output[$rowNumber]['Sex'] . "<br> Date of Birth: " . $output[$rowNumber]['DoB'] . 
+                        "<br> Employee Login: " . $output[$rowNumber]['EmpLogin'] . 
+                        "<br> Employee Pass: " . $output[$rowNumber]['EmpPass'] . 
+                        "<br> SuperSSN: " . $output[$rowNumber]['SuperSSN'] . 
+                        "<br> Phone: " . $output[$rowNumber]['BusiPhone'] . 
+                        "<br> Email: " . $output[$rowNumber]['BusiEmail'] . 
+                        "<br> Role: " . $output[$rowNumber]['ERole'] . 
+                        "<br> Admin Login: " . $output[$rowNumber]['AdminLogin'] . 
+                        "<br> Admin Pass: " . $output[$rowNumber]['AdminPass'] . 
+                        "<br> Receptionist Login: " . $output[$rowNumber]['RecepLogin'] . 
+                        "<br> Receptionist Pass: " . $output[$rowNumber]['RecepPass'] . 
+
+
+                         "<br> <br>";
                     $rowNumber++;
+
                 }
-                echo json_encode($output, JSON_PRETTY_PRINT);
+               
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        document.location.href ='adminMain.php';
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 </body>

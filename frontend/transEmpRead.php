@@ -7,10 +7,10 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-		
+		<h1>List of Transactions</h1>
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
 
                 $conn = connect();
 
@@ -28,9 +28,17 @@
                         $output[$rowNumber]['Cost'] = $row['Cost'];
                         $output[$rowNumber]['GuestID'] = $row['GuestID'];
                         $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
+
+                        echo "Transaction ID: ". $output[$rowNumber]['TransID'] . "<br> Transaction Date: " . $output[$rowNumber]['TransDate'] . 
+                        "<br> Payment Type: " .$output[$rowNumber]['PaymentType'] . "<br> Cost: " . $output[$rowNumber]['Cost'] . 
+                        "<br> Guest ID: " . $output[$rowNumber]['GuestID'] . "<br> Employee SSN: " . 
+                        $output[$rowNumber]['EmpSSN'] . 
+
+                         "<br> <br>";
+
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                   
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
@@ -38,6 +46,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        document.location.href ='adminMain.php';
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 </body>

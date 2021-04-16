@@ -7,10 +7,11 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-		
+
+		<h1>Current Rooms</h1>
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
                 $conn = connect();
 
@@ -33,9 +34,15 @@
                         $output[$rowNumber]['ChkInDate'] = $row['ChkInDate'];
                         $output[$rowNumber]['GCheckOut'] = $row['GCheckOut'];
                         $output[$rowNumber]['ChkOutDate'] = $row['ChkOutDate'];
+                        echo "Floor No: ". $output[$rowNumber]['FloorNo'] . "<br> Room No: " . $output[$rowNumber]['RoomNo'] . 
+                        "<br> Cost: " .$output[$rowNumber]['Cost'] . "<br> Beds: " . $output[$rowNumber]['Beds'] . "<br> Availability: " . 
+                        $output[$rowNumber]['Availability'] . "<br> Clean Status: " . $output[$rowNumber]['CleanStatus'] . "<br> Room Type: " .
+                        $output[$rowNumber]['RoomType'] . "<br> Guest Checked In: " . $output[$rowNumber]['GCheckIn'] . 
+                         "<br> <br>";
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                   // echo json_encode($output, JSON_PRETTY_PRINT);
+                    
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
@@ -43,6 +50,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        document.location.href ='adminMain.php';
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 </body>
