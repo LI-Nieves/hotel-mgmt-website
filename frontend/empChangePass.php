@@ -19,15 +19,17 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
 
-                $ePass  = $_POST["ePass"];
-                $rPass  = $_POST["rPass"];
-                $aPass  = $_POST["aPass"];
+                $ePass  = $_POST["ePass"]??"";
+                $rPass  = $_POST["rPass"]??"";
+                $aPass  = $_POST["aPass"]??"";
 
                 $conn = connect();
-
-                $result = empChangePass($conn,$ePass,$rPass,$aPass);
-
                 $eSSN = assignCookie();
+                $eType = checkEmpType($conn,$eSSN);
+
+                $conn2 = connect();
+                $result = empChangePass($conn2,$ePass,$rPass,$aPass,$eType);
+
 
                 if ($result) {
                     echo "Successfully changed your password(s).<br>";

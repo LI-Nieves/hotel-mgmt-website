@@ -63,8 +63,6 @@
                 return false;
             }
 
-            $result = $stmt->get_result();
-
             return $gID;
 
             // SQL statement
@@ -141,8 +139,6 @@
             if ($stmt->affected_rows < 1) {
                 return false;
             }
-
-            $result = $stmt->get_result();
 
             return true;
 

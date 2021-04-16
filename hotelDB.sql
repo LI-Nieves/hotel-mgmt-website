@@ -228,6 +228,8 @@ BEGIN
 END //
 DELIMITER ;
 
+-- -----------------------------------------------------------------------------------------------------------------
+
 -- Used in guestAccountNew()
 DELIMITER // 
 CREATE PROCEDURE guestAccountNew(IN gID varchar(10),IN gUser varchar(50),IN gPass varchar(50),IN gCredit varchar(16),IN gPhone varchar(11),IN gName varchar(100),IN gAddress varchar(100))
@@ -268,6 +270,8 @@ BEGIN
 END //
 DELIMITER ;
 
+-- -----------------------------------------------------------------------------------------------------------------
+
 -- Used in phoneEmpRead()
 DELIMITER // 
 CREATE PROCEDURE phoneEmpRead()
@@ -300,6 +304,8 @@ BEGIN
 END //
 DELIMITER ;
 
+-- -----------------------------------------------------------------------------------------------------------------
+
 -- Used in transEmpRead()
 DELIMITER // 
 CREATE PROCEDURE transEmpRead()
@@ -321,5 +327,139 @@ DELIMITER //
 CREATE PROCEDURE transAdminDel(IN tID varchar(10))
 BEGIN
 	DELETE FROM Transactions WHERE TransID = tID;
+END //
+DELIMITER ;
+
+-- -----------------------------------------------------------------------------------------------------------------
+
+-- Used in empEmpRead()
+DELIMITER // 
+CREATE PROCEDURE empEmpRead(IN eSSN varchar(9))
+BEGIN
+	SELECT * FROM Employee WHERE SSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in empAdminRead()
+DELIMITER // 
+CREATE PROCEDURE empAdminRead()
+BEGIN
+	SELECT * FROM Employee;
+END //
+DELIMITER ;
+
+-- Used in transEmpNew()
+DELIMITER // 
+CREATE PROCEDURE transEmpNew(IN tID varchar(10),IN tDate datetime,IN tType varchar(50),IN tCost int,IN tGuestID varchar(10),IN tESSN varchar(9))
+BEGIN
+	INSERT INTO Transactions VALUES (tID,tDate,tType,tCost,tGuestID,tESSN);
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE newRecep(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50),IN ePass varchar(50),IN superSSN varchar(9),IN rPhone varchar(11),
+    IN rEmail varchar(50),IN rLogin varchar(50),IN rPass varchar(50))
+BEGIN
+	INSERT INTO Employee VALUES (eSSN,eFname,eLname,eAddress,eSal,eSex,eDOB,
+		eLogin,ePass,superSSN,rPhone,rEmail,NULL,NULL,NULL,NULL,rLogin,rPass,"Receptionist");
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE newMaint(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50),IN ePass varchar(50),IN superSSN varchar(9),IN mRole varchar(50),IN mHr int)
+BEGIN
+	INSERT INTO Employee VALUES (eSSN,eFname,eLname,eAddress,eSal,eSex,eDOB,
+		eLogin,ePass,superSSN,NULL,NULL,mRole,mHr,NULL,NULL,NULL,NULL,"Maintenance");
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE newOther(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50),IN ePass varchar(50),IN superSSN varchar(9))
+BEGIN
+	INSERT INTO Employee VALUES (eSSN,eFname,eLname,eAddress,eSal,eSex,eDOB,
+		eLogin,ePass,superSSN,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,"Other");
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE newAdmin(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50),IN ePass varchar(50),IN superSSN varchar(9),IN rPhone varchar(11),
+    IN rEmail varchar(50),IN rLogin varchar(50),IN rPass varchar(50))
+BEGIN
+	INSERT INTO Employee VALUES (eSSN,eFname,eLname,eAddress,eSal,eSex,eDOB,
+		eLogin,ePass,superSSN,rPhone,rEmail,NULL,NULL,rLogin,rPass,NULL,NULL,"Admin");
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE modRecep(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50),IN rPhone varchar(11),IN rEmail varchar(50),IN rLogin varchar(50))
+BEGIN
+	UPDATE Employee SET Fname = eFname, Lname = eLname, Address = eAddress, Salary = eSal,
+		Sex = eSex, DoB = eDOB, EmpLogin = eLogin, BusiPhone = rPhone, BusiEmail = rEmail, RecepLogin = rLogin,
+		EmpFlag = "Receptionist" WHERE SSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE modMaint(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50),IN mRole varchar(50),IN mHr int)
+BEGIN
+	UPDATE Employee SET Fname = eFname, Lname = eLname, Address = eAddress, Salary = eSal,
+		Sex = eSex, DoB = eDOB, EmpLogin = eLogin, ERole = mRole, NumHrWeek = mHr, EmpFlag = "Maintenance" WHERE SSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE modOther(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50))
+BEGIN
+	UPDATE Employee SET Fname = eFname, Lname = eLname, Address = eAddress, Salary = eSal,
+		Sex = eSex, DoB = eDOB, EmpLogin = eLogin, EmpFlag = "Other" WHERE SSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in empAdmin()
+DELIMITER // 
+CREATE PROCEDURE modAdmin(IN eSSN varchar(9),IN eFname varchar(50),IN eLname varchar(50),IN eAddress varchar(100),IN eSal int,
+	IN eSex varchar(10),IN eDOB date,IN eLogin varchar(50),IN rPhone varchar(11),IN rEmail varchar(50),IN rLogin varchar(50))
+BEGIN
+	UPDATE Employee SET Fname = eFname, Lname = eLname, Address = eAddress, Salary = eSal,
+		Sex = eSex, DoB = eDOB, EmpLogin = eLogin, BusiPhone = rPhone, BusiEmail = rEmail, AdminLogin = rLogin,
+		EmpFlag = "Admin" WHERE SSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in empAdminDel()
+DELIMITER // 
+CREATE PROCEDURE empAdminDel(IN eSSN varchar(9))
+BEGIN
+	DELETE FROM Employee WHERE SSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in empChangePass()
+DELIMITER // 
+CREATE PROCEDURE changePass(IN eSSN varchar(9),IN ePass varchar(50),IN rPass varchar(50),IN aPass varchar(50))
+BEGIN
+	UPDATE Employee SET EmpPass = ePass, RecepPass = rPass, AdminPass = aPass WHERE SSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in checkEmpType()
+DELIMITER // 
+CREATE PROCEDURE checkEType(IN eSSN varchar(9))
+BEGIN
+	SELECT EmpFlag FROM Employee WHERE SSN = eSSN;
 END //
 DELIMITER ;

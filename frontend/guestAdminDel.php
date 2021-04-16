@@ -26,7 +26,7 @@
                     echo "Successfully deleted Guest record.<br>";
                 }
                 else {
-                    echo "Failed to delete Guest record. Please ensure you entered details for existing Guest.<br>";
+                    echo "Failed to delete Guest record. Please ensure you entered details for an existing Guest.<br>";
                 }
             ?>
         </p>

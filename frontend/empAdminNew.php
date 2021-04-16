@@ -66,7 +66,10 @@
                     $result = false;
                 }
 
-                if (!$result) {
+                if ($result) {
+                    echo "Successfully created new employee.<br>Here's the auto-generated password: ".$result."<br>";
+                }
+                else {
                     echo "Failed to create a new employee.<br>";
                 }
 
