@@ -1,5 +1,5 @@
 <?php
-    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
+    include 'C:\xampp\htdocs\Project\logic\helper.php';
 
     // Admin endpoint: used when an admin logs in
     function adminLogin($conn,$aUser,$aPass) {
@@ -61,6 +61,14 @@
 
         setcookie("user", $currentID, 0, "/");
 
+        return $result;
+    }
+
+    // Employee endpoint: used when an employee views their own information
+    function empEmpRead($conn) {
+        $eSSN = assignCookie();
+        $sql = "SELECT * FROM Employee WHERE SSN = '$eSSN'";
+        $result = mysqli_query($conn, $sql);
         return $result;
     }
 
