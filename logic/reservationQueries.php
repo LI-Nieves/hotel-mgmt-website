@@ -50,6 +50,11 @@
             $assignFloor = checkAvailable($conn,$aDate,$dDate,$numBeds,0);
             $assignRoom = checkAvailable($conn,$aDate,$dDate,$numBeds,1);
 
+            if ($assignFloor == 0 || $assignRoom == 0) {
+                echo "Failed to find available room.<br>";
+                return false;
+            }
+
             $sql = "INSERT INTO Reservation VALUES (\"$guestID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",NULL)";
             $result1 = mysqli_query($conn, $sql);
 
@@ -65,7 +70,7 @@
             return false;
         }
         catch (TypeError $e) {
-            echo "Ensure that the floor number, room number, and number of people staying are numbers.<br>
+            echo "Please ensure that the floor number, room number, and number of people staying are numbers.<br>
                 Please also ensure that the arrival date and departure date are valid dates.<br>";
             return false;
         }
@@ -107,6 +112,11 @@
             $assignFloor = checkAvailable($conn,$aDate,$dDate,$numBeds,0);
             $assignRoom = checkAvailable($conn,$aDate,$dDate,$numBeds,1);
 
+            if ($assignFloor == 0 || $assignRoom == 0) {
+                echo "Failed to find available room.<br>";
+                return false;
+            }
+
             $sql = "INSERT INTO Reservation VALUES (\"$gID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",\"$eSSN\")";
             $result1 = mysqli_query($conn, $sql);
 
@@ -144,17 +154,22 @@
                 WHERE ('$aDate' <= r2.EndDate) and ('$dDate' >= r2.StartDate))";
         $result = mysqli_query($conn, $sql);
 
-        $assignFloor;
-        $assignRoom;
+        $assignFloor = 0;
+        $assignRoom = 0;
 
         if ($result) {
             $output = array();
+            $count = 0;
 
             while ($row = mysqli_fetch_array($result)) {
                 $assignFloor = $row['FloorNo'];
                 $assignRoom = $row['RoomNo'];
+                $count++;
             }
 
+            if ($count == 0) {
+                return 0;
+            }
             // for floor
             if ($func == 0) {
                 return $assignFloor;
@@ -165,7 +180,6 @@
             }
         }
         else {
-            echo "Failed to find available room.<br>";
             return 0;
         }
         

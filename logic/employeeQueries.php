@@ -1,5 +1,5 @@
 <?php
-    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
+    include 'C:\xampp\htdocs\Project\logic\helper.php';
 
     // Admin endpoint: used when an admin logs in
     function adminLogin($conn,$aUser,$aPass) {
@@ -64,6 +64,14 @@
         return $result;
     }
 
+    // Employee endpoint: used when an employee views their own information
+    function empEmpRead($conn) {
+        $eSSN = assignCookie();
+        $sql = "SELECT * FROM Employee WHERE SSN = '$eSSN'";
+        $result = mysqli_query($conn, $sql);
+        return $result;
+    }
+
     // Admin endpoint; used when an admin views all employees
     function empAdminRead($conn) {
         $sql = "SELECT * FROM Employee";
@@ -74,6 +82,34 @@
     // Admin endpoint: used when admin creates+modifies employees
     function empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,$func) {
         try {
+            // checking if the Employee username already exists
+            $table = 'Employee'; 
+            $dupUsername = dupUsername($conn,$eLogin,$table,$eSSN);
+            if ($dupUsername) {
+                echo "This employee username already exists in the database.<br>";
+                return false;
+            }
+
+            // checking if the Recep username already exists (if they're a receptionist) 
+            if ($func == 0 || $func == 4) {
+                $table = 'Receptionist'; 
+                $dupUsername = dupUsername($conn,$rLogin,$table,$eSSN);
+                if ($dupUsername) {
+                    echo "This receptionist username already exists in the database.<br>";
+                    return false;
+                }
+            }
+
+            // checking if the Admin username already exists (if they're a Admin) 
+            if ($func == 3 || $func == 7) {
+                $table = 'Admin'; 
+                $dupUsername = dupUsername($conn,$rLogin,$table,$eSSN);
+                if ($dupUsername) {
+                    echo "This admin username already exists in the database.<br>";
+                    return false;
+                }
+            }
+
             // handling user input
             $output = handleInputInteger($eSSN,$eSal,$mHr);
             $output2 = handleInputDate($eDOB);
