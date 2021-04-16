@@ -35,7 +35,7 @@
                         }
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                   
                 }
 
                 else {
@@ -46,7 +46,7 @@
         <h1>Hello Guest</h1>
         <h3>This is your Reservation</h3>
         <p>Guest ID: <?php echo $output[$correctRow]['GuestID']; ?></p>
-        <p>Floor No: <?php echo json_encode($output[$correctRow]['FloorNo']); ?></p>
+        <p>Floor No: <?php echo ($output[$correctRow]['FloorNo']); ?></p>
         <p>Room No: <?php echo $output[$correctRow]['RoomNo']; ?></p>
         <p>Reservation No: <?php echo $output[$correctRow]['ResID']; ?></p>
         <p>Start Date: <?php echo $output[$correctRow]['StartDate']; ?></p>
@@ -56,6 +56,7 @@
         </p>
 
         <input type="submit" id="modRes" class="fadeIn second" value="Modify Reservation"/>
+
         <input type="button" id="newRes" class="fadeIn second" value="New Reservation"/>
 		</div>
 	  </div>

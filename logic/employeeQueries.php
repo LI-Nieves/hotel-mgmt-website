@@ -170,7 +170,7 @@
 
                 $rowNumber = 0;
                 $output = array();
-                $password;
+                $password = 0;
 
                 while ($row = mysqli_fetch_array($resultPass)) {
                     $password = $row['EmpPass'];

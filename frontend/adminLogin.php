@@ -80,10 +80,6 @@
                         echo "Successfully logged in.<br>";
                         if($aType =="g"){//login as guest
                             echo "login as guest";
-                      
-
-
-
 
                             header("location: resGuestRead.php");
                         }elseif($aType =="e"){//login as employee
