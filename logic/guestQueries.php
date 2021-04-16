@@ -58,9 +58,14 @@
             $stmt = $conn->prepare("CALL guestAccountNew(?,?,?,?,?,?,?)");
             $stmt->bind_param("sssssss",$gID,$gUser,$gPass,$gCredit,$gPhone,$gName,$gAddress);
             $stmt->execute();
+
+            if ($stmt->affected_rows < 1) {
+                return false;
+            }
+
             $result = $stmt->get_result();
 
-            echo "Successfully created account. Please sign in.";
+            return $gID;
 
             // SQL statement
 /*             $sql = "INSERT INTO Guest VALUES (\"$gID\",\"$gUser\",\"$gPass\",\"$gCredit\",\"$gPhone\",\"$gName\",\"$gAddress\")";
@@ -133,7 +138,13 @@
             $stmt->bind_param("ssssss",$gUser,$gCredit,$gPhone,$gName,$gAddress,$gID);
             $stmt->execute();
 
-            echo "Successfully updated Guest record.";
+            if ($stmt->affected_rows < 1) {
+                return false;
+            }
+
+            $result = $stmt->get_result();
+
+            return true;
 
 /*             $sql = "UPDATE Guest SET GuestLogin = \"$gLogin\", CreditCard = $gCard, 
                 PhoneNo = $gPhone, GuestName = \"$gName\", Address = \"$gAddress\" WHERE GuestID = \"$gID\"";
@@ -153,6 +164,12 @@
         $stmt = $conn->prepare("CALL guestAdminDel(?)");
         $stmt->bind_param("s",$gID);
         $stmt->execute();
+
+        if ($stmt->affected_rows < 1) {
+            return false;
+        }
+
+        return true;
 
 /*         $sql = "DELETE FROM Guest WHERE GuestID = $gID";
         $result = mysqli_query($conn,$sql);

@@ -28,9 +28,7 @@
                 $cID = phoneEmpNew($conn,$gID,$duration,$pDate);
 
                 $result = mysqli_query($conn,"CALL checkCall($cID)");
-
-                //$result = phoneEmpNew($conn,$gID,$duration,$pDate);
-
+                
                 if ($result) {
                     echo "Successfully created phone call record.<br>Here's the info:<br>";
                     header("Content-Type: JSON");

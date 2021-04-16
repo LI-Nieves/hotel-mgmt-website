@@ -122,7 +122,7 @@ CREATE TABLE Transactions (
     PaymentType varchar(50),
     Cost int NOT NULL, 
     GuestID varchar(10),
-    EmpSSN varchar(10),
+    EmpSSN varchar(9),
     PRIMARY KEY (TransID),
     FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
 		ON DELETE SET NULL
@@ -260,7 +260,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Checking if certain Guest exists()
+-- Checking if certain Guest exists() NOT NEEDED
 DELIMITER // 
 CREATE PROCEDURE checkGuest(IN gID varchar(10))
 BEGIN
@@ -300,17 +300,26 @@ BEGIN
 END //
 DELIMITER ;
 
-CREATE TABLE PhoneCall (
-	CallID varchar(10) NOT NULL,
-    Duration int,
-    CallDate datetime NOT NULL,
-    GuestID varchar(10),
-    EmpSSN varchar(10),
-    PRIMARY KEY (CallID),
-    FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
-		ON DELETE SET NULL
-        ON UPDATE CASCADE,
-    FOREIGN KEY (EmpSSN) REFERENCES Employee(SSN)
-		ON DELETE SET NULL
-        ON UPDATE CASCADE
-);
+-- Used in transEmpRead()
+DELIMITER // 
+CREATE PROCEDURE transEmpRead()
+BEGIN
+	SELECT * FROM Transactions;
+END //
+DELIMITER ;
+
+-- Used in transEmpNew()
+DELIMITER // 
+CREATE PROCEDURE transEmpNew(IN tID varchar(10),IN tDate datetime,IN tType varchar(50),IN tCost int,IN tGuestID varchar(10),IN tESSN varchar(9))
+BEGIN
+	INSERT INTO Transactions VALUES (tID,tDate,tType,tCost,tGuestID,tESSN);
+END //
+DELIMITER ;
+
+-- Used in transAdminDel()
+DELIMITER // 
+CREATE PROCEDURE transAdminDel(IN tID varchar(10))
+BEGIN
+	DELETE FROM Transactions WHERE TransID = tID;
+END //
+DELIMITER ;

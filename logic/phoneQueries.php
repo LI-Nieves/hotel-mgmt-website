@@ -20,7 +20,7 @@
                 return false;
             }
 
-            $duration = !empty($duration) ? $duration : "NULL";
+            $duration = !empty($duration) ? $duration : NULL;
 
             // setting the EmpSSN on record to be the currently logged in employee
             $eSSN = assignCookie();
@@ -31,6 +31,11 @@
             $stmt = $conn->prepare("CALL phoneEmpNew(?,?,?,?,?)");
             $stmt->bind_param("sisss",$cID, $duration,$pDate,$gID,$eSSN);
             $stmt->execute();
+
+            if ($stmt->affected_rows < 1) {
+                return false;
+            }
+            
             $result = $stmt->get_result();
 
             return $cID;
@@ -60,6 +65,12 @@
         $stmt = $conn->prepare("CALL phoneAdminDel(?)");
         $stmt->bind_param("s",$cID);
         $stmt->execute();
+
+        if ($stmt->affected_rows < 1) {
+            return false;
+        }
+
+        return true;
 
 /*         $sql = "DELETE FROM PhoneCall WHERE CallID = $cID";
         $result = mysqli_query($conn,$sql);
