@@ -73,6 +73,18 @@
                 <input type="submit" id="viewGuest" class="fadeIn second" value="View Guests"/>
 
         </p>
+        <script>
+            var btn= document.getElementById('viewRoom');
+            btn.addEventListener('click',function(){
+                document.location.href ='roomEmpRead.php';
+            }
+            );
+            var btn2= document.getElementById('makeRoom');
+            btn2.addEventListener('click',function(){
+                document.location.href ='roomAdminNew.php';
+            }
+            );
+            </script>
 		</div>
 	  </div>
 </body>

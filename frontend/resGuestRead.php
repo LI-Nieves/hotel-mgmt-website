@@ -16,6 +16,7 @@
 
                 $result = resGuestRead($conn);
 
+                $validRes = false;
                 if ($result) {
                     header("Content-Type: JSON");
                     $rowNumber = 0;
@@ -32,10 +33,11 @@
                         $output[$rowNumber]['NumPeople'] = $row['NumPeople'];
                         if($output[$rowNumber]['GuestID'] = $row['GuestID']){
                             $correctRow = $rowNumber;
+                            $validRes = true;
                         }
                         $rowNumber++;
                     }
-                   
+                    
                 }
 
                 else {
@@ -45,25 +47,32 @@
             ?>
         <h1>Hello Guest</h1>
         <h3>This is your Reservation</h3>
-        <p>Guest ID: <?php echo $output[$correctRow]['GuestID']; ?></p>
-        <p>Floor No: <?php echo ($output[$correctRow]['FloorNo']); ?></p>
-        <p>Room No: <?php echo $output[$correctRow]['RoomNo']; ?></p>
-        <p>Reservation No: <?php echo $output[$correctRow]['ResID']; ?></p>
-        <p>Start Date: <?php echo $output[$correctRow]['StartDate']; ?></p>
-        <p>End Date: <?php echo $output[$correctRow]['EndDate']; ?></p>
-        <p>Confirmation No: <?php echo $output[$correctRow]['ConfirmNo']; ?></p>
-        <p>Number of People: <?php echo $output[$correctRow]['NumPeople']; ?></p>       
+        <p>Guest ID: <?php  if($validRes==true ){echo $output[$correctRow]['GuestID']; }?></p>
+        <p>Floor No: <?php if($validRes==true ){echo ($output[$correctRow]['FloorNo']);} ?></p>
+        <p>Room No: <?php if($validRes==true ){echo $output[$correctRow]['RoomNo']; }?></p>
+        <p>Reservation No: <?php if($validRes==true ){echo $output[$correctRow]['ResID']; }?></p>
+        <p>Start Date: <?php if($validRes==true ){echo $output[$correctRow]['StartDate'];} ?></p>
+        <p>End Date: <?php if($validRes==true ){echo $output[$correctRow]['EndDate'];} ?></p>
+        <p>Confirmation No: <?php if($validRes==true ){echo $output[$correctRow]['ConfirmNo'];} ?></p>
+        <p>Number of People: <?php if($validRes==true ){echo $output[$correctRow]['NumPeople']; }?></p>       
         </p>
         
                 <form action=""></form>
 
-        <input type="submit" id="modRes" class="fadeIn second" value="Modify Reservation"/>
+        <input type="button" id="modRes" class="fadeIn second" value="Delete Reservation"/>
 
         <input type="button" id="newRes" class="fadeIn second" value="New Reservation"/>
             <script>
             var btn= document.getElementById('modRes');
-            //btn.addEventListener('click')
-            
+            btn.addEventListener('click',function(){
+                document.location.href ='resGuestDel.php';
+            }
+            );
+            var btn2= document.getElementById('newRes');
+            btn2.addEventListener('click',function(){
+                document.location.href ='resGuestNew.php';
+            }
+            );
             </script>    
 
 

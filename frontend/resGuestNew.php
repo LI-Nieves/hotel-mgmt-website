@@ -15,15 +15,15 @@
             <input type = "text" name = "numBeds" placeholder = "Number of beds preferred?"/>
             <input type = "submit" />
         </form>
-		
+		<input type="button" id="back" class="fadeIn second" value="Back"/>
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
-                $aDate      = $_POST["aDate"];
-                $dDate      = $_POST["dDate"];
-                $numPeople  = $_POST["numPeople"];
-                $numBeds    = $_POST["numBeds"];
+                $aDate      = $_POST["aDate"]??"";
+                $dDate      = $_POST["dDate"]??"";
+                $numPeople  = $_POST["numPeople"]??"";
+                $numBeds    = $_POST["numBeds"]??"";
                 
                 $conn = connect();
 
@@ -47,6 +47,14 @@
 
             ?>
         </p>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        document.location.href ='resGuestRead.php';
+                    }
+                    );
+        </script>
+
 		</div>
 	  </div>
 

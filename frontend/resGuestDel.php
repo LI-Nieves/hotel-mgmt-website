@@ -14,7 +14,7 @@
             <input type = "text" name = "roomNo" placeholder = "Room number of reserved room"/><br>
             <input type = "submit" />
         </form>
-		
+		<input type="button" id="back" class="fadeIn second" value="Back"/>
         <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
@@ -51,6 +51,13 @@
 
             ?>
         </p>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        document.location.href ='resGuestRead.php';
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 
