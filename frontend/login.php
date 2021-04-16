@@ -67,45 +67,26 @@
 
 
                 if ($result) {
-                    header("Content-Type: JSON");
-                    $rowNumber = 0;
-                    $output = array();
-    
-                    while ($row = mysqli_fetch_array($result)) {
-                        $output[$rowNumber]['SSN'] = $row['SSN']??"";
-                        $rowNumber++;
+                    echo "Successfully logged in.<br>";
+                    if($aType =="g"){//login as guest
+                        echo "login as guest";
+
+                        header("location: resGuestRead.php");
+                    }elseif($aType =="e"){//login as employee
+                        echo "login as emp";
+                        header("location: resEmpRead.php");
+
+                    }elseif($aType =="a"){//login as admin
+                        echo "login as admin";
+                        header("location: adminMain.php");
+
+                    }elseif($aType =="r"){//login as receptionist
+                        echo "login as rec";
+                        header("location: recepMain.php");
                     }
-                    
-                    if (count($output) > 0) {
-                        echo "Successfully logged in.<br>";
-                        if($aType =="g"){//login as guest
-                            echo "login as guest";
-
-                            header("location: resGuestRead.php");
-                        }elseif($aType =="e"){//login as employee
-                            echo "login as emp";
-                            header("location: resEmpRead.php");
-
-                        }elseif($aType =="a"){//login as admin
-                            echo "login as admin";
-                            header("location: adminMain.php");
-
-                        }elseif($aType =="r"){//login as receptionist
-                            echo "login as rec";
-                            header("location: recepMain.php");
-
-                        }else{
-                            
-                        }
-                                
-                    }
-                    else {
-                        echo "Login failed.<br>";
-                    }
-                    
                 }
                 else {
-                    echo "Failed to retrieve data from the database.<br>";
+                    echo "Login failed.<br>";
                 }
 
             ?>

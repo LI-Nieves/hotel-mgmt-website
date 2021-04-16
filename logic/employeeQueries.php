@@ -1,67 +1,82 @@
 <?php
     include_once 'C:\xampp\htdocs\Project\logic\helper.php';
 
-    // Admin endpoint: used when an admin logs in
-    function adminLogin($conn,$aUser,$aPass) {
-        $sql = "SELECT * FROM Employee WHERE AdminLogin = \"$aUser\" AND AdminPass = \"$aPass\"";
-        $result = mysqli_query($conn, $sql);
+    function adminLogin($conn,$user,$pass) {
+        // SQL statement
+        $stmt = $conn->prepare("CALL GetCurrentAdmin(?,?)");
+        $stmt->bind_param("ss", $user, $pass);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // setting this guest's ID as the current session's ID
-        $sql1 = "SELECT SSN FROM Employee WHERE AdminLogin = \"$aUser\" AND GuestPass = \"$aPass\"";
-        $result1 = mysqli_query($conn, $sql);
+        $resultRet = $result;
 
         $currentID = 0;
-        if ($result1) {
-            while ($row = mysqli_fetch_array($result1)) {
+        if ($result) {
+            $count = 0;
+            while ($row = mysqli_fetch_array($result)) {
                 $currentID = $row['SSN'];
+                $count++;
             }
+            if ($count == 0) {
+                return false;
+            }
+            // setting this Admin's SSN as the current session's ID
+            setcookie("user", $currentID, 0, "/");
         }
-
-        setcookie("user", $currentID, 0, "/");
-
-        return $result;
+        
+        return $resultRet;
     }
 
     // Receptionist endpoint: used when a receptionist logs in
     function recepLogin($conn,$user,$pass) {
-        $sql = "SELECT * FROM Employee WHERE RecepLogin = \"$user\" AND RecepPass = \"$pass\"";
-        $result = mysqli_query($conn, $sql);
+        $stmt = $conn->prepare("CALL GetCurrentRecep(?,?)");
+        $stmt->bind_param("ss", $user, $pass);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // setting this guest's ID as the current session's ID
-        $sql1 = "SELECT SSN FROM Employee WHERE RecepLogin = \"$user\" AND RecepPass = \"$pass\"";
-        $result1 = mysqli_query($conn, $sql);
+        $resultRet = $result;
 
         $currentID = 0;
-        if ($result1) {
-            while ($row = mysqli_fetch_array($result1)) {
+        if ($result) {
+            $count = 0;
+            while ($row = mysqli_fetch_array($result)) {
                 $currentID = $row['SSN'];
+                $count++;
             }
+            if ($count == 0) {
+                return false;
+            }
+            // setting this Admin's SSN as the current session's ID
+            setcookie("user", $currentID, 0, "/");
         }
-
-        setcookie("user", $currentID, 0, "/");
-
-        return $result;
+        
+        return $resultRet;
     }
 
     // Employee endpoint: used when an employee logs in
     function employeeLogin($conn,$user,$pass) {
-        $sql = "SELECT * FROM Employee WHERE EmpLogin = \"$user\" AND EmpPass = \"$pass\"";
-        $result = mysqli_query($conn, $sql);
+        $stmt = $conn->prepare("CALL GetCurrentEmp(?,?)");
+        $stmt->bind_param("ss", $user, $pass);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // setting this guest's ID as the current session's ID
-        $sql1 = "SELECT SSN FROM Employee WHERE EmpLogin = \"$user\" AND EmpPass = \"$pass\"";
-        $result1 = mysqli_query($conn, $sql);
+        $resultRet = $result;
 
         $currentID = 0;
-        if ($result1) {
-           while ($row = mysqli_fetch_array($result1)) {
+        if ($result) {
+            $count = 0;
+            while ($row = mysqli_fetch_array($result)) {
                 $currentID = $row['SSN'];
+                $count++;
             }
+            if ($count == 0) {
+                return false;
+            }
+            // setting this Admin's SSN as the current session's ID
+            setcookie("user", $currentID, 0, "/");
         }
-
-        setcookie("user", $currentID, 0, "/");
-
-        return $result;
+        
+        return $resultRet;
     }
 
     // Employee endpoint: used when an employee views their own information

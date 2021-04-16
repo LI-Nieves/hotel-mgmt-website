@@ -33,16 +33,9 @@
 
                 $result = guestLogin($conn,$gUser,$gPass);
                 
+                
                 if ($result) {
-                    $count = mysqli_fetch_array($result);
-                    if ($count > 0) {
-                        echo "Successfully logged in.<br>";
-
-                    }
-                    else {
-                        echo "Login failed.<br>";
-                    }
-                    
+                    echo "Successfully logged in.<br>";
                 }
                 else {
                     echo "Username not found.<br>";

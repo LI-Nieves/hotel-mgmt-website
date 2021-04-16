@@ -178,3 +178,52 @@ INSERT INTO Dependent VALUES ("555555555","789456123","Michael Scott");
 INSERT INTO DepBenefits VALUES ("555555555","789456123","Health insurance");
 
 INSERT INTO PhoneCall VALUES ("1234567890","15","2021-01-10","1111111111","555555555");
+
+DELETE FROM Guest;
+DELETE FROM Employee;
+DELETE FROM FLOORS;
+DELETE FROM ROOM;
+DELETE FROM RESERVATION;
+DELETE FROM TRANSACTIONS;
+DELETE FROM DEPENDENT;
+DELETE FROM DEPBENEFITS;
+DELETE FROM PHONECALL;
+
+-- ------------- STORED PROCEDURES ------------- --
+SELECT * FROM Guest WHERE GuestLogin = 'GuestLoginA' AND GuestPass = 'GuestPassB';
+
+-- Used in guestLogin()
+DELIMITER // 
+CREATE PROCEDURE GetCurrentGuest(IN username varchar(50),IN pass varchar(50))
+BEGIN
+	SELECT * FROM Guest WHERE GuestLogin = username AND GuestPass = pass;
+    
+END //
+DELIMITER ;
+
+-- Used in adminLogin()
+DELIMITER // 
+CREATE PROCEDURE GetCurrentAdmin(IN username varchar(50),IN pass varchar(50))
+BEGIN
+	SELECT * FROM Employee WHERE AdminLogin = username AND AdminPass = pass;
+    
+END //
+DELIMITER ;
+
+-- Used in recepLogin()
+DELIMITER // 
+CREATE PROCEDURE GetCurrentRecep(IN username varchar(50),IN pass varchar(50))
+BEGIN
+	SELECT * FROM Employee WHERE RecepLogin = username AND RecepPass = pass;
+    
+END //
+DELIMITER ;
+
+-- Used in adminLogin()
+DELIMITER // 
+CREATE PROCEDURE GetCurrentEmp(IN username varchar(50),IN pass varchar(50))
+BEGIN
+	SELECT * FROM Employee WHERE EmpLogin = username AND EmpPass = pass;
+    
+END //
+DELIMITER ;

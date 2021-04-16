@@ -4,26 +4,28 @@
     // Guest endpoint: used when a guest logs in
     function guestLogin($conn,$gUser,$gPass) {
         // SQL statement
-        $sql = "SELECT * FROM Guest WHERE GuestLogin = \"$gUser\" AND GuestPass = \"$gPass\"";
-        $result = mysqli_query($conn, $sql);
+        $stmt = $conn->prepare("CALL GetCurrentGuest(?,?)");
+        $stmt->bind_param("ss", $gUser, $gPass);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // retrieving Guest's ID
-        $sql1 = "SELECT GuestID FROM Guest WHERE GuestLogin = \"$gUser\" AND GuestPass = \"$gPass\"";
-        $result1 = mysqli_query($conn, $sql);
+        $resultRet = $result;
 
         $currentID = 0;
-        if ($result1) {
-            header("Content-Type: JSON");
-
-            while ($row = mysqli_fetch_array($result1)) {
+        if ($result) {
+            $count = 0;
+            while ($row = mysqli_fetch_array($result)) {
                 $currentID = $row['GuestID'];
+                $count++;
             }
+            if ($count == 0) {
+                return false;
+            }
+            // setting this Guest's ID as the current session's ID
+            setcookie("user", $currentID, 0, "/");
         }
-
-        // setting this Guest's ID as the current session's ID
-        setcookie("user", $currentID, 0, "/");
-
-        return $result;
+        
+        return $resultRet;
     }
 
     // Guest endpoint: used when a guest creates account
