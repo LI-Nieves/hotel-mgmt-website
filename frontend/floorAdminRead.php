@@ -14,6 +14,7 @@
 
                 $conn = connect();
 
+                // Pulling data from Floors table
                 $result = floorAdminRead($conn);
 
                 if ($result) {
@@ -34,6 +35,7 @@
                     echo "Failed to retrieve data from database.<br>";
                 }
 
+                // Pulling data from MaintHandling table
                 $result2 = maintAdminRead($conn);
 
                 if ($result2) {

@@ -1,5 +1,5 @@
 <?php
-    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
+    include 'C:\xampp\htdocs\Project\logic\helper.php';
 
     // Admin/Receptionist endpoint: used to view all transactions
     function transEmpRead($conn) {

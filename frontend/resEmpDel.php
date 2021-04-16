@@ -27,16 +27,19 @@
 
                 $conn = connect();
 
+                // count how many records there are, pre-"deletion"
                 $initial = countEntries($conn,"SELECT * FROM Reservation");
 
                 $result = resEmpDel($conn,$rID,$floorNo,$roomNo,$gID);
 
                 if ($result) {
-                    // checking if a reservation was truly deleted.
+                    // looking at all records in the PhoneCall table
                     $sqlCheck = "SELECT * FROM Reservation";
                     
+                    // count how many records there are post-"deletion"
                     $final = countEntries($conn,$sqlCheck);
 
+                    // if there's no difference in # of records, nothing was really deleted; fail
                     if ($initial == $final) {
                         echo "Failed to delete reservation. Please ensure you entered details for existing reservation.<br>";
                     }

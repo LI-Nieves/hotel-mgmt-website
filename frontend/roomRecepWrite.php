@@ -30,35 +30,19 @@
                 $iDate  = $_POST["iDate"];
                 $oDate  = $_POST["oDate"];
 
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
-
                 $conn = connect();
+            
+                // checking if the specified floor and room number exist in the table
+                $check = "SELECT * FROM Room WHERE FloorNo = $fNo AND RoomNo = $rNo";
+                if (countEntries($conn,$check) == 0) {
+                    echo "The room you desire to update data for does not exist in the table.<br>";
+                    return false;
+                }
 
                 $result = roomRecepWrite($conn,$fNo,$rNo,$gID,$iDate,$oDate);
 
                 if ($result) {
-                    $check = mysqli_query($conn, "SELECT * FROM Room WHERE FloorNo = $fNo AND RoomNo = $rNo");
-                    $count = 0;
-                    $output = array();
-    
-                    while ($row = mysqli_fetch_array($check)) {
-                        $count++;
-                    }
-
-                    if ($count > 0) {
-                        echo "Successfully modified guest check in/out.<br>";
-                    }
-                    else {
-                        echo "Failed to check Guest in/out. 
-                            Please ensure the Guest ID, Floor Number, and Room Number are valid.<br>";
-                    }
+                    echo "Successfully modified guest check in/out.<br>";
                 }
                 else {
                     echo "Failed to check Guest in/out. 

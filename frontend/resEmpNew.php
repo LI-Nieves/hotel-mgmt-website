@@ -27,15 +27,6 @@
                 $numBeds    = $_POST["numBeds"];
                 $gID        = $_POST["gID"];
 
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
-
                 $conn = connect();
 
                 $result = resEmpNew($conn,$aDate,$dDate,$numPeople,$numBeds,$gID);

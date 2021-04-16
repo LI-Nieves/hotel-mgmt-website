@@ -22,23 +22,15 @@
                 $numUtilities = $_POST["numUtilities"];
                 $fAmenities = $_POST["fAmenities"];
 
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["desiredFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["floorNo"].
-                    "<br>Number of utilities: ".$_POST["numUtilities"].
-                    "<br>Floor amenities: ".$_POST["fAmenities"].
-                    "<br>Maintenance employee's SSN: ".$_POST["maintSSN"].
-                    "<br>"; */
-
                 $conn = connect();
 
                 $result1 = floorAdminNew($conn,$floorNo,$numUtilities,$fAmenities);
+                
                 if ($result1) {
                     echo "Successfully added data to the Floor table.<br>";
                 }
                 else {
-                    echo "Failed to add data to the Floor table.<br>";    // should I add why?
+                    echo "Failed to add data to the Floor table.<br>";
                 }
 
             ?>

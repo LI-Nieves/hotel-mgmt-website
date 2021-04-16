@@ -39,16 +39,6 @@
                 $gPhone     = $_POST["gPhone"];
                 $gAddress   = $_POST["gAddress"];
 
-                // for debugging?
-/*                 echo 
-                    "Here are your inputs, "    .$_POST["gName"].
-                    ":<br>Login: "              .$_POST["gUser"].
-                    "<br>Password: "            .$_POST["gPass"].
-                    "<br>Credit card: "         .$_POST["gCredit"].
-                    "<br>Phone number: "        .$_POST["gPhone"].
-                    "<br>Address: "             .$_POST["gAddress"].
-                    "<br>"; */
-
                 $conn = connect();
 
                 $result = guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);

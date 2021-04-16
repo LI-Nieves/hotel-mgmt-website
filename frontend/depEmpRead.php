@@ -14,9 +14,9 @@
 
                 $conn = connect();
 
-                //$result = depEmpRead($conn);
                 $result = depEmp($conn,'000000000','000000000','',0);
                 
+                // Pulling data from the Dependent table
                 if ($result) {
                     header("Content-Type: JSON");
                     $rowNumber = 0;
@@ -34,10 +34,9 @@
                     echo "Failed to retrieve data from the database.<br>";
                 }
 
-
-                //$result2 = depBenEmpRead($conn);
                 $result2 = depEmp($conn,'000000000','000000000','',3);
 
+                // Pulling data from the DepBenefits table
                 if ($result2) {
                     header("Content-Type: JSON");
                     $rowNumber = 0;

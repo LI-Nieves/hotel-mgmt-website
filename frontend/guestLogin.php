@@ -21,11 +21,7 @@
                 <input type="text" id="password" class="fadeIn third" name="guestPass" placeholder="Password"/>
                 <input type="submit" id="click-login" class="fadeIn fourth" value="Log In" onclick= "init()"/>
 		    </form>
-<!--             <form action = "<?php $_PHP_SELF ?>" method = "POST">
-                Guest Username: <input type = "text" name = "guestUser"/><br>
-                Guest Password: <input type = "text" name = "guestPass"/><br>
-                <input type = "submit" />
-            </form> -->
+
             <p> <?php 
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\guestQueries.php';
@@ -41,6 +37,7 @@
                     $count = mysqli_fetch_array($result);
                     if ($count > 0) {
                         echo "Successfully logged in.<br>";
+
                     }
                     else {
                         echo "Login failed.<br>";
