@@ -219,11 +219,56 @@ BEGIN
 END //
 DELIMITER ;
 
--- Used in adminLogin()
+-- Used in employeeLogin()
 DELIMITER // 
 CREATE PROCEDURE GetCurrentEmp(IN username varchar(50),IN pass varchar(50))
 BEGIN
 	SELECT * FROM Employee WHERE EmpLogin = username AND EmpPass = pass;
     
+END //
+DELIMITER ;
+
+-- Used in guestAccountNew()
+DELIMITER // 
+CREATE PROCEDURE guestAccountNew(IN gID varchar(10),IN gUser varchar(50),IN gPass varchar(50),IN gCredit varchar(16),IN gPhone varchar(11),IN gName varchar(100),IN gAddress varchar(100))
+BEGIN
+	INSERT INTO Guest VALUES (gID,gUser,gPass,gCredit,gPhone,gName,gAddress);
+END //
+DELIMITER ;
+
+-- Used in guestAdminRead()
+DELIMITER // 
+CREATE PROCEDURE guestAdminRead()
+BEGIN
+	SELECT * FROM Guest;
+END //
+DELIMITER ;
+
+-- Used in guestAdminWrite()
+DELIMITER // 
+CREATE PROCEDURE guestAdminWrite(IN gUser varchar(50),IN gCredit varchar(16),IN gPhone varchar(11),IN gName varchar(100),IN gAddress varchar(100),IN gID varchar(10))
+BEGIN
+	UPDATE Guest SET GuestLogin = gUser, CreditCard = gCredit, PhoneNo = gPhone, GuestName = gName, Address = gAddress WHERE GuestID = gID;
+END //
+DELIMITER ;
+
+-- Used in guestAdminDel()
+DELIMITER // 
+CREATE PROCEDURE guestAdminDel(IN gID varchar(10))
+BEGIN
+	DELETE FROM Guest WHERE GuestID = gID;
+END //
+DELIMITER ;
+
+-- Checking if certain Guest exists()
+DELIMITER // 
+CREATE PROCEDURE checkGuest(IN gID varchar(10))
+BEGIN
+	SELECT * FROM Guest WHERE GuestID = gID;
+END //
+DELIMITER ;DELIMITER // 
+CREATE PROCEDURE checkGuest(IN gID varchar(10))
+BEGIN
+	SELECT * FROM Guest WHERE GuestID = gID;
 END //
 DELIMITER ;

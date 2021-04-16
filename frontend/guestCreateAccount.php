@@ -9,7 +9,7 @@
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
 		  <!-- Tabs Titles -->
-		  <h2 class="inactive underlineHover" onclick="document.location.href='./guestLogin.php'"> Sign In </h2>
+		  <h2 class="inactive underlineHover" onclick="document.location.href='./login.php'"> Sign In </h2>
 		  <h2 class="active">Sign Up </h2>
 	  
 		  <!-- Icon -->
@@ -32,20 +32,21 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\guestQueries.php';
 
-                $gName      = $_POST["gName"];
-                $gUser      = $_POST["gUser"];
-                $gPass      = $_POST["gPass"];
-                $gCredit    = $_POST["gCredit"];
-                $gPhone     = $_POST["gPhone"];
-                $gAddress   = $_POST["gAddress"];
+                $gName      = $_POST["gName"]??"";
+                $gUser      = $_POST["gUser"]??"";
+                $gPass      = $_POST["gPass"]??"";
+                $gCredit    = $_POST["gCredit"]??"";
+                $gPhone     = $_POST["gPhone"]??"";
+                $gAddress   = $_POST["gAddress"]??"";
 
                 $conn = connect();
 
-                $result = guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
+                guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
+/*                 $result = guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
 
                 if (!$result) {
                     echo "Failed to create account.<br>";
-                }
+                } */
 
                 ?>
             </p>

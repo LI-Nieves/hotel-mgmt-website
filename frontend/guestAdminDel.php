@@ -19,9 +19,25 @@
 
                 $gID  = $_POST["gID"];
                 
-                $conn = connect();
+                $conn1 = connect();
+                $initial = countEntries($conn1,"CALL guestAdminRead()");
+                
+                $conn2 = connect();
+                guestAdminDel($conn2,$gID);
 
-                // count how many records there are, pre-"deletion"
+                $conn3 = connect();
+                $final = countEntries($conn3,"CALL guestAdminRead()");
+
+                // if there's no difference in # of records, nothing was really deleted; fail
+                if ($initial == $final) {
+                    echo "Failed to delete Guest record. Please ensure you entered details for existing Guest.<br>";
+                }
+                else {
+                    echo "Successfully deleted Guest record.<br>";
+                }
+
+
+/*                 // count how many records there are, pre-"deletion"
                 $initial = countEntries($conn,"SELECT * FROM Guest");
 
                 $result = guestAdminDel($conn,$gID);
@@ -43,7 +59,7 @@
                 }
                 else {
                     echo "Failed to delete Guest record.<br>";
-                }
+                } */
 
             ?>
         </p>
