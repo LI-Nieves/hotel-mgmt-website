@@ -25,28 +25,13 @@
 
                 $conn = connect();
 
-                // count how many records there are, pre-"deletion"
-                $initial = countEntries($conn,"SELECT * FROM Reservation");
-
                 $result = resGuestDel($conn,$rID,$floorNo,$roomNo);
 
                 if ($result) {
-                    // looking at all records in the Reservation table
-                    $sqlCheck = "SELECT * FROM Reservation";
-                    
-                    // count how many records there are post-"deletion"
-                    $final = countEntries($conn,$sqlCheck);
-
-                    // if there's no difference in # of records, nothing was really deleted; fail
-                    if ($initial == $final) {
-                        echo "Failed to delete reservation. Please ensure you entered details for existing reservation.<br>";
-                    }
-                    else {
-                        echo "Successfully deleted your reservation.<br>";
-                    }
+                    echo "Successfully cancelled your reservation.<br>";
                 }
                 else {
-                    echo "Failed to delete reservation.<br>";
+                    echo "Failed to cancel reservation. Please ensure you entered details for an existing reservation.<br>";
                 }
 
             ?>
