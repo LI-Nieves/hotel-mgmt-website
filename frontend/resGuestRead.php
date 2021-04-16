@@ -8,6 +8,9 @@
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
 		
+      
+        <h1>Hello Guest</h1>
+        <h3>This is your Reservation(s)</h3>
         <p> <?php 
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
@@ -32,9 +35,15 @@
                         $output[$rowNumber]['ConfirmNo'] = $row['ConfirmNo'];
                         $output[$rowNumber]['NumPeople'] = $row['NumPeople'];
                         if($output[$rowNumber]['GuestID'] = $row['GuestID']){
+                           
                             $correctRow = $rowNumber;
                             $validRes = true;
                         }
+                        echo "Reservation No: ". $output[$rowNumber]['ResID'] . "<br> Start Date: " . $output[$rowNumber]['StartDate'] . 
+                        "<br> End Date: " .$output[$rowNumber]['EndDate'] . "<br> Room No: " . $output[$rowNumber]['RoomNo'] . "<br> Floor No: " . 
+                        $output[$rowNumber]['FloorNo'] . "<br> Number of People: " . $output[$rowNumber]['NumPeople'] . "<br> Confirmation No: " .
+                        $output[$rowNumber]['ConfirmNo'] . "<br> Guest ID: " . $output[$rowNumber]['GuestID'] . "<br> <br>";
+
                         $rowNumber++;
                     }
                     
@@ -45,16 +54,7 @@
                 }
 
             ?>
-        <h1>Hello Guest</h1>
-        <h3>This is your Reservation</h3>
-        <p>Guest ID: <?php  if($validRes==true ){echo $output[$correctRow]['GuestID']; }?></p>
-        <p>Floor No: <?php if($validRes==true ){echo ($output[$correctRow]['FloorNo']);} ?></p>
-        <p>Room No: <?php if($validRes==true ){echo $output[$correctRow]['RoomNo']; }?></p>
-        <p>Reservation No: <?php if($validRes==true ){echo $output[$correctRow]['ResID']; }?></p>
-        <p>Start Date: <?php if($validRes==true ){echo $output[$correctRow]['StartDate'];} ?></p>
-        <p>End Date: <?php if($validRes==true ){echo $output[$correctRow]['EndDate'];} ?></p>
-        <p>Confirmation No: <?php if($validRes==true ){echo $output[$correctRow]['ConfirmNo'];} ?></p>
-        <p>Number of People: <?php if($validRes==true ){echo $output[$correctRow]['NumPeople']; }?></p>       
+     
         </p>
         
                 <form action=""></form>

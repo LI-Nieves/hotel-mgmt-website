@@ -16,12 +16,12 @@
         </form>
 		<input type="button" id="back" class="fadeIn second" value="Back"/>
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
-                $rID        = $_POST["rID"];
-                $floorNo    = $_POST["floorNo"];
-                $roomNo     = $_POST["roomNo"];
+                $rID        = $_POST["rID"]??"";
+                $floorNo    = $_POST["floorNo"]??"";
+                $roomNo     = $_POST["roomNo"]??"";
 
                 $conn = connect();
 
