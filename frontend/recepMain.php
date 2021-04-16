@@ -43,7 +43,7 @@
                 }
 
             ?>
-                <h1>Hello Employee</h1>
+                <h1>Hello Receptionist</h1>
                 <h3>This is your Information</h3>
                 <p>SSN: <?php echo $output[$correctRow]['SSN']; ?></p>
                 <p>First Name: <?php echo $output[$correctRow]['Fname']; ?></p>

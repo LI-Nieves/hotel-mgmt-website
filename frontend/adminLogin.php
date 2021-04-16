@@ -88,12 +88,14 @@
 
                         }elseif($aType =="a"){//login as admin
                             echo "login as admin";
-                            header("location: resEmpRead.php");
+                            header("location: adminMain.php");
 
-                        }else{//login as receptionist
-                            echo "login as rec   ";
-                            header("location: resGuestRead.php");
+                        }elseif($aType =="r"){//login as receptionist
+                            echo "login as rec";
+                            header("location: recepMain.php");
 
+                        }else{
+                            
                         }
                                 
                     }

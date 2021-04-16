@@ -43,7 +43,7 @@
                 }
 
             ?>
-                <h1>Hello Employee</h1>
+                <h1>Hello Admin</h1>
                 <h3>This is your Information</h3>
                 <p>SSN: <?php echo $output[$correctRow]['SSN']; ?></p>
                 <p>First Name: <?php echo $output[$correctRow]['Fname']; ?></p>
@@ -55,8 +55,22 @@
                 </p>
 
                 <input type="submit" id="viewRoom" class="fadeIn second" value="View Rooms"/>
-
-                <input type="button" id="modRoomClean" class="fadeIn second" value="Update Clean Status"/>
+                <input type="submit" id="makeRoom" class="fadeIn second" value="Create Rooms"/>
+                <input type="submit" id="modRoom" class="fadeIn second" value="Modify Rooms"/>
+                <input type="submit" id="viewEmp" class="fadeIn second" value="View Employees"/>
+                <input type="submit" id="modEmp" class="fadeIn second" value="Modify Employees"/>
+                <input type="submit" id="makeEmp" class="fadeIn second" value="Create Employees"/>
+                <input type="submit" id="viewEmpDep" class="fadeIn second" value="View Employees Dependents"/>
+                <input type="submit" id="modEmpDep" class="fadeIn second" value="Modify Employees Dependents"/>
+                <input type="submit" id="makeBen" class="fadeIn second" value="Create Dependents Benefits"/>
+                <input type="submit" id="viewTran" class="fadeIn second" value="View Transactions"/>
+                <input type="submit" id="viewRes" class="fadeIn second" value="View Reservations"/>
+                <input type="submit" id="makeRes" class="fadeIn second" value="Create Reservation"/>
+                <input type="submit" id="removeRes" class="fadeIn second" value="Delete Reservation"/>
+                <input type="submit" id="viewFl" class="fadeIn second" value="View Floor"/>
+                <input type="submit" id="modFl" class="fadeIn second" value="Modify Floor"/>
+                <input type="submit" id="makeFl" class="fadeIn second" value="Create Floor"/>
+                <input type="submit" id="viewGuest" class="fadeIn second" value="View Guests"/>
 
         </p>
 		</div>
