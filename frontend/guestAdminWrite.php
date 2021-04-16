@@ -33,20 +33,38 @@
                 $conn = connect();
 
                 // checking if the specified original Guest ID exists in the table
-                $check = "SELECT * FROM Guest WHERE GuestID = \"$gID\"";
-                if (countEntries($conn,$check) == 0) {
+                $stmt = $conn->prepare("CALL checkGuest(?)");
+                $stmt->bind_param("s",$gID);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $count = 0;
+                if ($result) {
+                    while ($row = mysqli_fetch_array($resultCheck)) {
+                        $count++;
+                    }
+                }
+                if ($count == 0) {
                     echo "The Guest ID you desire to update data for does not exist in the table.<br>";
                     return false;
                 }
 
-                $result = guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
+/*                 $check = "SELECT * FROM Guest WHERE GuestID = \"$gID\"";
+                if (countEntries($conn,$check) == 0) {
+                    echo "The Guest ID you desire to update data for does not exist in the table.<br>";
+                    return false;
+                } */
+
+                guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
+                
+/*                 $result = guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
 
                 if ($result) {
                     echo "Successfully updated guest information.<br>";
                 }
                 else {
                     echo "Failed to updated guest information.<br>";
-                }
+                } */
 
             ?>
         </p>

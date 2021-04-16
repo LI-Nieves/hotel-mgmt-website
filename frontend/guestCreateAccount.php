@@ -9,7 +9,7 @@
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
 		  <!-- Tabs Titles -->
-		  <h2 class="inactive underlineHover" onclick="document.location.href='./login.php'" > Sign In </h2>
+		  <h2 class="inactive underlineHover" onclick="document.location.href='./login.php'"> Sign In </h2>
 		  <h2 class="active">Sign Up </h2>
 	  
 		  <!-- Icon -->
@@ -41,11 +41,12 @@
 
                 $conn = connect();
 
-                $result = guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
+                guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
+/*                 $result = guestAccountNew($conn,$gName,$gUser,$gPass,$gCredit,$gPhone,$gAddress);
 
                 if (!$result) {
                     echo "Failed to create account.<br>";
-                }
+                } */
 
                 ?>
             </p>

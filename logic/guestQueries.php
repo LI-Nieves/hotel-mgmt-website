@@ -53,10 +53,17 @@
             }
 
             // generating random GuestID
-            $gID = rand(0000000000,9999999999);
+            $gID = rand(1000000000,9999999999);
+
+            $stmt = $conn->prepare("CALL guestAccountNew(?,?,?,?,?,?,?)");
+            $stmt->bind_param("sssssss",$gID,$gUser,$gPass,$gCredit,$gPhone,$gName,$gAddress);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            echo "Successfully created account. Please sign in.";
 
             // SQL statement
-            $sql = "INSERT INTO Guest VALUES (\"$gID\",\"$gUser\",\"$gPass\",\"$gCredit\",\"$gPhone\",\"$gName\",\"$gAddress\")";
+/*             $sql = "INSERT INTO Guest VALUES (\"$gID\",\"$gUser\",\"$gPass\",\"$gCredit\",\"$gPhone\",\"$gName\",\"$gAddress\")";
             $result = mysqli_query($conn, $sql);
 
             if ($result) {
@@ -81,7 +88,7 @@
                 echo json_encode($output, JSON_PRETTY_PRINT);
             }
 
-            return $result;
+            return $result; */
         }
         catch (TypeError $e) {
             echo "Please ensure that credit card and phone numbers are valid.<br>";
@@ -91,24 +98,29 @@
 
     // Admin endpoint: used when admin views all guests
     function guestAdminRead($conn) {
-        $sql = "SELECT * FROM Guest";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($conn,"CALL guestAdminRead()");
         return $result;
     }
     
     // Admin endpoint: used when admin modifies guest
-    function guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress) {
+    function guestAdminWrite($conn,$gID,$gUser,$gCredit,$gPhone,$gName,$gAddress) {
         try {
+            $table = 'Guest';
+            $dupUsername = dupUsername($conn,$gUser,$table,$gID);
+            if ($dupUsername) {
+                echo "This username already exists in the database.<br>";
+                return false;
+            }
             // handling user input
-            $output = handleInputInteger($gID,$gCard,$gPhone);
+            $output = handleInputInteger($gID,$gCredit,$gPhone);
             if (!$output) {
-                throw new TypeError(); 
+                throw new TypeError; 
             }
             if (strlen($gID) != 10) {
                 echo "Invalid Guest ID.<br>";
                 return false;
             }
-            if (strlen($gCard) != 16) {
+            if (strlen($gCredit) != 16) {
                 echo "Invalid credit card.<br>";
                 return false;
             }
@@ -116,26 +128,36 @@
                 echo "Invalid phone number.<br>";
                 return false;
             }
-            $sql = "UPDATE Guest SET GuestLogin = \"$gLogin\", CreditCard = $gCard, 
+
+            $stmt = $conn->prepare("CALL guestAdminWrite(?,?,?,?,?,?)");
+            $stmt->bind_param("ssssss",$gUser,$gCredit,$gPhone,$gName,$gAddress,$gID);
+            $stmt->execute();
+
+            echo "Successfully updated Guest record.";
+
+/*             $sql = "UPDATE Guest SET GuestLogin = \"$gLogin\", CreditCard = $gCard, 
                 PhoneNo = $gPhone, GuestName = \"$gName\", Address = \"$gAddress\" WHERE GuestID = \"$gID\"";
 
             $result = mysqli_query($conn, $sql);
-            return $result;
+            return $result; */
                 
         }
         catch (TypeError $e) {
-            echo "Ensure that the Guest's ID, credit card, and phone number are valid numbers.<br>";
+            echo "Please ensure that the Guest's ID, credit card, and phone number are valid numbers.<br>";
             return false;
         }
     }
 
     // Admin endpoint: used when an admin deletes a guest record
     function guestAdminDel($conn,$gID) {
+        $stmt = $conn->prepare("CALL guestAdminDel(?)");
+        $stmt->bind_param("s",$gID);
+        $stmt->execute();
 
-        $sql = "DELETE FROM Guest WHERE GuestID = $gID";
+/*         $sql = "DELETE FROM Guest WHERE GuestID = $gID";
         $result = mysqli_query($conn,$sql);
 
-        return $result;
+        return $result; */
     } 
 
 ?>
