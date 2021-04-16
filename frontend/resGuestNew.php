@@ -30,11 +30,13 @@
                 $result = resGuestNew($conn,$aDate,$dDate,$numPeople,$numBeds);
 
                 if ($result) {
+                    $res = mysqli_query($conn,"CALL findRes($result[0],$result[1],$result[2],$result[3])");
+
                     header("Content-Type: JSON");
                     $rowNumber = 0;
                     $output = array();
     
-                    while ($row = mysqli_fetch_array($result)) {
+                    while ($row = mysqli_fetch_array($res)) {
                         $output[$rowNumber]['ResID'] = $row['ResID'];
                         $output[$rowNumber]['ConfirmNo'] = $row['ConfirmNo'];
                         $rowNumber++;

@@ -463,3 +463,68 @@ BEGIN
 	SELECT EmpFlag FROM Employee WHERE SSN = eSSN;
 END //
 DELIMITER ;
+
+-- RESERVATION -----------------------------------------------------------------------------------------------------------------
+
+-- Used in resGuestRead()
+DELIMITER // 
+CREATE PROCEDURE resGuestRead(IN gID varchar(10))
+BEGIN
+	SELECT * FROM Reservation WHERE GuestID = gID;
+END //
+DELIMITER ;
+
+-- Used in resGuestDel() and resEmpDel()
+DELIMITER // 
+CREATE PROCEDURE resDel(IN rID varchar(10),IN fNo int,IN rNo int,IN gID varchar(10))
+BEGIN
+	DELETE FROM Reservation WHERE ResID = rID AND FloorNo = fNo AND RoomNo = rNo AND GuestID = gID;
+END //
+DELIMITER ;
+
+-- Used in resGuestNew() and resEmpNew()
+DELIMITER // 
+CREATE PROCEDURE resNew(IN gID varchar(10),IN fNo int,IN rNo int,IN rID varchar(10),IN aDate date,IN dDate date,
+	IN cNo varchar(10),IN numPeople int,IN eSSN varchar(9))
+BEGIN
+	INSERT INTO Reservation VALUES (gID,fNo,rNo,rID,aDate,dDate,cNo,numPeople,eSSN);
+END //
+DELIMITER ;
+
+-- Used in resGuestNew()
+DELIMITER // 
+CREATE PROCEDURE findRes(IN gID varchar(10),IN fNo int,IN rNo int,IN rID varchar(10))
+BEGIN
+	SELECT * FROM Reservation WHERE GuestID = gID AND FloorNo = fNo AND RoomNo = rNo AND ResID = rID;
+END //
+DELIMITER ;
+
+-- Used in resEmpRead()
+DELIMITER // 
+CREATE PROCEDURE resEmpRead()
+BEGIN
+	SELECT * FROM Reservation;
+END //
+DELIMITER ;
+
+CREATE TABLE Reservation (
+	GuestID varchar(10) NOT NULL,
+    FloorNo int NOT NULL,
+    RoomNo INT UNSIGNED NOT NULL,
+    ResID varchar(10) NOT NULL,
+    StartDate date NOT NULL,
+    EndDate date NOT NULL,
+    ConfirmNo varchar(10),
+    NumPeople int NOT NULL,
+    EmpSSN varchar(9),
+    PRIMARY KEY (GuestID, FloorNo, RoomNo, ResID),
+    FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (FloorNo, RoomNo) REFERENCES Room(FloorNo, RoomNo)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (EmpSSN) REFERENCES Employee(SSN)
+		ON DELETE SET NULL
+        ON UPDATE CASCADE
+);

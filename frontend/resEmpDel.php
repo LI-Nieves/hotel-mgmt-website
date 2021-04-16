@@ -20,37 +20,21 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
-                $rID        = $_POST["rID"];
-                $floorNo    = $_POST["floorNo"];
-                $roomNo     = $_POST["roomNo"];
-                $gID        = $_POST["gID"];
+                $rID        = $_POST["rID"]??"";
+                $floorNo    = $_POST["floorNo"]??"";
+                $roomNo     = $_POST["roomNo"]??"";
+                $gID        = $_POST["gID"]??"";
 
                 $conn = connect();
-
-                // count how many records there are, pre-"deletion"
-                $initial = countEntries($conn,"SELECT * FROM Reservation");
 
                 $result = resEmpDel($conn,$rID,$floorNo,$roomNo,$gID);
 
                 if ($result) {
-                    // looking at all records in the PhoneCall table
-                    $sqlCheck = "SELECT * FROM Reservation";
-                    
-                    // count how many records there are post-"deletion"
-                    $final = countEntries($conn,$sqlCheck);
-
-                    // if there's no difference in # of records, nothing was really deleted; fail
-                    if ($initial == $final) {
-                        echo "Failed to delete reservation. Please ensure you entered details for existing reservation.<br>";
-                    }
-                    else {
-                        echo "Successfully deleted reservation.<br>";
-                    }
+                    echo "Successfully cancelled reservation.<br>";
                 }
                 else {
-                    echo "Failed to delete reservation.<br>";
+                    echo "Failed to cancel reservation. Please ensure you entered details for an existing reservation.<br>";
                 }
-
             ?>
         </p>
 		</div>

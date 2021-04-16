@@ -5,8 +5,8 @@
     function resGuestRead($conn) {
         $guestID = assignCookie();
 
-        $sql = "SELECT * FROM Reservation WHERE GuestID = \"$guestID\"";
-        $result = mysqli_query($conn, $sql);
+/*         $sql = "SELECT * FROM Reservation WHERE GuestID = \"$guestID\""; */
+        $result = mysqli_query($conn, "CALL resGuestRead($guestID)");
         return $result;
     }
 
@@ -15,10 +15,19 @@
         // getting ID of currently logged in Guest
         $guestID = assignCookie();
 
-        $sql = "DELETE FROM Reservation WHERE ResID = $rID AND FloorNo = $floorNo AND RoomNo = $roomNo AND GuestID = $guestID";
+        $stmt = $conn->prepare("CALL resDel(?,?,?,?)");
+        $stmt->bind_param("siis",$rID,$floorNo,$roomNo,$guestID);
+        $stmt->execute();
+
+        if ($stmt->affected_rows < 1) {
+            return false;
+        }
+
+        return true;
+/*         $sql = "DELETE FROM Reservation WHERE ResID = $rID AND FloorNo = $floorNo AND RoomNo = $roomNo AND GuestID = $guestID";
         $result = mysqli_query($conn,$sql);
 
-        return $result;
+        return $result; */
     } 
 
     // Guest endpoint: used when a guest creates reservations for a room
@@ -45,6 +54,7 @@
             $rID = rand(1000000000,9999999999);
             //generate Confirmation number
             $cNo = rand(1000000000,9999999999);
+            $eSSN = NULL;
 
             // CHECK IF THE ROOM IS AVAILABLE
             $assignFloor = checkAvailable($conn,$aDate,$dDate,$numBeds,0);
@@ -55,7 +65,17 @@
                 return false;
             }
 
-            $sql = "INSERT INTO Reservation VALUES (\"$guestID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",NULL)";
+            $stmt = $conn->prepare("CALL resNew(?,?,?,?,?,?,?,?,?)");
+            $stmt->bind_param("siissssis",$guestID,$assignFloor,$assignRoom,$rID,$aDate,$dDate,$cNo,$numPeople,$eSSN);
+            $stmt->execute();
+
+            if ($stmt->affected_rows < 1) {
+                return false;
+            }
+
+            return array($guestID,$assignFloor,$assignRoom,$rID);
+
+/*             $sql = "INSERT INTO Reservation VALUES (\"$guestID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",NULL)";
             $result1 = mysqli_query($conn, $sql);
 
             if($result1) {
@@ -67,7 +87,7 @@
             else {
                 return false;
             }
-            return false;
+            return false; */
         }
         catch (TypeError $e) {
             echo "Please ensure that the floor number, room number, and number of people staying are numbers.<br>
@@ -77,9 +97,10 @@
     } 
 
     // Admin/Receptionist endpoint: used to view all reservations
+    // missing..?
     function resEmpRead($conn) {
-        $sql = "SELECT * FROM Reservation";
-        $result = mysqli_query($conn, $sql);
+/*         $sql = "SELECT * FROM Reservation"; */
+        $result = mysqli_query($conn, "CALL resEmpRead()");
         return $result;
     }
 
@@ -117,7 +138,17 @@
                 return false;
             }
 
-            $sql = "INSERT INTO Reservation VALUES (\"$gID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",\"$eSSN\")";
+            $stmt = $conn->prepare("CALL resNew(?,?,?,?,?,?,?,?,?)");
+            $stmt->bind_param("siissssis",$gID,$assignFloor,$assignRoom,$rID,$aDate,$dDate,$cNo,$numPeople,$eSSN);
+            $stmt->execute();
+
+            if ($stmt->affected_rows < 1) {
+                return false;
+            }
+
+            return array($gID,$assignFloor,$assignRoom,$rID);
+
+/*             $sql = "INSERT INTO Reservation VALUES (\"$gID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",\"$eSSN\")";
             $result1 = mysqli_query($conn, $sql);
 
             if($result1) {
@@ -128,7 +159,7 @@
             }
             else {
                 return false;
-            }
+            } */
         }
         catch (TypeError $e) {
             echo "Ensure that the floor number, room number, and number of people staying are numbers.<br>
@@ -139,17 +170,25 @@
 
     // Admin/Receptionist endpoint: used to cancel a reservation
     function resEmpDel($conn,$rID,$floorNo,$roomNo,$gID) {
-        $sql = "DELETE FROM Reservation WHERE ResID = $rID AND FloorNo = $floorNo AND RoomNo = $roomNo AND GuestID = $gID";
-        $result = mysqli_query($conn,$sql);
+/*         $sql = "DELETE FROM Reservation WHERE ResID = $rID AND FloorNo = $floorNo AND RoomNo = $roomNo AND GuestID = $gID";
+        $result = mysqli_query($conn,$sql); */
 
-        return $result;
+        $stmt = $conn->prepare("CALL resDel(?,?,?,?)");
+        $stmt->bind_param("siis",$rID,$floorNo,$roomNo,$gID);
+        $stmt->execute();
+
+        if ($stmt->affected_rows < 1) {
+            return false;
+        }
+
+        return true;
     }  
 
     //  algorithm used to check which rooms are suitable for reservation
     //  based on the indicated date range and number of beds
     //  date ranges cannot overlap and the number of beds should be equal
     function checkAvailable($conn,$aDate,$dDate,$numBeds,$func) {
-        $sql =  "SELECT FloorNo, RoomNo FROM Room as r1 WHERE r1.Beds = $numBeds and (FloorNo, RoomNo) NOT IN
+        $sql =  "SELECT FloorNo, RoomNo FROM Room as r1 WHERE r1.Beds >= $numBeds and (FloorNo, RoomNo) NOT IN
                 (SELECT FloorNo, RoomNo FROM Reservation as r2 
                 WHERE ('$aDate' <= r2.EndDate) and ('$dDate' >= r2.StartDate))";
         $result = mysqli_query($conn, $sql);
