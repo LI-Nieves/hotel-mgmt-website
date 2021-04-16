@@ -33,7 +33,7 @@
 
                 $result = depAdmin($conn,$eSSN,'000000000',$dSSN,$dName,0);
                 if ($result) {
-                    echo "Successfully added data to the database.<br>";
+                    echo "Successfully created new dependent for Employee $eSSN.<br>";
                 }
                 else {
                     echo "Failed to add data to the database. Ensure the Employee SSN exists in the database.<br>";    // should I add why?

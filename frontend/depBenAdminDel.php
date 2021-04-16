@@ -22,28 +22,22 @@
                 $eSSN  = $_POST["eSSN"];
                 $dSSN  = $_POST["dSSN"];
                 $dBen  = $_POST["dBen"];
-
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
                 
                 $conn = connect();
 
+                // count how many records there are, pre-"deletion"
                 $initial = countEntries($conn,"SELECT * FROM DepBenefits");
 
                 $result = depBenAdminDel($conn,$eSSN,$dSSN,$dBen);
 
                 if ($result) {
-                    // checking if a reservation was truly deleted.
+                    // looking at all records in the DepBenefits table
                     $sqlCheck = "SELECT * FROM DepBenefits";
                     
+                    // count how many records there are post-"deletion"
                     $final = countEntries($conn,$sqlCheck);
 
+                    // if there's no difference in # of records, nothing was really deleted; fail
                     if ($initial == $final) {
                         echo "Failed to delete Benefit for that Dependent. Please ensure you entered details for an existing Benefit for that Dependent.<br>";
                     }

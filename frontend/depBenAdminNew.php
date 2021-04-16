@@ -22,14 +22,8 @@
                 $dSSN   = $_POST["dSSN"];
                 $temp   = $_POST["dBen"];
 
+                // take comma-separated string, split it into an array by string
                 $dBen   = explode(',',$temp);
-
-                // for debugging?
-/*                 echo 
-                    "You entered:<br>eSSN: ".$_POST["eSSN"].
-                    "<br>dSSN: ".$_POST["dSSN"].
-                    "<br>dBen: ".$dBen[1].
-                    "<br>"; */
 
                 $conn = connect();
 
@@ -39,9 +33,8 @@
                     echo "Successfully added data to the database.<br>";
                 }
                 else {
-                    echo "Failed to add data to the database. Ensure the Employee SSN exists in the database.<br>";    // should I add why?
+                    echo "Failed to add data to the database. Please ensure the Employee SSN exists in the database.<br>";
                 }
-
             ?>
         </p>
 		</div>

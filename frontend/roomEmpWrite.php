@@ -13,7 +13,7 @@
             <input type = "text" name = "rNo" placeholder = "Room number"/><br>
             <!--    Clean status (true, false): <input type = "text" name = "stat" /> 
                     I'm thinking there could be a button that just says "Set to clean
-                    just so they don't have to manually type it in? Up to you tho       -->
+                    just so they don't have to manually type it in?      -->
             <input type = "submit" />
         </form>
 		
@@ -24,18 +24,17 @@
                 $fNo    = $_POST["fNo"];
                 $rNo    = $_POST["rNo"];
 
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
-
                 $conn = connect();
 
-                $result = roomEmpWrite($conn,$fNo,$rNo);//,$stat);
+                // checking if the specified Floor and Room numbers exist in the table
+                $eSSN = assignCookie();
+                $check = "SELECT * FROM Room WHERE FloorNo = \"$fNo\" and RoomNo = \"$rNo\"";
+                if (countEntries($conn,$check) == 0) {
+                    echo "The room you desire to update data for does not exist in the table.<br>";
+                    return false;
+                }
+
+                $result = roomEmpWrite($conn,$fNo,$rNo);
 
                 if (!$result) {
                     echo "Failed to modify the room's clean status. 

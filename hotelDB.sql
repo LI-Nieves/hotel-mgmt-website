@@ -116,18 +116,6 @@ CREATE TABLE Reservation (
         ON UPDATE CASCADE
 );
 
-SELECT FloorNo, RoomNo
-FROM Room as r1
-WHERE r1.Beds = 2 and (FloorNo, RoomNo) NOT IN
-	(SELECT FloorNo, RoomNo
-	FROM Reservation as r2
-	WHERE ('1999-01-02' <= r2.EndDate) and ('1999-01-06' >= r2.StartDate));
-
--- All rooms where reservations overlap
-SELECT FloorNo, RoomNo
-FROM Reservation as r
-WHERE ('1999-01-02' <= r.EndDate) and ('1999-01-06' >= r.StartDate);
-
 CREATE TABLE Transactions (
 	TransID varchar(10) NOT NULL,
     TransDate datetime,
@@ -177,8 +165,8 @@ INSERT INTO Floors VALUES (2, 'Rec room', 1);
 INSERT INTO Floors VALUES (3, 'Gymnasium', 1);
 INSERT INTO FLOORS VALUES (5, NULL, NULL);
 
-INSERT INTO Room VALUES (2, 1, 500, 2, true, 'Regular', NULL, NULL, NULL, NULL);
-INSERT INTO Room VALUES (3, 1, 500, 2, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
+INSERT INTO Room VALUES (2, 1, 125, 2, true, 'Regular', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 1, 125, 2, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
 UPDATE Room SET CleanStatus = FALSE, GCheckIn = '1111111111', ChkInDate = '2021-01-01' WHERE FloorNo = 2 AND RoomNo = 1;
 
 INSERT INTO Reservation VALUES ('1111111111',2,1,'1234567890','1999-01-01','1999-01-05','1234567890',2,NULL);
@@ -186,7 +174,7 @@ INSERT INTO Reservation VALUES ('1111111111',2,1,'1234567890','1999-01-01','1999
 INSERT INTO Transactions VALUES ('7894561231',NULL,NULL,5000,NULL,NULL);
 INSERT INTO Transactions VALUES ('7894561230','2021-01-01','Visa',3000,'1111111111','555555555');
 
-INSERT INTO Dependent VALUES ("555555555","789456123","Michael");
+INSERT INTO Dependent VALUES ("555555555","789456123","Michael Scott");
 INSERT INTO DepBenefits VALUES ("555555555","789456123","Health insurance");
 
 INSERT INTO PhoneCall VALUES ("1234567890","15","2021-01-10","1111111111","555555555");

@@ -30,40 +30,19 @@
                 $gName   = $_POST["gName"];
                 $gAddress  = $_POST["gAddress"];
 
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
-
                 $conn = connect();
+
+                // checking if the specified original Guest ID exists in the table
+                $check = "SELECT * FROM Guest WHERE GuestID = \"$gID\"";
+                if (countEntries($conn,$check) == 0) {
+                    echo "The Guest ID you desire to update data for does not exist in the table.<br>";
+                    return false;
+                }
 
                 $result = guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
 
                 if ($result) {
-                    $check = mysqli_query($conn, "SELECT * FROM Guest WHERE GuestLogin = \"$gLogin\" and CreditCard = $gCard 
-                        and PhoneNo = $gPhone and GuestName = \"$gName\" and Address = \"$gAddress\" and GuestID = \"$gID\"");
-                    $count = 0;
-                    $output = array();
-
-                    if ($check) {
-                        while ($row = mysqli_fetch_array($check)) {
-                            $count++;
-                        }
-    
-                        if ($count > 0) {
-                            echo "Successfully updated guest information.<br>";
-                        }
-                        else {
-                            echo "Failed to updated guest information.<br>";
-                        }
-                    }
-                    else {
-                        echo "Failed to updated guest information.<br>";
-                    }
+                    echo "Successfully updated guest information.<br>";
                 }
                 else {
                     echo "Failed to updated guest information.<br>";

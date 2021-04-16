@@ -18,28 +18,22 @@
                 include 'C:\xampp\htdocs\Project\logic\floorQueries.php';
 
                 $fNo  = $_POST["fNo"];
-
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["resFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["resRoom"].
-                    "<br>Number of utilities: ".$_POST["aDate"].
-                    "<br>Floor amenities: ".$_POST["dDate"].
-                    "<br>Maintenance employee's SSN: ".$_POST["numPeople"].
-                    "<br>"; */
                 
                 $conn = connect();
 
+                // count how many records there are, pre-"deletion"
                 $initial = countEntries($conn,"SELECT * FROM Floors");
 
                 $result = floorAdminDel($conn,$fNo);
 
                 if ($result) {
-                    // checking if a reservation was truly deleted.
+                    // looking at all records in the Floors table
                     $sqlCheck = "SELECT * FROM Floors";
                     
+                    // count how many records there are post-"deletion"
                     $final = countEntries($conn,$sqlCheck);
 
+                    // if there's no difference in # of records, nothing was really deleted; fail
                     if ($initial == $final) {
                         echo "Failed to delete Floor record. Please ensure you entered details for existing Floor.<br>";
                     }

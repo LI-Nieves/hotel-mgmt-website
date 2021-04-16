@@ -14,7 +14,7 @@
 
                 $conn = connect();
 
-                //$result = depEmpRead($conn);
+                // Pulling data from Dependent table
                 $result = depAdminRead($conn,0);
                 
                 if ($result) {
@@ -34,8 +34,7 @@
                     echo "Failed to retrieve data from the database.<br>";
                 }
 
-
-                //$result2 = depBenEmpRead($conn);
+                // Pulling data from DepBenefits table
                 $result2 = depAdminRead($conn,3);
 
                 if ($result2) {

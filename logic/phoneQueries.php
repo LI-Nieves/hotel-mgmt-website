@@ -1,5 +1,5 @@
 <?php
-    include_once 'C:\xampp\htdocs\Project\logic\helper.php';
+    include 'C:\xampp\htdocs\Project\logic\helper.php';
     // Admin/Receptionist endpoint 5; used to view all phone calls
     function phoneEmpRead($conn) {
         $sql = "SELECT * FROM PhoneCall";

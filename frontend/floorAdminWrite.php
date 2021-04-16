@@ -25,23 +25,22 @@
                 $numUtilities = $_POST["numUtilities"];
                 $fAmenities = $_POST["fAmenities"];
 
-                // for debugging?
-/*                 echo 
-                    "You'd like to change data for Floor ".$_POST["desiredFloor"].
-                    "<br>You entered:<br>Floor number: ".$_POST["floorNo"].
-                    "<br>Number of utilities: ".$_POST["numUtilities"].
-                    "<br>Floor amenities: ".$_POST["fAmenities"].
-                    "<br>Maintenance employee's SSN: ".$_POST["maintSSN"].
-                    "<br>"; */
-
                 $conn = connect();
 
+                // checking if the specified floor exists in the table
+                $check = "SELECT * FROM Floors WHERE FloorNo = $desiredFloor";
+                if (countEntries($conn,$check) == 0) {
+                    echo "The floor number you desire to update data for does not exist in the table.<br>";
+                    return false;
+                }   
+
                 $result1 = floorAdminWrite($conn,$desiredFloor,$floorNo,$fAmenities,$numUtilities);
+
                 if ($result1) {
                     echo "Your changes to the Floor table have been accepted.<br>";
                 }
                 else {
-                    echo "Your changes to the Floor table have been rejected.<br>";    // should I add why?
+                    echo "Your changes to the Floor table have been rejected.<br>";
                 }
 
             ?>
