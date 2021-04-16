@@ -266,9 +266,51 @@ CREATE PROCEDURE checkGuest(IN gID varchar(10))
 BEGIN
 	SELECT * FROM Guest WHERE GuestID = gID;
 END //
-DELIMITER ;DELIMITER // 
-CREATE PROCEDURE checkGuest(IN gID varchar(10))
+DELIMITER ;
+
+-- Used in phoneEmpRead()
+DELIMITER // 
+CREATE PROCEDURE phoneEmpRead()
 BEGIN
-	SELECT * FROM Guest WHERE GuestID = gID;
+	SELECT * FROM PhoneCall;
 END //
 DELIMITER ;
+
+-- Used in phoneEmpNew()
+DELIMITER // 
+CREATE PROCEDURE phoneEmpNew(IN cID varchar(10),IN duration int,IN pDate datetime,IN gID varchar(10),IN eSSN varchar(10))
+BEGIN
+	INSERT INTO PhoneCall VALUES (cID,duration,pDate,gID,eSSN);
+END //
+DELIMITER ;
+
+-- Used in phoneAdminDel()
+DELIMITER // 
+CREATE PROCEDURE phoneAdminDel(IN cID varchar(10))
+BEGIN
+	DELETE FROM PhoneCall WHERE CallID = cID;
+END //
+DELIMITER ;
+
+-- Checking if certain Phone Call exists()
+DELIMITER // 
+CREATE PROCEDURE checkCall(IN cID varchar(10))
+BEGIN
+	SELECT * FROM PhoneCall WHERE CallID = cID;
+END //
+DELIMITER ;
+
+CREATE TABLE PhoneCall (
+	CallID varchar(10) NOT NULL,
+    Duration int,
+    CallDate datetime NOT NULL,
+    GuestID varchar(10),
+    EmpSSN varchar(10),
+    PRIMARY KEY (CallID),
+    FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
+		ON DELETE SET NULL
+        ON UPDATE CASCADE,
+    FOREIGN KEY (EmpSSN) REFERENCES Employee(SSN)
+		ON DELETE SET NULL
+        ON UPDATE CASCADE
+);

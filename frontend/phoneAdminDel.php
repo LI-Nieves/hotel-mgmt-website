@@ -19,9 +19,24 @@
 
                 $cID  = $_POST["cID"];
                 
-                $conn = connect();
+                $conn1 = connect();
+                $initial = countEntries($conn1,"CALL phoneEmpRead()");
+                
+                $conn2 = connect();
+                phoneAdminDel($conn2,$cID);
 
-                // count how many records there are, pre-"deletion"
+                $conn3 = connect();
+                $final = countEntries($conn3,"CALL phoneEmpRead()");
+
+                // if there's no difference in # of records, nothing was really deleted; fail
+                if ($initial == $final) {
+                    echo "Failed to delete Phone Call record. Please ensure you entered details for existing Phone Call.<br>";
+                }
+                else {
+                    echo "Successfully deleted Phone Call record.<br>";
+                }
+
+/*                 // count how many records there are, pre-"deletion"
                 $initial = countEntries($conn,"SELECT * FROM PhoneCall");
 
                 $result = phoneAdminDel($conn,$cID);
@@ -43,7 +58,7 @@
                 }
                 else {
                     echo "Failed to delete Phone Call record.<br>";
-                }
+                } */
 
             ?>
         </p>
