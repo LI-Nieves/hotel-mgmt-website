@@ -62,7 +62,7 @@
         <input type="button" id="newRes" class="fadeIn second" value="New Reservation"/>
             <script>
             var btn= document.getElementById('modRes');
-            btn.addEventListener('')
+            //btn.addEventListener('click')
             
             </script>    
 
