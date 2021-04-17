@@ -29,23 +29,23 @@
         </form>
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
 
-                $eSSN  = $_POST["eSSN"];
-                $eFname   = $_POST["eFname"];
-                $eLname  = $_POST["eLname"];
-                $eAddress  = $_POST["eAddress"];
-                $eSal   = $_POST["eSal"];
-                $eSex  = $_POST["eSex"];
-                $eDOB  = $_POST["eDOB"];
-                $eLogin   = $_POST["eLogin"];
-                $eFlag  = $_POST["eFlag"];
-                $rPhone   = $_POST["rPhone"];
-                $rEmail  = $_POST["rEmail"];
-                $rLogin   = $_POST["rLogin"];
-                $mRole  = $_POST["mRole"];
-                $mHr  = $_POST["mHr"];
+                $eSSN  = $_POST["eSSN"]??"";
+                $eFname   = $_POST["eFname"]??"";
+                $eLname  = $_POST["eLname"]??"";
+                $eAddress  = $_POST["eAddress"]??"";
+                $eSal   = $_POST["eSal"]??"";
+                $eSex  = $_POST["eSex"]??"";
+                $eDOB  = $_POST["eDOB"]??"";
+                $eLogin   = $_POST["eLogin"]??"";
+                $eFlag  = $_POST["eFlag"]??"";
+                $rPhone   = $_POST["rPhone"]??"";
+                $rEmail  = $_POST["rEmail"]??"";
+                $rLogin   = $_POST["rLogin"]??"";
+                $mRole  = $_POST["mRole"]??"";
+                $mHr  = $_POST["mHr"]??"";
 
                 $conn = connect();
 

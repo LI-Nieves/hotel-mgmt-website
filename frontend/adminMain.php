@@ -8,7 +8,9 @@
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
 		
-        <p> <?php 
+        
+                <h1>Hello Admin</h1>
+               <p> <?php 
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
 
@@ -33,6 +35,15 @@
                         
                         if($output[$rowNumber]['SSN'] = $row['SSN']){
                             $correctRow = $rowNumber;
+                            echo "SSN: ". $output[$rowNumber]['SSN'] . "<br> First Name: " . $output[$rowNumber]['Fname'] . 
+                            "<br> Last Name: " .$output[$rowNumber]['Lname'] . 
+                            "<br> Salary: " . $output[$rowNumber]['Salary'] . "<br> Sex: " . 
+                            $output[$rowNumber]['Sex'] . "<br> Date of Birth: " . $output[$rowNumber]['DoB'] .        
+                    
+                            "<br> Role: " . $output[$rowNumber]['ERole'] . 
+                             "<br> <br>";
+
+
                         }
                         $rowNumber++;
                     }
@@ -43,30 +54,24 @@
                 }
 
             ?>
-                <h1>Hello Admin</h1>
-                <h3>This is your Information</h3>
-                <p>SSN: <?php echo $output[$correctRow]['SSN']; ?></p>
-                <p>First Name: <?php echo $output[$correctRow]['Fname']; ?></p>
-                <p>Last Name: <?php echo $output[$correctRow]['Lname']; ?></p>
-                <p>Salary: <?php echo ($output[$correctRow]['Salary']); ?></p>
-                <p>Sex: <?php echo $output[$correctRow]['Sex']; ?></p>
-                <p>Date of Birth: <?php echo $output[$correctRow]['DoB']; ?></p>
-                <p>Role: <?php echo $output[$correctRow]['ERole']; ?></p>   
-                </p>
 
                 <input type="submit" id="viewRoom" class="fadeIn second" value="View Rooms"/>
-                <input type="submit" id="makeRoom" class="fadeIn second" value="Create Rooms"/>
-                <input type="submit" id="modRoom" class="fadeIn second" value="Delete Rooms"/>
+                <input type="submit" id="modRoom" class="fadeIn second" value="Modify Rooms"/>
+            
                 <input type="submit" id="viewEmp" class="fadeIn second" value="View Employees"/>
                 <input type="submit" id="modEmp" class="fadeIn second" value="Modify Employees"/>
                 <input type="submit" id="makeEmp" class="fadeIn second" value="Create Employees"/>
 
                 <input type="submit" id="viewEmpDep" class="fadeIn second" value="View Employees Dependents"/>
-
+                <input type="submit" id="makeEmpDep" class="fadeIn second" value="Create Employees Dependents"/>
+                <input type="submit" id="removeEmpDep" class="fadeIn second" value="Delete Employees Dependents"/>
                 <input type="submit" id="modEmpDep" class="fadeIn second" value="Modify Employees Dependents"/>
 
                 <input type="submit" id="makeBen" class="fadeIn second" value="Create Dependents Benefits"/>
+                <input type="submit" id="deleteBen" class="fadeIn second" value="Delete Dependents Benefits"/>
+
                 <input type="submit" id="viewTrans" class="fadeIn second" value="View Transactions"/>
+                <input type="submit" id="makeTrans" class="fadeIn second" value="Create Transaction"/>
 
                 <input type="submit" id="viewRes" class="fadeIn second" value="View Reservations"/>
                 <input type="submit" id="makeRes" class="fadeIn second" value="Create Reservation"/>
@@ -74,27 +79,31 @@
 
                 <input type="submit" id="viewFl" class="fadeIn second" value="View Floor"/>
                 <input type="submit" id="modFl" class="fadeIn second" value="Modify Floor"/>
-                <input type="submit" id="makeFl" class="fadeIn second" value="Create Floor"/>
+                
 
                 <input type="submit" id="viewGuest" class="fadeIn second" value="View Guests"/>
-                
+                <input type="submit" id="makeGuest" class="fadeIn second" value="Create Guests"/>
+                <input type="submit" id="deleteGuest" class="fadeIn second" value="Delete Guests"/>
+
+
+                <input type="submit" id="viewPh" class="fadeIn second" value="View Phone Calls"/>
+                <input type="submit" id="makePh" class="fadeIn second" value="Create Phone Calls"/>
+                <input type="submit" id="removePh" class="fadeIn second" value="Delete Phone Calls"/>
 
 
 
         </p>
         <script>
+        //Room
             var btn= document.getElementById('viewRoom');
             btn.addEventListener('click',function(){
                 document.location.href ='roomEmpRead.php';
             });
-            var btn2= document.getElementById('makeRoom');
-            btn2.addEventListener('click',function(){
-                document.location.href ='roomAdminNew.php';
-            });
             var btn3= document.getElementById('modRoom');
             btn3.addEventListener('click',function(){
-                document.location.href ='roomAdminDel.php';
+                document.location.href ='roomAdminWrite.php';
             });
+            //Employee
             var btn4= document.getElementById('viewEmp');
             btn4.addEventListener('click',function(){
                 document.location.href ='empAdminRead.php';
@@ -107,18 +116,37 @@
             btn6.addEventListener('click',function(){
                 document.location.href ='empAdminNew.php';
             });
+            var btn94= document.getElementById('deleteEmp');
+            btn94.addEventListener('click',function(){
+                document.location.href ='empAdminDel.php';
+            });
+
+            //Dependants
             var btn7= document.getElementById('viewEmpDep');
             btn7.addEventListener('click',function(){
-                document.location.href ='depEmpRead.php';
+                document.location.href ='depAdminRead.php';
             });
-            var btn8= document.getElementById('modEmpDep');
+            var btn8= document.getElementById('makeEmpDep');
             btn8.addEventListener('click',function(){
-                document.location.href ='roomAdminDel.php';
+                document.location.href ='depAdminNew.php';
             });
-            //
-            var btn9= document.getElementById('modRoom');
+            var btn9= document.getElementById('removeEmpDep');
             btn9.addEventListener('click',function(){
-                document.location.href ='roomAdminDel.php';
+                document.location.href ='depAdminDel.php';
+            });
+
+            var btn91= document.getElementById('modEmpDep');
+            btn91.addEventListener('click',function(){
+                document.location.href ='depAdminWrite.php';
+            });
+            //Benefits
+            var btn92= document.getElementById('makeBen');
+            btn92.addEventListener('click',function(){
+                document.location.href ='depBenAdminNew.php';
+            });
+            var btn93= document.getElementById('deleteBen');
+            btn93.addEventListener('click',function(){
+                document.location.href ='depBenAdminDel.php';
             });
 
              //Transaction View 
