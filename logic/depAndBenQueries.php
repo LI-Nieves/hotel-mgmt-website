@@ -29,7 +29,7 @@
             // Employee endpoint: used when an employee modifies their own dependents
             else if ($func == 1) {
 /*                 $sql = "UPDATE Dependent SET DepSSN = \"$dSSN\", DepName = \"$dName\" WHERE EmpSSN = \"$eSSN\" and DepSSN = \"$dSSN1\""; */
-                $stmt = $conn->prepare("CALL depEmpWrite(?,?,?,?)");
+                $stmt = $conn->prepare("CALL depWrite(?,?,?,?)");
                 $stmt->bind_param("ssss",$eSSN,$dSSN1,$dSSN,$dName);
                 $stmt->execute();
 
@@ -42,7 +42,7 @@
             // Employee endpoint: used when an employee creates new dependents
             else if ($func == 2) {
 /*                 $sql = "INSERT INTO Dependent VALUES (\"$eSSN\",\"$dSSN\",\"$dName\")"; */
-                $stmt = $conn->prepare("CALL depEmpNew(?,?,?)");
+                $stmt = $conn->prepare("CALL depNew(?,?,?)");
                 $stmt->bind_param("sss",$eSSN,$dSSN,$dName);
                 $stmt->execute();
 

@@ -25,9 +25,7 @@
                 $dName  = $_POST["dName"]??"";
 
                 $conn = connect();
-
                 // checking if the specified eSSN and DepSSN exists in the table
-                $eSSN = assignCookie();
                 $stmt = $conn->prepare("CALL checkDep(?,?)");
                 $stmt->bind_param("ss",$eSSN,$dSSN1);
                 $stmt->execute();
