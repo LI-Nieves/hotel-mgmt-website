@@ -62,6 +62,7 @@
         <input type="button" id="modRes" class="fadeIn second" value="Delete Reservation"/>
 
         <input type="button" id="newRes" class="fadeIn second" value="New Reservation"/>
+        <input type="button" id="logOut" class="fadeIn second" value="Log Out"/>
             <script>
             var btn= document.getElementById('modRes');
             btn.addEventListener('click',function(){
@@ -73,6 +74,12 @@
                 document.location.href ='resGuestNew.php';
             }
             );
+            var btn33= document.getElementById('logOut');
+            btn33.addEventListener('click',function(){
+                document.location.href ='login.php';
+            }
+            );
+
             </script>    
 
 

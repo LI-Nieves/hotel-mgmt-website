@@ -10,7 +10,9 @@
 <body>
 
 	<div class="wrapper fadeInDown">
+    
 		<div id="formContent">
+        <h1>Welcome to Hotel</h1>
 		  <!-- Tabs Titles -->
 		 <h2 class="active" type = "button"> Sign In </h2>
 		 <h2 class="inactive underlineHover" id="click-signup" onclick="document.location.href='./guestCreateAccount.php'">Sign Up </h2> 
