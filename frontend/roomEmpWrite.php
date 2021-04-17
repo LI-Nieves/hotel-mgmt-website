@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Update Clean Status</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "fNo" placeholder = "Floor number"/><br>
             <input type = "text" name = "rNo" placeholder = "Room number"/><br>
@@ -53,8 +53,9 @@
                 }
 
             ?>
+            <input type="button" id="back" class="fadeIn second" value="Back"/>
         </p>
-        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        
         <script>
         var btn= document.getElementById('back');
                     btn.addEventListener('click',function(){

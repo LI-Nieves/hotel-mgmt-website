@@ -52,7 +52,13 @@
 
             ?>
                 <input type="submit" id="viewRoom" class="fadeIn second" value="View Rooms"/>
-                <input type="submit" id="viewR" class="fadeIn second" value="Update Clean Status"/>  
+                <input type="submit" id="empClean" class="fadeIn second" value="Update Clean Status"/>  
+
+                <input type="submit" id="viewEmpDep" class="fadeIn second" value="View Employees Dependents"/>
+                <input type="submit" id="makeEmpDep" class="fadeIn second" value="Create Employees Dependents"/>
+                <input type="submit" id="modEmpDep" class="fadeIn second" value="Modify Employees Dependents"/>
+
+                <input type="submit" id="modEmpPass" class="fadeIn second" value="Change Employee Password"/>
         </p>
 
         <script>
@@ -60,9 +66,27 @@
                  btn.addEventListener('click',function(){
                 document.location.href ='roomEmpRead.php';
                  });
-                var btn7= document.getElementById('viewEmpDep');
+                var btn7= document.getElementById('empClean');
             btn7.addEventListener('click',function(){
                 document.location.href ='roomEmpWrite.php';
+            });
+
+             //Dependants
+             var btn71= document.getElementById('viewEmpDep');
+            btn71.addEventListener('click',function(){
+                document.location.href ='depEmpRead.php';
+            });
+            var btn8= document.getElementById('makeEmpDep');
+            btn8.addEventListener('click',function(){
+                document.location.href ='depEmpNew.php';
+            });
+            var btn91= document.getElementById('modEmpDep');
+            btn91.addEventListener('click',function(){
+                document.location.href ='depEmpWrite.php';
+            });
+            var btn72= document.getElementById('modEmpPass');
+            btn72.addEventListener('click',function(){
+                document.location.href ='empChangePass.php';
             });
             </script>
 		</div>
