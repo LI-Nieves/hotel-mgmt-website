@@ -161,13 +161,19 @@ INSERT INTO Employee VALUES ('555555555', 'Maddie', 'Fitzpatrick', 'Boston, PA',
 INSERT INTO Employee VALUES ('666666666', 'Esteban', 'Ramirez', 'Boston, PA', 30000, 'Male', '1992-01-01', 'EmpLoginC', 'EmpPassC', '444444444', NULL, NULL, 'Housekeeper', 30, NULL, NULL, NULL, NULL, 'Maintenance');
 
 INSERT INTO Floors VALUES (1, 'Parking lot', 3);
-INSERT INTO Floors VALUES (2, 'Rec room', 1);
-INSERT INTO Floors VALUES (3, 'Gymnasium', 1);
-INSERT INTO FLOORS VALUES (5, NULL, NULL);
+INSERT INTO Floors VALUES (2, NULL, NULL);
+INSERT INTO Floors VALUES (3, NULL, NULL);
 
 INSERT INTO Room VALUES (2, 1, 125, 2, true, 'Regular', NULL, NULL, NULL, NULL);
-INSERT INTO Room VALUES (3, 1, 125, 2, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
-UPDATE Room SET CleanStatus = FALSE, GCheckIn = '1111111111', ChkInDate = '2021-01-01' WHERE FloorNo = 2 AND RoomNo = 1;
+INSERT INTO Room VALUES (2, 2, 125, 2, true, 'Regular', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (2, 3, 125, 2, true, 'Regular', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (2, 4, 125, 2, true, 'Regular', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (2, 5, 125, 2, true, 'Regular', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 1, 200, 2, true, 'Deluxe', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 2, 200, 2, true, 'Deluxe', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 3, 200, 2, true, 'Deluxe', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 4, 200, 2, true, 'Deluxe', NULL, NULL, NULL, NULL);
+INSERT INTO Room VALUES (3, 5, 200, 2, true, 'Deluxe', NULL, NULL, NULL, NULL);
 
 INSERT INTO Reservation VALUES ('1111111111',2,1,'1234567890','1999-01-01','1999-01-05','1234567890',2,NULL);
 
@@ -188,8 +194,12 @@ DELETE FROM TRANSACTIONS;
 DELETE FROM DEPENDENT;
 DELETE FROM DEPBENEFITS;
 DELETE FROM PHONECALL;
+-- INSERT INTO Room VALUES (3, 1, 125, 2, false, 'Regular', '1111111111', '2021-01-01', '1111111111', NULL);
+-- UPDATE Room SET CleanStatus = FALSE, GCheckIn = '1111111111', ChkInDate = '2021-01-01' WHERE FloorNo = 2 AND RoomNo = 1;
 
--- ------------- STORED PROCEDURES ------------- --
+-- STORED PROCEDURES ----------------------------------------------------------------------------------------------------------------
+
+-- LOGINS -----------------------------------------------------------------------------------------------------------------
 SELECT * FROM Guest WHERE GuestLogin = 'GuestLoginA' AND GuestPass = 'GuestPassB';
 
 -- Used in guestLogin()
@@ -228,7 +238,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- -----------------------------------------------------------------------------------------------------------------
+-- GUEST -----------------------------------------------------------------------------------------------------------------
 
 -- Used in guestAccountNew()
 DELIMITER // 
@@ -270,7 +280,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- -----------------------------------------------------------------------------------------------------------------
+-- PHONECALL -----------------------------------------------------------------------------------------------------------------
 
 -- Used in phoneEmpRead()
 DELIMITER // 
@@ -304,7 +314,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- -----------------------------------------------------------------------------------------------------------------
+-- TRANSACTION -----------------------------------------------------------------------------------------------------------------
 
 -- Used in transEmpRead()
 DELIMITER // 
@@ -330,7 +340,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- -----------------------------------------------------------------------------------------------------------------
+-- EMPLOYEE -----------------------------------------------------------------------------------------------------------------
 
 -- Used in empEmpRead()
 DELIMITER // 
