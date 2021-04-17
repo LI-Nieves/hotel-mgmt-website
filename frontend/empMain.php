@@ -59,6 +59,7 @@
                 <input type="submit" id="modEmpDep" class="fadeIn second" value="Modify Employees Dependents"/>
 
                 <input type="submit" id="modEmpPass" class="fadeIn second" value="Change Employee Password"/>
+                <input type="button" id="logOut" class="fadeIn second" value="Log Out"/>
         </p>
 
         <script>
@@ -88,6 +89,11 @@
             btn72.addEventListener('click',function(){
                 document.location.href ='empChangePass.php';
             });
+            var btn33= document.getElementById('logOut');
+            btn33.addEventListener('click',function(){
+                document.location.href ='login.php';
+            }
+            );
             </script>
 		</div>
 	  </div>

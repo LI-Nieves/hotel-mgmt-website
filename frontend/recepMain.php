@@ -68,8 +68,14 @@
                 <input type="submit" id="removeRes" class="fadeIn second" value="Delete Reservation"/>
 
                 <input type="submit" id="modEmpPass" class="fadeIn second" value="Change Employee Password"/>
+                <input type="button" id="logOut" class="fadeIn second" value="Log Out"/>
 
                 <script>
+                 var btn33= document.getElementById('logOut');
+                btn33.addEventListener('click',function(){
+                    document.location.href ='login.php';
+                }
+                );
                 var btn= document.getElementById('viewRoom');
                  btn.addEventListener('click',function(){
                 document.location.href ='roomEmpRead.php';

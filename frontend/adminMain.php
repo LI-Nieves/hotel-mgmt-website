@@ -91,11 +91,16 @@
                 <input type="submit" id="viewPh" class="fadeIn second" value="View Phone Calls"/>
                 <input type="submit" id="makePh" class="fadeIn second" value="Create Phone Calls"/>
                 <input type="submit" id="removePh" class="fadeIn second" value="Delete Phone Calls"/>
-
+                <input type="button" id="logOut" class="fadeIn second" value="Log Out"/>
 
 
         </p>
         <script>
+         var btn33= document.getElementById('logOut');
+            btn33.addEventListener('click',function(){
+                document.location.href ='login.php';
+            }
+            );
         //Room
             var btn= document.getElementById('viewRoom');
             btn.addEventListener('click',function(){
