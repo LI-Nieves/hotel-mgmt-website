@@ -33,30 +33,36 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
 
-                $eSSN  = $_POST["eSSN"];
-                $eFname   = $_POST["eFname"];
-                $eLname  = $_POST["eLname"];
-                $eAddress  = $_POST["eAddress"];
-                $eSal   = $_POST["eSal"];
-                $eSex  = $_POST["eSex"];
-                $eDOB  = $_POST["eDOB"];
-                $eLogin   = $_POST["eLogin"];
-                $eFlag  = $_POST["eFlag"];
-                $rPhone   = $_POST["rPhone"];
-                $rEmail  = $_POST["rEmail"];
-                $rLogin   = $_POST["rLogin"];
-                $mRole  = $_POST["mRole"];
-                $mHr  = $_POST["mHr"];
+                $eSSN  = $_POST["eSSN"]??"";
+                $eFname   = $_POST["eFname"]??"";
+                $eLname  = $_POST["eLname"]??"";
+                $eAddress  = $_POST["eAddress"]??"";
+                $eSal   = $_POST["eSal"]??"";
+                $eSex  = $_POST["eSex"]??"";
+                $eDOB  = $_POST["eDOB"]??"";
+                $eLogin   = $_POST["eLogin"]??"";
+                $eFlag  = $_POST["eFlag"]??"";
+                $rPhone   = $_POST["rPhone"]??"";
+                $rEmail  = $_POST["rEmail"]??"";
+                $rLogin   = $_POST["rLogin"]??"";
+                $mRole  = $_POST["mRole"]??"";
+                $mHr  = $_POST["mHr"]??"";
 
-                $conn = connect();
+                $conn2 = connect();
 
-                // checking if the specified SSN exists in the table
-                $check = "SELECT * FROM Employee WHERE SSN = \"$eSSN\"";
-                if (countEntries($conn,$check) == 0) {
-                    echo "The SSN you desire to update data for does not exist in the table.<br>";
+                // checking if the specified SSN exists in the table                
+                $stmt = $conn2->prepare("CALL checkEmp(?)");
+                $stmt->bind_param("s",$eSSN);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $count = mysqli_num_rows($result);
+                if ($count == 0) {
+                    echo "The Employee you desire to update data for does not exist in the table.<br>";
                     return false;
                 }
                 
+                $conn = connect();
 
                 if ($eFlag == "Receptionist") {
                     $result = empAdmin($conn,$eSSN,$eFname,$eLname,$eAddress,$eSal,$eSex,$eDOB,$eLogin,$eFlag,$rPhone,$rEmail,$rLogin,$mRole,$mHr,4);

@@ -334,7 +334,7 @@ DELIMITER ;
 
 -- Used in empEmpRead()
 DELIMITER // 
-CREATE PROCEDURE empEmpRead(IN eSSN varchar(9))
+CREATE PROCEDURE checkEmp(IN eSSN varchar(9))
 BEGIN
 	SELECT * FROM Employee WHERE SSN = eSSN;
 END //
@@ -507,24 +507,55 @@ BEGIN
 END //
 DELIMITER ;
 
-CREATE TABLE Reservation (
-	GuestID varchar(10) NOT NULL,
+-- FLOOR -----------------------------------------------------------------------------------------------------------------
+
+-- used in floorAdminRead()
+DELIMITER // 
+CREATE PROCEDURE floorAdminRead()
+BEGIN
+	SELECT * FROM Floors;
+END //
+DELIMITER ;
+
+-- used in maintAdminRead()
+DELIMITER // 
+CREATE PROCEDURE maintAdminRead()
+BEGIN
+	SELECT * FROM MaintHandling;
+END //
+DELIMITER ;
+
+-- Used in floorAdminWrite()
+DELIMITER // 
+CREATE PROCEDURE floorAdminWrite(IN dFNo int,IN fAmen varchar(100),IN numUtil int)
+BEGIN
+	UPDATE Floors SET FAmenities = fAmen, NumUtilities = numUtil WHERE FloorNo = dFNo;
+END //
+DELIMITER ;
+
+-- check if there's a certain floor number
+DELIMITER // 
+CREATE PROCEDURE checkFloor(IN fNo int)
+BEGIN
+	SELECT * FROM Floors WHERE FloorNo = fNo;
+END //
+DELIMITER ;
+
+CREATE TABLE Floors (
+	FloorNo int NOT NULL,
+    FAmenities varchar(100),
+    NumUtilities int,
+    PRIMARY KEY (FloorNo)
+);
+
+CREATE TABLE MaintHandling (
+	MaintSSN varchar(9) NOT NULL,
     FloorNo int NOT NULL,
-    RoomNo INT UNSIGNED NOT NULL,
-    ResID varchar(10) NOT NULL,
-    StartDate date NOT NULL,
-    EndDate date NOT NULL,
-    ConfirmNo varchar(10),
-    NumPeople int NOT NULL,
-    EmpSSN varchar(9),
-    PRIMARY KEY (GuestID, FloorNo, RoomNo, ResID),
-    FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
+    PRIMARY KEY (MaintSSN, FloorNo),
+	FOREIGN KEY (MaintSSN) REFERENCES Employee(SSN)
 		ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (FloorNo, RoomNo) REFERENCES Room(FloorNo, RoomNo)
+	FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
 		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (EmpSSN) REFERENCES Employee(SSN)
-		ON DELETE SET NULL
         ON UPDATE CASCADE
 );

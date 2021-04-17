@@ -36,7 +36,8 @@
                 }
 
                 // Pulling data from MaintHandling table
-                $result2 = maintAdminRead($conn);
+                $conn2 = connect();
+                $result2 = maintAdminRead($conn2);
 
                 if ($result2) {
                     header("Content-Type: JSON");
