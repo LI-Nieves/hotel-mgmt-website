@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-		
+		<h1>Hello Employee</h1>
         <p> <?php 
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
@@ -33,6 +33,14 @@
                         
                         if($output[$rowNumber]['SSN'] = $row['SSN']){
                             $correctRow = $rowNumber;
+                            echo "SSN: ". $output[$rowNumber]['SSN'] . "<br> First Name: " . $output[$rowNumber]['Fname'] . 
+                            "<br> Last Name: " .$output[$rowNumber]['Lname'] . 
+                            "<br> Salary: " . $output[$rowNumber]['Salary'] . "<br> Sex: " . 
+                            $output[$rowNumber]['Sex'] . "<br> Date of Birth: " . $output[$rowNumber]['DoB'] .        
+                    
+                            "<br> Role: " . $output[$rowNumber]['ERole'] . 
+                             "<br> <br>";
+                        
                         }
                         $rowNumber++;
                     }
@@ -43,34 +51,20 @@
                 }
 
             ?>
-                <h1>Hello Receptionist</h1>
-                <h3>This is your Information</h3>
-                <p>SSN: <?php echo $output[$correctRow]['SSN']; ?></p>
-                <p>First Name: <?php echo $output[$correctRow]['Fname']; ?></p>
-                <p>Last Name: <?php echo $output[$correctRow]['Lname']; ?></p>
-                <p>Salary: <?php echo ($output[$correctRow]['Salary']); ?></p>
-                <p>Sex: <?php echo $output[$correctRow]['Sex']; ?></p>
-                <p>Date of Birth: <?php echo $output[$correctRow]['DoB']; ?></p>
-                <p>Role: <?php echo $output[$correctRow]['ERole']; ?></p>   
-                </p>
-
                 <input type="submit" id="viewRoom" class="fadeIn second" value="View Rooms"/>
+                <input type="submit" id="viewR" class="fadeIn second" value="Update Clean Status"/>  
+        </p>
 
-                <input type="submit" id="modRoomClean" class="fadeIn second" value="Update Clean Status"/>
-
-                <script>
+        <script>
                 var btn= document.getElementById('viewRoom');
                  btn.addEventListener('click',function(){
                 document.location.href ='roomEmpRead.php';
-                });
-                var btn2= document.getElementById('modRoomClean');
-                btn2.addEventListener('click',function(){
-                    document.location.href ='roomRecepWrite.php';
-                });    
-
-
-                </script>
-        </p>
+                 });
+                var btn7= document.getElementById('viewEmpDep');
+            btn7.addEventListener('click',function(){
+                document.location.href ='roomEmpWrite.php';
+            });
+            </script>
 		</div>
 	  </div>
 </body>

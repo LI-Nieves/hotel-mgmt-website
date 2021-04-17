@@ -74,7 +74,7 @@
                         header("location: resGuestRead.php");
                     }elseif($aType =="e"){//login as employee
                         echo "login as emp";
-                        header("location: resEmpRead.php");
+                        header("location: empMain.php");
 
                     }elseif($aType =="a"){//login as admin
                         echo "login as admin";

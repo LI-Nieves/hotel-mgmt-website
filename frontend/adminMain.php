@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin/Receptionist: View Reservations</title>
+<title>Admin View Information</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

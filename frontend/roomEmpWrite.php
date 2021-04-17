@@ -18,8 +18,8 @@
         </form>
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
                 $fNo    = $_POST["fNo"];
                 $rNo    = $_POST["rNo"];
