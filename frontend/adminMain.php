@@ -61,6 +61,7 @@
                 <input type="submit" id="viewEmp" class="fadeIn second" value="View Employees"/>
                 <input type="submit" id="modEmp" class="fadeIn second" value="Modify Employees"/>
                 <input type="submit" id="makeEmp" class="fadeIn second" value="Create Employees"/>
+                <input type="submit" id="deleteEmp" class="fadeIn second" value="Delete Employees"/>
 
                 <input type="submit" id="viewEmpDep" class="fadeIn second" value="View Employees Dependents"/>
                 <input type="submit" id="makeEmpDep" class="fadeIn second" value="Create Employees Dependents"/>
