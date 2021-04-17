@@ -18,22 +18,25 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\depAndBenQueries.php';
 
-                $eSSN   = $_POST["eSSN"];
-                $dSSN   = $_POST["dSSN"];
-                $temp   = $_POST["dBen"];
+                $eSSN   = $_POST["eSSN"]??"";
+                $dSSN   = $_POST["dSSN"]??"";
+                $temp   = $_POST["dBen"]??"";
 
                 // take comma-separated string, split it into an array by string
                 $dBen   = explode(',',$temp);
-
-                $conn = connect();
-
-                $result = depBenAdminNew($conn,$eSSN,$dSSN,$dBen);
                 
-                if ($result) {
-                    echo "Successfully added data to the database.<br>";
-                }
-                else {
-                    echo "Failed to add data to the database. Please ensure the Employee SSN exists in the database.<br>";
+                // for each benefit, add it as a separate entry into the DepBenefits table
+                for ($i = 0; $i < sizeof($dBen); $i++) {
+                    $conn = connect();
+                    $result = depBenAdminNew($conn,$eSSN,$dSSN,$dBen[$i]);
+                    if ($result) {
+                        echo "Successfully added Employee SSN: " .$eSSN. ", Dependent SSN: " .$dSSN. ", Benefit name: " .$dBen[$i]. " to the database.<br>";
+                    }
+                    else {
+                        echo "Failed to add Employee SSN: " .$eSSN. ", Dependent SSN: " .$dSSN. ", Benefit name: " .$dBen[$i]. " to the database.<br>
+                            Please ensure the Employee SSN and Dependent SSN exist in the database.<br>";
+
+                    }
                 }
             ?>
         </p>

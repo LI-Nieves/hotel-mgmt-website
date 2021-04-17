@@ -13,7 +13,6 @@
                 include 'C:\xampp\htdocs\Project\logic\depAndBenQueries.php';
 
                 $conn = connect();
-
                 $result = depEmp($conn,'000000000','000000000','',0);
                 
                 // Pulling data from the Dependent table
@@ -34,6 +33,7 @@
                     echo "Failed to retrieve data from the database.<br>";
                 }
 
+                $conn = connect();
                 $result2 = depEmp($conn,'000000000','000000000','',3);
 
                 // Pulling data from the DepBenefits table

@@ -18,16 +18,9 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\depAndBenQueries.php';
 
-                $eSSN   = $_POST["eSSN"];
-                $dSSN   = $_POST["dSSN"];
-                $dName  = $_POST["dName"];
-
-                // for debugging?
-/*                 echo 
-                    "You entered:<br>eSSN: ".$_POST["eSSN"].
-                    "<br>dSSN: ".$_POST["dSSN"].
-                    "<br>dName: ".$_POST["dName"].
-                    "<br>"; */
+                $eSSN   = $_POST["eSSN"]??"";
+                $dSSN   = $_POST["dSSN"]??"";
+                $dName  = $_POST["dName"]??"";
 
                 $conn = connect();
 

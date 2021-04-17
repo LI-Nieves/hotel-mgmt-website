@@ -607,37 +607,84 @@ BEGIN
 END //
 DELIMITER ;
 
-CREATE TABLE MaintHandling (
-	MaintSSN varchar(9) NOT NULL,
-    FloorNo int NOT NULL,
-    PRIMARY KEY (MaintSSN, FloorNo),
-	FOREIGN KEY (MaintSSN) REFERENCES Employee(SSN)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-	FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
+-- DEPENDENT & DEPBENEFITS -----------------------------------------------------------------------------------------------------------------
 
-CREATE TABLE Room (
-	FloorNo int NOT NULL,
-    RoomNo INT UNSIGNED NOT NULL,
-    Cost int NOT NULL,
-    Beds int NOT NULL,
-    CleanStatus boolean NOT NULL, 
-    RoomType varchar(100),
-    GCheckIn varchar(10),
-    ChkInDate datetime,
-    GCheckOut varchar(10),
-    ChkOutDate datetime,
-    PRIMARY KEY (FloorNo, RoomNo),
-    FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (GCheckIn) REFERENCES Guest(GuestID)
-		ON DELETE SET NULL
-        ON UPDATE CASCADE,
-    FOREIGN KEY (GCheckOut) REFERENCES Guest(GuestID)
-		ON DELETE SET NULL
-        ON UPDATE CASCADE
-);
+-- Used to check if specific dependent exists
+DELIMITER // 
+CREATE PROCEDURE checkDep(IN eSSN varchar(9),IN dSSN varchar(9))
+BEGIN
+	SELECT * FROM Dependent WHERE EmpSSN = eSSN AND DepSSN = dSSN;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depEmpRead(IN eSSN varchar(9))
+BEGIN
+	SELECT * FROM Dependent WHERE EmpSSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depBenEmpRead(IN eSSN varchar(9))
+BEGIN
+	SELECT * FROM DepBenefits WHERE EmpSSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in depAdminRead()
+DELIMITER // 
+CREATE PROCEDURE depAdminRead()
+BEGIN
+	SELECT * FROM Dependent;
+END //
+DELIMITER ;
+
+-- Used in depAdminRead()
+DELIMITER // 
+CREATE PROCEDURE depBenAdminRead()
+BEGIN
+	SELECT * FROM DepBenefits;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depWrite(IN eSSN varchar(9),IN dSSN1 varchar(9),IN dSSN varchar(9),IN dName varchar(50))
+BEGIN
+	UPDATE Dependent SET DepSSN = dSSN, DepName = dName WHERE EmpSSN = eSSN and DepSSN = dSSN1;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depNew(IN eSSN varchar(9),IN dSSN varchar(9),IN dName varchar(50))
+BEGIN
+	INSERT INTO Dependent VALUES (eSSN,dSSN,dName);
+END //
+DELIMITER ;
+
+-- Used in depAdminDel()
+DELIMITER // 
+CREATE PROCEDURE depDel(IN eSSN varchar(9),IN dSSN varchar(9))
+BEGIN
+	DELETE FROM Dependent WHERE EmpSSN = eSSN AND DepSSN = dSSN;
+END //
+DELIMITER ;
+
+-- Used in depBenAdminNew()
+DELIMITER // 
+CREATE PROCEDURE depBenNew(IN eSSN varchar(9),IN dSSN varchar(9),IN dBen varchar(500))
+BEGIN
+	INSERT INTO DepBenefits VALUES (eSSN,dSSN,dBen);
+END //
+DELIMITER ;
+INSERT INTO DepBenefits VALUES ('444444444','987654321','a');
+-- Used in depBenAdminDel()
+DELIMITER // 
+CREATE PROCEDURE depBenDel(IN eSSN varchar(9),IN dSSN varchar(9),IN dBen varchar(500))
+BEGIN
+	DELETE FROM DepBenefits WHERE EmpSSN = eSSN AND DepSSN = dSSN and DepBenefits = dBen;
+END //
+DELIMITER ;

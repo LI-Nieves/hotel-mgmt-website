@@ -19,8 +19,8 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\depAndbenQueries.php';
 
-                $dSSN   = $_POST["dSSN"];
-                $dName  = $_POST["dName"];
+                $dSSN   = $_POST["dSSN"]??"";
+                $dName  = $_POST["dName"]??"";
 
                 $conn = connect();
 
