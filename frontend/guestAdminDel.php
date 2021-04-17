@@ -17,7 +17,7 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\guestQueries.php';
 
-                $gID  = $_POST["gID"];
+                $gID  = $_POST["gID"]??"";
                 
                 $conn2 = connect();
                 $result = guestAdminDel($conn2,$gID);

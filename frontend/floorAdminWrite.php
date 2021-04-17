@@ -27,7 +27,7 @@
 
                 // checking if the specified floor exists in the table
                 $stmt = $conn->prepare("CALL checkFloor(?)");
-                $stmt->bind_param("s",$desiredFloor);
+                $stmt->bind_param("i",$desiredFloor);
                 $stmt->execute();
                 $result = $stmt->get_result();
 

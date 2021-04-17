@@ -30,8 +30,8 @@
                 $result = mysqli_query($conn,"CALL checkCall($cID)");
                 
                 if ($result) {
-                    echo "Successfully created phone call record.<br>Here's the info:<br>";
-                    header("Content-Type: JSON");
+                    echo "Successfully created phone call record.<br>";
+/*                     header("Content-Type: JSON");
                     $rowNumber = 0;
                     $output = array();
     
@@ -40,7 +40,7 @@
                         $output[$rowNumber]['GuestID'] = $row['GuestID'];
                         $rowNumber++;
                     }
-                    //echo json_encode($output, JSON_PRETTY_PRINT);
+                    json_encode($output, JSON_PRETTY_PRINT) */;
                 }
                 else {
                     echo "Failed to create the phone call record. Please ensure that the Guest ID is valid.<br>";
