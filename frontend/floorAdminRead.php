@@ -9,8 +9,8 @@
 		<div id="formContent2">
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\floorQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\floorQueries.php';
 
                 $conn = connect();
 
@@ -26,9 +26,13 @@
                         $output[$rowNumber]['FloorNo'] = $row['FloorNo'];
                         $output[$rowNumber]['FAmenities'] = $row['FAmenities'];
                         $output[$rowNumber]['NumUtilities'] = $row['NumUtilities'];
+                        echo "Floor No: ". $output[$rowNumber]['FloorNo'] . "<br> Floor Amenities " . $output[$rowNumber]['FAmenities'] . 
+                        "<br> Number of Utilities: " .$output[$rowNumber]['NumUtilities'] . "<br> <br>";
+
                         $rowNumber++;
+
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                   // echo json_encode($output, JSON_PRETTY_PRINT);
                 }
 
                 else {
@@ -47,9 +51,12 @@
                     while ($row = mysqli_fetch_array($result2)) {
                         $output[$rowNumber]['MaintSSN'] = $row['MaintSSN'];
                         $output[$rowNumber]['FloorNo'] = $row['FloorNo'];
+                        echo "Maintenance SSN: ". $output[$rowNumber]['MaintSSN'] . "<br> Floor No " . $output[$rowNumber]['FloorNo'] . 
+                       "<br> <br>";
+
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                   // echo json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to retrieve data from database.<br>";
@@ -57,6 +64,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 </body>

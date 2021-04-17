@@ -11,10 +11,11 @@
         <p> <?php 
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
+                include_once 'C:\xampp\htdocs\Project\logic\reservationQueries.php';
 
                 $conn = connect();
 
-                $result = empEmpRead($conn);
+                $result = resEmpRead($conn);
                 
                 if ($result) {
                     header("Content-Type: JSON");
@@ -22,18 +23,24 @@
                     $output = array();
     
                     while ($row = mysqli_fetch_array($result)) {
-                        $output[$rowNumber]['SSN'] = $row['SSN'];
-                        $output[$rowNumber]['Fname'] = $row['Fname'];
-                        $output[$rowNumber]['Lname'] = $row['Lname'];
-                        $output[$rowNumber]['Salary'] = $row['Salary'];
-                        $output[$rowNumber]['Sex'] = $row['Sex'];
-                        $output[$rowNumber]['DoB'] = $row['DoB'];
-                        $output[$rowNumber]['ERole'] = $row['ERole'];
-  
-                        
-                        if($output[$rowNumber]['SSN'] = $row['SSN']){
+                        $output[$rowNumber]['GuestID'] = $row['GuestID'];
+                        $output[$rowNumber]['FloorNo'] = $row['FloorNo'];
+                        $output[$rowNumber]['RoomNo'] = $row['RoomNo'];
+                        $output[$rowNumber]['ResID'] = $row['ResID'];
+                        $output[$rowNumber]['StartDate'] = $row['StartDate'];
+                        $output[$rowNumber]['EndDate'] = $row['EndDate'];
+                        $output[$rowNumber]['ConfirmNo'] = $row['ConfirmNo'];
+                        $output[$rowNumber]['NumPeople'] = $row['NumPeople'];
+                        if($output[$rowNumber]['GuestID'] = $row['GuestID']){
+                           
                             $correctRow = $rowNumber;
+                            $validRes = true;
                         }
+                        echo "Reservation No: ". $output[$rowNumber]['ResID'] . "<br> Start Date: " . $output[$rowNumber]['StartDate'] . 
+                        "<br> End Date: " .$output[$rowNumber]['EndDate'] . "<br> Room No: " . $output[$rowNumber]['RoomNo'] . "<br> Floor No: " . 
+                        $output[$rowNumber]['FloorNo'] . "<br> Number of People: " . $output[$rowNumber]['NumPeople'] . "<br> Confirmation No: " .
+                        $output[$rowNumber]['ConfirmNo'] . "<br> Guest ID: " . $output[$rowNumber]['GuestID'] . "<br> <br>";
+
                         $rowNumber++;
                     }
                     
@@ -43,22 +50,17 @@
                 }
 
             ?>
-                <h1>Hello Employee</h1>
-                <h3>This is your Information</h3>
-                <p>SSN: <?php echo $output[$correctRow]['SSN']; ?></p>
-                <p>First Name: <?php echo $output[$correctRow]['Fname']; ?></p>
-                <p>Last Name: <?php echo $output[$correctRow]['Lname']; ?></p>
-                <p>Salary: <?php echo ($output[$correctRow]['Salary']); ?></p>
-                <p>Sex: <?php echo $output[$correctRow]['Sex']; ?></p>
-                <p>Date of Birth: <?php echo $output[$correctRow]['DoB']; ?></p>
-                <p>Role: <?php echo $output[$correctRow]['ERole']; ?></p>   
-                </p>
-
-                <input type="submit" id="viewRoom" class="fadeIn second" value="View Rooms"/>
-
-                <input type="button" id="modRoomClean" class="fadeIn second" value="Update Clean Status"/>
-
+                
+               
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 </body>

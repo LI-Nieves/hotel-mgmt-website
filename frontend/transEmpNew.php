@@ -16,13 +16,13 @@
         </form>
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
 
-                $tDate      = $_POST["tDate"];
-                $tType      = $_POST["tType"];
-                $tCost      = $_POST["tCost"];
-                $tGuestID   = $_POST["tGuestID"];
+                $tDate      = $_POST["tDate"]??"";
+                $tType      = $_POST["tType"]??"";
+                $tCost      = $_POST["tCost"]??"";
+                $tGuestID   = $_POST["tGuestID"]??"";
 
                 $conn = connect();
 
@@ -40,6 +40,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 
