@@ -31,7 +31,7 @@
                 
                 if ($result) {
                     echo "Successfully created phone call record.<br>";
-/*                     header("Content-Type: JSON");
+                    header("Content-Type: JSON");
                     $rowNumber = 0;
                     $output = array();
     
@@ -40,7 +40,9 @@
                         $output[$rowNumber]['GuestID'] = $row['GuestID'];
                         $rowNumber++;
                     }
-                    json_encode($output, JSON_PRETTY_PRINT) */;
+                    $object = json_encode($output, JSON_PRETTY_PRINT);
+                    $result = json_decode($object, true);
+                    echo "Call ID: ".$result[0]['CallID'].", Guest ID: ".$result[0]['GuestID'];
                 }
                 else {
                     echo "Failed to create the phone call record. Please ensure that the Guest ID is valid.<br>";

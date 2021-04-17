@@ -36,10 +36,11 @@
                         echo "Floor No: ". $output[$rowNumber]['FloorNo'] . "<br> Room No: " . $output[$rowNumber]['RoomNo'] . 
                         "<br> Cost: " .$output[$rowNumber]['Cost'] . "<br> Beds: " . $output[$rowNumber]['Beds'] . "<br> Clean Status: " . 
                         $output[$rowNumber]['CleanStatus'] . "<br> Room Type: " . $output[$rowNumber]['RoomType'] . "<br> Guest Checked In: " . 
-                        $output[$rowNumber]['GCheckIn'] . "<br> <br>";
+                        $output[$rowNumber]['GCheckIn'] . "<br> Check-in date: ".$output[$rowNumber]['ChkInDate']."<br> Check-out date: ".
+                        $output[$rowNumber]['ChkOutDate']."<br> <br>";
                         $rowNumber++;
                     }
-                   // echo json_encode($output, JSON_PRETTY_PRINT);
+                   json_encode($output, JSON_PRETTY_PRINT);
                     
                 }
                 else {
