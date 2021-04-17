@@ -10,7 +10,7 @@
 		
         
                 <h1>Hello Admin</h1>
-               <p> <?php 
+             <p> <?php 
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
 
@@ -151,7 +151,7 @@
                 document.location.href ='depBenAdminDel.php';
             });
 
-             //Transaction View 
+             //Transaction  
              var btn17= document.getElementById('viewTrans');
             btn17.addEventListener('click',function(){
                 document.location.href ='transEmpRead.php';

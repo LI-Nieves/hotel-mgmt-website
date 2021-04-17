@@ -7,10 +7,10 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-		
+		<h1>View Phone Calls</h1>
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\phoneQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\phoneQueries.php';
 
                 $conn = connect();
 

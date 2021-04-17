@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Check In / Out</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "fNo" placeholder = "Floor number of room?"/><br>
             <input type = "text" name = "rNo" placeholder = "Room number of room?"/><br>
@@ -16,13 +16,20 @@
             <input type = "text" name = "iDate" placeholder = "Check-in date"/><br>
             <input type = "text" name = "oDate" placeholder = "Check-out date (if applicable)"/><br>
             <input type = "submit" />
+            <input type="button" id="back" class="fadeIn second" value="Back"/>
             <!--    Note that Clean Status will remain what it currently is. 
                     When checking in, Availability = FALSE and when checking out, vice versa. -->
         </form>
-		
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        document.location.href ='recepMain.php';
+                    }
+                    );
+        </script>
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
                 $fNo    = $_POST["fNo"]??"";
                 $rNo    = $_POST["rNo"]??"";
@@ -56,7 +63,13 @@
                 }
 
             ?>
+           
         </p>
+        
+       
+
+       
+       
 		</div>
 	  </div>
 
