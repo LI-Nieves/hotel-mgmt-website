@@ -54,6 +54,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 

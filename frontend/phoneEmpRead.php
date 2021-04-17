@@ -27,9 +27,14 @@
                         $output[$rowNumber]['CallDate'] = $row['CallDate'];
                         $output[$rowNumber]['GuestID'] = $row['GuestID'];
                         $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
+                        echo "Caller ID: ". $output[$rowNumber]['CallID'] . "<br> Duration: " . $output[$rowNumber]['Duration'] . 
+                        "<br> Call Date: " .$output[$rowNumber]['CallDate'] . "<br> Guest ID: " . $output[$rowNumber]['GuestID'] . "<br> Employee SSN: " . 
+                        $output[$rowNumber]['EmpSSN'] . "<br> <br>";
+
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                   // echo json_encode($output, JSON_PRETTY_PRINT);
+
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
@@ -37,6 +42,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 </body>

@@ -16,8 +16,8 @@
         </form>
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\depAndbenQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\depAndbenQueries.php';
 
                 $dSSN   = $_POST["dSSN"]??"";
                 $dName  = $_POST["dName"]??"";
@@ -35,6 +35,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 

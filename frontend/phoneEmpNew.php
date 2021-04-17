@@ -19,9 +19,9 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\phoneQueries.php';
 
-                $gID        = $_POST["gID"];
-                $duration   = $_POST["duration"];
-                $pDate      = $_POST["pDate"];
+                $gID        = $_POST["gID"]??"";
+                $duration   = $_POST["duration"]??"";
+                $pDate      = $_POST["pDate"]??"";
 
                 $conn = connect();
 
@@ -40,7 +40,7 @@
                         $output[$rowNumber]['GuestID'] = $row['GuestID'];
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                    //echo json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to create the phone call record. Please ensure that the Guest ID is valid.<br>";
@@ -48,6 +48,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 

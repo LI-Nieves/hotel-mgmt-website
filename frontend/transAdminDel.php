@@ -14,8 +14,8 @@
         </form>
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\transactionQueries.php';
 
                 $tID  = $_POST["tID"]??"";
                 
@@ -32,6 +32,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 

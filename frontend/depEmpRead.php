@@ -9,8 +9,8 @@
 		<div id="formContent2">
 		
         <p> <?php 
-                include 'C:\xampp\htdocs\Project\backend\database.php';
-                include 'C:\xampp\htdocs\Project\logic\depAndBenQueries.php';
+                include_once 'C:\xampp\htdocs\Project\backend\database.php';
+                include_once 'C:\xampp\htdocs\Project\logic\depAndBenQueries.php';
 
                 $conn = connect();
                 $result = depEmp($conn,'000000000','000000000','',0);
@@ -25,9 +25,12 @@
                         $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
                         $output[$rowNumber]['DepSSN'] = $row['DepSSN'];
                         $output[$rowNumber]['DepName'] = $row['DepName'];
+                        echo "Employee SSN: ". $output[$rowNumber]['EmpSSN'] . "<br> Dependent SSN: " . $output[$rowNumber]['DepSSN'] . 
+                        "<br> Dependent Name: " .$output[$rowNumber]['DepName'] . "<br> <br>";
+
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                    //echo json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
@@ -46,9 +49,11 @@
                         $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
                         $output[$rowNumber]['DepSSN'] = $row['DepSSN'];
                         $output[$rowNumber]['DepBenefits'] = $row['DepBenefits'];
+                        echo "Employee SSN: ". $output[$rowNumber]['EmpSSN'] . "<br> Dependent SSN: " . $output[$rowNumber]['DepSSN'] . 
+                        "<br> Dependent Benefits: " .$output[$rowNumber]['DepName'] . "<br> <br>";
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                    //echo json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
@@ -56,6 +61,14 @@
 
             ?>
         </p>
+        <input type="button" id="back" class="fadeIn second" value="Back"/>
+        <script>
+        var btn= document.getElementById('back');
+                    btn.addEventListener('click',function(){
+                        window.history.back();
+                    }
+                    );
+        </script>
 		</div>
 	  </div>
 </body>

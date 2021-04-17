@@ -73,17 +73,18 @@
 
                 <input type="submit" id="viewTrans" class="fadeIn second" value="View Transactions"/>
                 <input type="submit" id="makeTrans" class="fadeIn second" value="Create Transaction"/>
+                <input type="submit" id="deleteTrans" class="fadeIn second" value="Delete Transaction"/>
 
                 <input type="submit" id="viewRes" class="fadeIn second" value="View Reservations"/>
                 <input type="submit" id="makeRes" class="fadeIn second" value="Create Reservation"/>
                 <input type="submit" id="removeRes" class="fadeIn second" value="Delete Reservation"/>
 
-                <input type="submit" id="viewFl" class="fadeIn second" value="View Floor"/>
-                <input type="submit" id="modFl" class="fadeIn second" value="Modify Floor"/>
+                <input type="submit" id="viewFloor" class="fadeIn second" value="View Floor"/>
+                <input type="submit" id="modFloor" class="fadeIn second" value="Modify Floor"/>
                 
 
                 <input type="submit" id="viewGuest" class="fadeIn second" value="View Guests"/>
-                <input type="submit" id="makeGuest" class="fadeIn second" value="Create Guests"/>
+                <input type="submit" id="modGuest" class="fadeIn second" value="Modify Guests"/>
                 <input type="submit" id="deleteGuest" class="fadeIn second" value="Delete Guests"/>
 
 
@@ -155,6 +156,14 @@
             btn17.addEventListener('click',function(){
                 document.location.href ='transEmpRead.php';
             });
+            var btn18= document.getElementById('makeTrans');
+            btn18.addEventListener('click',function(){
+                document.location.href ='transEmpNew.php';
+            });
+            var btn19= document.getElementById('deleteTrans');
+            btn19.addEventListener('click',function(){
+                document.location.href ='transAdminDel.php';
+            });
 
             //reservation
             var btn10= document.getElementById('viewRes');
@@ -169,6 +178,7 @@
             btn12.addEventListener('click',function(){
                 document.location.href ='resEmpDel.php';
             });
+
             //Floor
             var btn13= document.getElementById('viewFloor');
             btn13.addEventListener('click',function(){
@@ -180,11 +190,31 @@
             });
             //Guest 
             var btn15= document.getElementById('viewGuest');
-            btn13.addEventListener('click',function(){
-                document.location.href ='resEmpRead.php';//Not sure
+            btn15.addEventListener('click',function(){
+                document.location.href ='guestAdminRead.php';
             });
-           
-            
+            var btn25= document.getElementById('deleteGuest');
+            btn25.addEventListener('click',function(){
+                document.location.href ='guestAdminDel.php';
+            });
+            var btn26= document.getElementById('modGuest');
+            btn26.addEventListener('click',function(){
+                document.location.href ='guestAdminWrite.php';
+            });
+            //Phone
+            var btn27= document.getElementById('viewPh');
+            btn27.addEventListener('click',function(){
+                document.location.href ='phoneEmpRead.php';
+            });
+            var btn29= document.getElementById('makePh');
+            btn29.addEventListener('click',function(){
+                document.location.href ='phoneEmpNew.php';
+            });
+            var btn28= document.getElementById('removePh');
+            btn28.addEventListener('click',function(){
+                document.location.href ='phoneAdminDel.php';
+            });
+
             </script>
 		</div>
 	  </div>
