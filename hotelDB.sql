@@ -541,12 +541,71 @@ BEGIN
 END //
 DELIMITER ;
 
-CREATE TABLE Floors (
-	FloorNo int NOT NULL,
-    FAmenities varchar(100),
-    NumUtilities int,
-    PRIMARY KEY (FloorNo)
-);
+-- ROOM -----------------------------------------------------------------------------------------------------------------
+
+-- check if there's a certain room
+DELIMITER // 
+CREATE PROCEDURE checkRoom(IN fNo int,IN rNo int)
+BEGIN
+	SELECT * FROM Room WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- used in roomEmpRead()
+DELIMITER // 
+CREATE PROCEDURE roomEmpRead()
+BEGIN
+	SELECT * FROM Room;
+END //
+DELIMITER ;
+
+-- Used in roomEmpWrite()
+DELIMITER // 
+CREATE PROCEDURE roomEmpWrite(IN fNo int,IN rNo int)
+BEGIN
+	UPDATE Room SET CleanStatus = TRUE WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- Used in maintEmpWrite()
+DELIMITER // 
+CREATE PROCEDURE checkMaint(IN fNo int,IN eSSN varchar(9))
+BEGIN
+	SELECT * FROM MaintHandling WHERE MaintSSN = eSSN AND FloorNo = fNo;
+END //
+DELIMITER ;
+
+-- Used in maintEmpWrite()
+DELIMITER // 
+CREATE PROCEDURE maintNew(IN fNo int,IN eSSN varchar(9))
+BEGIN
+	INSERT INTO MaintHandling VALUES (eSSN,fNo);
+END //
+DELIMITER ;
+
+-- Used in roomRecepWrite()
+DELIMITER // 
+CREATE PROCEDURE checkIn(IN fNo int,IN rNo int,IN gID varchar(10),IN iDate date)
+BEGIN
+	UPDATE Room SET CleanStatus = 0, GCheckIn = gID, ChkInDate = iDate, GCheckOut = NULL, ChkOutDate = NULL WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- Used in roomRecepWrite()
+DELIMITER // 
+CREATE PROCEDURE checkOut(IN fNo int,IN rNo int,IN gID varchar(10),IN iDate date,IN oDate date)
+BEGIN
+	UPDATE Room SET GCheckIn = gID, ChkInDate = iDate, GCheckOut = gID, ChkOutDate = oDate WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- Used in roomAdmin()
+DELIMITER // 
+CREATE PROCEDURE roomAdmin(IN fNo int,IN rNo int,IN cost int,IN bed int,IN rType varchar(100))
+BEGIN
+	UPDATE Room SET Cost = cost, Beds = bed, RoomType = rType WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
 
 CREATE TABLE MaintHandling (
 	MaintSSN varchar(9) NOT NULL,
@@ -557,5 +616,28 @@ CREATE TABLE MaintHandling (
         ON UPDATE CASCADE,
 	FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
 		ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Room (
+	FloorNo int NOT NULL,
+    RoomNo INT UNSIGNED NOT NULL,
+    Cost int NOT NULL,
+    Beds int NOT NULL,
+    CleanStatus boolean NOT NULL, 
+    RoomType varchar(100),
+    GCheckIn varchar(10),
+    ChkInDate datetime,
+    GCheckOut varchar(10),
+    ChkOutDate datetime,
+    PRIMARY KEY (FloorNo, RoomNo),
+    FOREIGN KEY (FloorNo) REFERENCES Floors(FloorNo)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (GCheckIn) REFERENCES Guest(GuestID)
+		ON DELETE SET NULL
+        ON UPDATE CASCADE,
+    FOREIGN KEY (GCheckOut) REFERENCES Guest(GuestID)
+		ON DELETE SET NULL
         ON UPDATE CASCADE
 );

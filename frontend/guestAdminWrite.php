@@ -40,7 +40,7 @@
 
                 $count = mysqli_num_rows($result);
                 if ($count == 0) {
-                    echo "The Guest ID you desire to update data for does not exist in the table.<br>";
+                    echo "The Guest ID you desire to update does not exist in the table.<br>";
                     return false;
                 }
                 

@@ -24,21 +24,27 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
-                $fNo    = $_POST["fNo"];
-                $rNo    = $_POST["rNo"];
-                $gID    = $_POST["gID"];
-                $iDate  = $_POST["iDate"];
-                $oDate  = $_POST["oDate"];
+                $fNo    = $_POST["fNo"]??"";
+                $rNo    = $_POST["rNo"]??"";
+                $gID    = $_POST["gID"]??"";
+                $iDate  = $_POST["iDate"]??"";
+                $oDate  = $_POST["oDate"]??"";
 
                 $conn = connect();
             
                 // checking if the specified floor and room number exist in the table
-                $check = "SELECT * FROM Room WHERE FloorNo = $fNo AND RoomNo = $rNo";
-                if (countEntries($conn,$check) == 0) {
-                    echo "The room you desire to update data for does not exist in the table.<br>";
+                $stmt = $conn->prepare("CALL checkRoom(?,?)");
+                $stmt->bind_param("ii",$fNo,$rNo);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $count = mysqli_num_rows($result);
+                if ($count == 0) {
+                    echo "The Room you desire to update does not exist in the database.<br>";
                     return false;
                 }
 
+                $conn = connect();
                 $result = roomRecepWrite($conn,$fNo,$rNo,$gID,$iDate,$oDate);
 
                 if ($result) {

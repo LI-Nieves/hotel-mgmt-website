@@ -57,6 +57,7 @@
     // returns the number of records that SQL statement generates
     function countEntries($conn,$stmt) {
         $resultCheck = mysqli_query($conn,$stmt);
+        echo gettype($resultCheck);
                     
         $count = 0;
 

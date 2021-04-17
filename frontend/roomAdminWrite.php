@@ -23,22 +23,28 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
-                $fNo    = $_POST["fNo"];
-                $rNo    = $_POST["rNo"];
-                $cost   = $_POST["cost"];
-                $bed    = $_POST["bed"];
-                $rType  = $_POST["rType"];
+                $fNo    = $_POST["fNo"]??"";
+                $rNo    = $_POST["rNo"]??"";
+                $cost   = $_POST["cost"]??"";
+                $bed    = $_POST["bed"]??"";
+                $rType  = $_POST["rType"]??"";
 
                 $conn = connect();
 
-                // checking if the specified original DepSSN exists in the table
-                $check = "SELECT * FROM Room WHERE FloorNo = $fNo AND RoomNo = $rNo";
-                if (countEntries($conn,$check) == 0) {
-                    echo "The room you desire to update data for does not exist in the table.<br>";
+                // checking if the specified original room exists in the table
+                $stmt = $conn->prepare("CALL checkRoom(?,?)");
+                $stmt->bind_param("ii",$fNo,$rNo);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $count = mysqli_num_rows($result);
+                if ($count == 0) {
+                    echo "The room you desire to update does not exist in the table.<br>";
                     return false;
                 }
-
-                $result = roomAdmin($conn,$fNo,$rNo,$cost,$bed,$rType,1);
+                
+                $conn = connect();
+                $result = roomAdmin($conn,$fNo,$rNo,$cost,$bed,$rType);
 
                 if ($result) {
                     echo "Successfully modified room details.<br>";
