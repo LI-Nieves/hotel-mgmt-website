@@ -41,7 +41,9 @@
                         $output[$rowNumber]['ConfirmNo'] = $row['ConfirmNo'];
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                    $object = json_encode($output, JSON_PRETTY_PRINT);
+                    $result = json_decode($object,true);
+                    echo "Reservation ID: ".$result[0]['ResID'].", Confirmation Number: ".$result[0]['ConfirmNo'];
                 }
                 else {
                     echo "Failed to create the reservation.<br>";

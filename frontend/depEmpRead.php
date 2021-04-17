@@ -50,7 +50,7 @@
                         $output[$rowNumber]['DepSSN'] = $row['DepSSN'];
                         $output[$rowNumber]['DepBenefits'] = $row['DepBenefits'];
                         echo "Employee SSN: ". $output[$rowNumber]['EmpSSN'] . "<br> Dependent SSN: " . $output[$rowNumber]['DepSSN'] . 
-                        "<br> Dependent Benefits: " .$output[$rowNumber]['DepName'] . "<br> <br>";
+                        "<br> Dependent Benefits: " .$output[$rowNumber]['DepBenefits'] . "<br> <br>";
                         $rowNumber++;
                     }
                     //echo json_encode($output, JSON_PRETTY_PRINT);

@@ -25,9 +25,11 @@
                         $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
                         $output[$rowNumber]['DepSSN'] = $row['DepSSN'];
                         $output[$rowNumber]['DepName'] = $row['DepName'];
+                        echo "Employee SSN: ". $output[$rowNumber]['EmpSSN'] . "<br> Dependent SSN: " . $output[$rowNumber]['DepSSN'] . 
+                        "<br> Dependent Name: " .$output[$rowNumber]['DepName'] . "<br> <br>";
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                    json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
@@ -46,9 +48,11 @@
                         $output[$rowNumber]['EmpSSN'] = $row['EmpSSN'];
                         $output[$rowNumber]['DepSSN'] = $row['DepSSN'];
                         $output[$rowNumber]['DepBenefits'] = $row['DepBenefits'];
+                        echo "Employee SSN: ". $output[$rowNumber]['EmpSSN'] . "<br> Dependent SSN: " . $output[$rowNumber]['DepSSN'] . 
+                        "<br> Dependent Benefits: " .$output[$rowNumber]['DepBenefits'] . "<br> <br>";
                         $rowNumber++;
                     }
-                    echo json_encode($output, JSON_PRETTY_PRINT);
+                    json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
