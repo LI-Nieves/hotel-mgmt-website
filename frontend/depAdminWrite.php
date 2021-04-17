@@ -19,21 +19,27 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\depAndBenQueries.php';
 
-                $eSSN   = $_POST["eSSN"];
-                $dSSN1   = $_POST["dSSN1"];
-                $dSSN   = $_POST["dSSN"];
-                $dName  = $_POST["dName"];
+                $eSSN   = $_POST["eSSN"]??"";
+                $dSSN1   = $_POST["dSSN1"]??"";
+                $dSSN   = $_POST["dSSN"]??"";
+                $dName  = $_POST["dName"]??"";
 
                 $conn = connect();
 
                 // checking if the specified eSSN and DepSSN exists in the table
                 $eSSN = assignCookie();
-                $check = "SELECT * FROM Dependent WHERE EmpSSN = \"$eSSN\" and DepSSN = \"$dSSN1\"";
-                if (countEntries($conn,$check) == 0) {
-                    echo "The SSNs you desire to update data for does not exist in the table.<br>";
+                $stmt = $conn->prepare("CALL checkDep(?,?)");
+                $stmt->bind_param("ss",$eSSN,$dSSN1);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $count = mysqli_num_rows($result);
+                if ($count == 0) {
+                    echo "The Dependent you desire to update does not exist in the table.<br>";
                     return false;
                 }
-
+                
+                $conn = connect();
                 $result = depAdmin($conn,$eSSN,$dSSN1,$dSSN,$dName,1);
                 if ($result) {
                     echo "Successfully updated dependent information.<br>";

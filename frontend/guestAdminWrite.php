@@ -23,12 +23,12 @@
                 include 'C:\xampp\htdocs\Project\backend\database.php';
                 include 'C:\xampp\htdocs\Project\logic\guestQueries.php';
 
-                $gID  = $_POST["gID"];
-                $gLogin   = $_POST["gLogin"];
-                $gCard  = $_POST["gCard"];
-                $gPhone  = $_POST["gPhone"];
-                $gName   = $_POST["gName"];
-                $gAddress  = $_POST["gAddress"];
+                $gID  = $_POST["gID"]??"";
+                $gLogin   = $_POST["gLogin"]??"";
+                $gCard  = $_POST["gCard"]??"";
+                $gPhone  = $_POST["gPhone"]??"";
+                $gName   = $_POST["gName"]??"";
+                $gAddress  = $_POST["gAddress"]??"";
 
                 $conn = connect();
 
@@ -38,18 +38,14 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                $count = 0;
-                if ($result) {
-                    while ($row = mysqli_fetch_array($result)) {
-                        $count++;
-                    }
-                }
+                $count = mysqli_num_rows($result);
                 if ($count == 0) {
-                    echo "The Guest ID you desire to update data for does not exist in the table.<br>";
+                    echo "The Guest ID you desire to update does not exist in the table.<br>";
                     return false;
                 }
                 
-                $result = guestAdminWrite($conn,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
+                $conn2 = connect();
+                $result = guestAdminWrite($conn2,$gID,$gLogin,$gCard,$gPhone,$gName,$gAddress);
 
                 if ($result) {
                     echo "Successfully updated guest information.<br>";

@@ -11,9 +11,6 @@
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "fNo" placeholder = "Floor number"/><br>
             <input type = "text" name = "rNo" placeholder = "Room number"/><br>
-            <!--    Clean status (true, false): <input type = "text" name = "stat" /> 
-                    I'm thinking there could be a button that just says "Set to clean
-                    just so they don't have to manually type it in?      -->
             <input type = "submit" />
         </form>
 		
@@ -21,22 +18,36 @@
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\roomQueries.php';
 
-                $fNo    = $_POST["fNo"];
-                $rNo    = $_POST["rNo"];
+                $fNo    = $_POST["fNo"]??"";
+                $rNo    = $_POST["rNo"]??"";
 
                 $conn = connect();
 
                 // checking if the specified Floor and Room numbers exist in the table
                 $eSSN = assignCookie();
-                $check = "SELECT * FROM Room WHERE FloorNo = \"$fNo\" and RoomNo = \"$rNo\"";
-                if (countEntries($conn,$check) == 0) {
-                    echo "The room you desire to update data for does not exist in the table.<br>";
+                
+                $stmt = $conn->prepare("CALL checkRoom(?,?)");
+                $stmt->bind_param("ii",$fNo,$rNo);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $count = mysqli_num_rows($result);
+                if ($count == 0) {
+                    echo "The room you desire to update does not exist in the table.<br>";
                     return false;
                 }
+                
+                $conn3 = connect();
+                $result = roomEmpWrite($conn3,$fNo,$rNo);
 
-                $result = roomEmpWrite($conn,$fNo,$rNo);
-
-                if (!$result) {
+                if ($result) {
+                    echo "Successfully set the room as clean.<br>";
+                    $conn2 = connect();
+                    $conn4 = connect();
+                    $eSSN = assignCookie();
+                    maintEmpWrite($conn2,$conn4,$fNo,$eSSN);
+                }
+                else {
                     echo "Failed to modify the room's clean status. 
                         Please ensure the floor number and room number are valid.<br>";
                 }

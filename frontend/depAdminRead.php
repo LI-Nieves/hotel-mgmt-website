@@ -13,7 +13,6 @@
                 include 'C:\xampp\htdocs\Project\logic\depAndBenQueries.php';
 
                 $conn = connect();
-
                 // Pulling data from Dependent table
                 $result = depAdminRead($conn,0);
                 
@@ -35,6 +34,7 @@
                 }
 
                 // Pulling data from DepBenefits table
+                $conn = connect();
                 $result2 = depAdminRead($conn,3);
 
                 if ($result2) {

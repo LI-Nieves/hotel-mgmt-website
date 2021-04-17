@@ -84,7 +84,7 @@
         $eSSN = assignCookie();
 /*         $sql = "SELECT * FROM Employee WHERE SSN = '$eSSN'";
         $result = mysqli_query($conn, $sql); */
-        $result = mysqli_query($conn, "CALL empEmpRead($eSSN)");
+        $result = mysqli_query($conn, "CALL checkEmp($eSSN)");
         return $result;
     }
 

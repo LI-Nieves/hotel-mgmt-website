@@ -27,7 +27,6 @@
                         $output[$rowNumber]['RoomNo'] = $row['RoomNo'];
                         $output[$rowNumber]['Cost'] = $row['Cost'];
                         $output[$rowNumber]['Beds'] = $row['Beds'];
-                        $output[$rowNumber]['Availability'] = $row['Availability'];
                         $output[$rowNumber]['CleanStatus'] = $row['CleanStatus'];
                         $output[$rowNumber]['RoomType'] = $row['RoomType'];
                         $output[$rowNumber]['GCheckIn'] = $row['GCheckIn'];
@@ -35,10 +34,9 @@
                         $output[$rowNumber]['GCheckOut'] = $row['GCheckOut'];
                         $output[$rowNumber]['ChkOutDate'] = $row['ChkOutDate'];
                         echo "Floor No: ". $output[$rowNumber]['FloorNo'] . "<br> Room No: " . $output[$rowNumber]['RoomNo'] . 
-                        "<br> Cost: " .$output[$rowNumber]['Cost'] . "<br> Beds: " . $output[$rowNumber]['Beds'] . "<br> Availability: " . 
-                        $output[$rowNumber]['Availability'] . "<br> Clean Status: " . $output[$rowNumber]['CleanStatus'] . "<br> Room Type: " .
-                        $output[$rowNumber]['RoomType'] . "<br> Guest Checked In: " . $output[$rowNumber]['GCheckIn'] . 
-                         "<br> <br>";
+                        "<br> Cost: " .$output[$rowNumber]['Cost'] . "<br> Beds: " . $output[$rowNumber]['Beds'] . "<br> Clean Status: " . 
+                        $output[$rowNumber]['CleanStatus'] . "<br> Room Type: " . $output[$rowNumber]['RoomType'] . "<br> Guest Checked In: " . 
+                        $output[$rowNumber]['GCheckIn'] . "<br> <br>";
                         $rowNumber++;
                     }
                    // echo json_encode($output, JSON_PRETTY_PRINT);

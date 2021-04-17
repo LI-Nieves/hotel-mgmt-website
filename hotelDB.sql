@@ -334,7 +334,7 @@ DELIMITER ;
 
 -- Used in empEmpRead()
 DELIMITER // 
-CREATE PROCEDURE empEmpRead(IN eSSN varchar(9))
+CREATE PROCEDURE checkEmp(IN eSSN varchar(9))
 BEGIN
 	SELECT * FROM Employee WHERE SSN = eSSN;
 END //
@@ -507,24 +507,184 @@ BEGIN
 END //
 DELIMITER ;
 
-CREATE TABLE Reservation (
-	GuestID varchar(10) NOT NULL,
-    FloorNo int NOT NULL,
-    RoomNo INT UNSIGNED NOT NULL,
-    ResID varchar(10) NOT NULL,
-    StartDate date NOT NULL,
-    EndDate date NOT NULL,
-    ConfirmNo varchar(10),
-    NumPeople int NOT NULL,
-    EmpSSN varchar(9),
-    PRIMARY KEY (GuestID, FloorNo, RoomNo, ResID),
-    FOREIGN KEY (GuestID) REFERENCES Guest(GuestID)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (FloorNo, RoomNo) REFERENCES Room(FloorNo, RoomNo)
-		ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (EmpSSN) REFERENCES Employee(SSN)
-		ON DELETE SET NULL
-        ON UPDATE CASCADE
-);
+-- FLOOR -----------------------------------------------------------------------------------------------------------------
+
+-- used in floorAdminRead()
+DELIMITER // 
+CREATE PROCEDURE floorAdminRead()
+BEGIN
+	SELECT * FROM Floors;
+END //
+DELIMITER ;
+
+-- used in maintAdminRead()
+DELIMITER // 
+CREATE PROCEDURE maintAdminRead()
+BEGIN
+	SELECT * FROM MaintHandling;
+END //
+DELIMITER ;
+
+-- Used in floorAdminWrite()
+DELIMITER // 
+CREATE PROCEDURE floorAdminWrite(IN dFNo int,IN fAmen varchar(100),IN numUtil int)
+BEGIN
+	UPDATE Floors SET FAmenities = fAmen, NumUtilities = numUtil WHERE FloorNo = dFNo;
+END //
+DELIMITER ;
+
+-- check if there's a certain floor number
+DELIMITER // 
+CREATE PROCEDURE checkFloor(IN fNo int)
+BEGIN
+	SELECT * FROM Floors WHERE FloorNo = fNo;
+END //
+DELIMITER ;
+
+-- ROOM -----------------------------------------------------------------------------------------------------------------
+
+-- check if there's a certain room
+DELIMITER // 
+CREATE PROCEDURE checkRoom(IN fNo int,IN rNo int)
+BEGIN
+	SELECT * FROM Room WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- used in roomEmpRead()
+DELIMITER // 
+CREATE PROCEDURE roomEmpRead()
+BEGIN
+	SELECT * FROM Room;
+END //
+DELIMITER ;
+
+-- Used in roomEmpWrite()
+DELIMITER // 
+CREATE PROCEDURE roomEmpWrite(IN fNo int,IN rNo int)
+BEGIN
+	UPDATE Room SET CleanStatus = TRUE WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- Used in maintEmpWrite()
+DELIMITER // 
+CREATE PROCEDURE checkMaint(IN fNo int,IN eSSN varchar(9))
+BEGIN
+	SELECT * FROM MaintHandling WHERE MaintSSN = eSSN AND FloorNo = fNo;
+END //
+DELIMITER ;
+
+-- Used in maintEmpWrite()
+DELIMITER // 
+CREATE PROCEDURE maintNew(IN fNo int,IN eSSN varchar(9))
+BEGIN
+	INSERT INTO MaintHandling VALUES (eSSN,fNo);
+END //
+DELIMITER ;
+
+-- Used in roomRecepWrite()
+DELIMITER // 
+CREATE PROCEDURE checkIn(IN fNo int,IN rNo int,IN gID varchar(10),IN iDate date)
+BEGIN
+	UPDATE Room SET CleanStatus = 0, GCheckIn = gID, ChkInDate = iDate, GCheckOut = NULL, ChkOutDate = NULL WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- Used in roomRecepWrite()
+DELIMITER // 
+CREATE PROCEDURE checkOut(IN fNo int,IN rNo int,IN gID varchar(10),IN iDate date,IN oDate date)
+BEGIN
+	UPDATE Room SET GCheckIn = gID, ChkInDate = iDate, GCheckOut = gID, ChkOutDate = oDate WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- Used in roomAdmin()
+DELIMITER // 
+CREATE PROCEDURE roomAdmin(IN fNo int,IN rNo int,IN cost int,IN bed int,IN rType varchar(100))
+BEGIN
+	UPDATE Room SET Cost = cost, Beds = bed, RoomType = rType WHERE FloorNo = fNo AND RoomNo = rNo;
+END //
+DELIMITER ;
+
+-- DEPENDENT & DEPBENEFITS -----------------------------------------------------------------------------------------------------------------
+
+-- Used to check if specific dependent exists
+DELIMITER // 
+CREATE PROCEDURE checkDep(IN eSSN varchar(9),IN dSSN varchar(9))
+BEGIN
+	SELECT * FROM Dependent WHERE EmpSSN = eSSN AND DepSSN = dSSN;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depEmpRead(IN eSSN varchar(9))
+BEGIN
+	SELECT * FROM Dependent WHERE EmpSSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depBenEmpRead(IN eSSN varchar(9))
+BEGIN
+	SELECT * FROM DepBenefits WHERE EmpSSN = eSSN;
+END //
+DELIMITER ;
+
+-- Used in depAdminRead()
+DELIMITER // 
+CREATE PROCEDURE depAdminRead()
+BEGIN
+	SELECT * FROM Dependent;
+END //
+DELIMITER ;
+
+-- Used in depAdminRead()
+DELIMITER // 
+CREATE PROCEDURE depBenAdminRead()
+BEGIN
+	SELECT * FROM DepBenefits;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depWrite(IN eSSN varchar(9),IN dSSN1 varchar(9),IN dSSN varchar(9),IN dName varchar(50))
+BEGIN
+	UPDATE Dependent SET DepSSN = dSSN, DepName = dName WHERE EmpSSN = eSSN and DepSSN = dSSN1;
+END //
+DELIMITER ;
+
+-- Used in depEmp()
+DELIMITER // 
+CREATE PROCEDURE depNew(IN eSSN varchar(9),IN dSSN varchar(9),IN dName varchar(50))
+BEGIN
+	INSERT INTO Dependent VALUES (eSSN,dSSN,dName);
+END //
+DELIMITER ;
+
+-- Used in depAdminDel()
+DELIMITER // 
+CREATE PROCEDURE depDel(IN eSSN varchar(9),IN dSSN varchar(9))
+BEGIN
+	DELETE FROM Dependent WHERE EmpSSN = eSSN AND DepSSN = dSSN;
+END //
+DELIMITER ;
+
+-- Used in depBenAdminNew()
+DELIMITER // 
+CREATE PROCEDURE depBenNew(IN eSSN varchar(9),IN dSSN varchar(9),IN dBen varchar(500))
+BEGIN
+	INSERT INTO DepBenefits VALUES (eSSN,dSSN,dBen);
+END //
+DELIMITER ;
+INSERT INTO DepBenefits VALUES ('444444444','987654321','a');
+-- Used in depBenAdminDel()
+DELIMITER // 
+CREATE PROCEDURE depBenDel(IN eSSN varchar(9),IN dSSN varchar(9),IN dBen varchar(500))
+BEGIN
+	DELETE FROM DepBenefits WHERE EmpSSN = eSSN AND DepSSN = dSSN and DepBenefits = dBen;
+END //
+DELIMITER ;
