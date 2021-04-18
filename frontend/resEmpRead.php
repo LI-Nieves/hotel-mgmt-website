@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-		
+		<h1>Reservations</h1>
         <p> <?php 
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';

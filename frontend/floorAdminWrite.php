@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Modify Floors</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "desiredFloor" placeholder = "Which floor would you like to change?"/>
             <input type = "text" name = "fAmenities" placeholder = "Floor amenities (if applicable)"/>

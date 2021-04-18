@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Modify Guest</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "gID" placeholder = "ID of Guest to modify?" /><br>
             WRITE NEW DETAILS BELOW:<br>
@@ -60,7 +60,7 @@
         <script>
         var btn= document.getElementById('back');
                     btn.addEventListener('click',function(){
-                        window.history.back();
+                        document.location.href ='adminMain.php';
                     }
                     );
         </script>

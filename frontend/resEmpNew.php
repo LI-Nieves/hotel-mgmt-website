@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Create Reservation</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "aDate" placeholder = "Arrival date"/>
             <input type = "text" name = "dDate" placeholder = "Departure date"/>
