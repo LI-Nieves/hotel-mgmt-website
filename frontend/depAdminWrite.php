@@ -43,7 +43,7 @@
                     echo "Successfully updated dependent information.<br>";
                 }
                 else {
-                    echo "Failed to updated dependent information. Ensure the Employee SSN exists in the database.<br>";    // should I add why?
+                    echo "Failed to updated dependent information. Ensure the Employee SSN exists in the database.<br>";
                 }
 
             ?>

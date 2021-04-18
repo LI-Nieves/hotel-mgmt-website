@@ -59,6 +59,7 @@
                     $rowNumber++;
 
                 }
+                json_encode($output);
                
 
             ?>

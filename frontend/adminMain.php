@@ -47,6 +47,7 @@
                         }
                         $rowNumber++;
                     }
+                    json_encode($output);
                     
                 }
                 else {

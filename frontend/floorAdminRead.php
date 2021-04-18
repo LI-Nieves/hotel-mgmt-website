@@ -32,7 +32,7 @@
                         $rowNumber++;
 
                     }
-                   // echo json_encode($output, JSON_PRETTY_PRINT);
+                   json_encode($output, JSON_PRETTY_PRINT);
                 }
 
                 else {
@@ -56,7 +56,7 @@
 
                         $rowNumber++;
                     }
-                   // echo json_encode($output, JSON_PRETTY_PRINT);
+                   json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to retrieve data from database.<br>";

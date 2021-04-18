@@ -690,7 +690,7 @@ BEGIN
 	INSERT INTO DepBenefits VALUES (eSSN,dSSN,dBen);
 END //
 DELIMITER ;
-INSERT INTO DepBenefits VALUES ('444444444','987654321','a');
+
 -- Used in depBenAdminDel()
 DELIMITER // 
 CREATE PROCEDURE depBenDel(IN eSSN varchar(9),IN dSSN varchar(9),IN dBen varchar(500))

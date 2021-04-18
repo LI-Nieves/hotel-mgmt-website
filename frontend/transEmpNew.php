@@ -31,6 +31,7 @@
                 
                 if ($result) {
                     echo "Successfully created transaction.<br>Here's the Transaction ID: $result";
+                    header("Content-Type: JSON");
                     json_encode($result, JSON_PRETTY_PRINT);
                 }
                 else {

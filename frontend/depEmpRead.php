@@ -53,7 +53,7 @@
                         "<br> Dependent Benefits: " .$output[$rowNumber]['DepBenefits'] . "<br> <br>";
                         $rowNumber++;
                     }
-                    //echo json_encode($output, JSON_PRETTY_PRINT);
+                    json_encode($output, JSON_PRETTY_PRINT);
                 }
                 else {
                     echo "Failed to retrieve data from the database.<br>";
