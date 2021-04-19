@@ -27,7 +27,7 @@
                     <option value="r">Receptionist</option>
                 </select>
                 <input type="text" id="login" class="fadeIn second" name="aUser" placeholder="Username"/>
-                <input type="text" id="password" class="fadeIn third" name="aPass" placeholder="Password"/>
+                <input type="password"  class="fadeIn third" name="aPass" placeholder="Password"/>
                 <input type="submit" id="click-login" class="fadeIn fourth" value="Log In"/>
 		      </form>
             <p> <?php 

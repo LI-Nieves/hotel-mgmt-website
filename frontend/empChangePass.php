@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Change Password</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "ePass" placeholder = "New Employee password"/><br>
             <input type = "text" name = "rPass" placeholder = "New Receptionist password (if applicable)"/><br>

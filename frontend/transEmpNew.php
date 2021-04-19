@@ -7,6 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
+        <h1>Create Transaction</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "tDate" placeholder = "Transaction date (optional)"/>
             <input type = "text" name = "tType" placeholder = "Payment type (optional)"/>
