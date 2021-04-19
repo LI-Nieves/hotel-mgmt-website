@@ -9,7 +9,7 @@
     }
 
     // Employee endpoint: used to modify clean status of room
-    // I'm gonna have this one method update both the Room table and the MaintSSN table
+    // This one method updates both the Room table and the MaintSSN table
     function roomEmpWrite($conn,$fNo,$rNo) {
         try {
             // handling user input
@@ -38,31 +38,6 @@
             }
 
             return true;
-
-/*             $sql = "UPDATE Room SET CleanStatus = TRUE WHERE FloorNo = $fNo AND RoomNo = $rNo";
-            $result1 = mysqli_query($conn, $sql);
-
-            if($result1) {
-                $check = mysqli_query($conn, "SELECT * FROM Room WHERE FloorNo = $fNo AND RoomNo = $rNo");
-                $count = 0;
-                $output = array();
-
-                while ($row = mysqli_fetch_array($check)) {
-                    $count++;
-                }
-
-                if ($count > 0) {
-                    echo "Successfully set the room as clean.<br>";
-                    maintEmpWrite($conn,$fNo,$eSSN);
-                    return $result1;
-                }
-                else {
-                    return false;
-                }
-            }
-            else {
-                return false;
-            } */
         }
         catch (TypeError $e) {
             echo "Ensure that the floor number and room number are valid numbers.<br>";
@@ -72,8 +47,6 @@
 
     // When Employee cleans a room on a floor, that floor is recorded in the database
     function maintEmpWrite($conn1,$conn2,$fNo,$eSSN) {
-/*         $sqlTry = "SELECT * FROM MaintHandling WHERE MaintSSN = \"$eSSN\" AND FloorNo = $fNo";
-        $resultTry = mysqli_query($conn, $sqlTry); */
 
         // checking if that employee already maintains that floor
         $stmt = $conn1->prepare("CALL checkMaint(?,?)");
@@ -93,40 +66,10 @@
             else {
                 echo "Successfully documented this floor as one you're maintaining.<br>";
             }
-/*             $sql = "INSERT INTO MaintHandling VALUES (\"$eSSN\",$fNo)";
-            $result = mysqli_query($conn, $sql);
-    
-            if ($result) {
-                echo "Successfully documented this floor as one you're maintaining.<br>";
-            }
-            else {
-                echo "Failed to documented this floor as one you're maintaining.<br>";
-            } */
         }
         else {
             echo "This is the floor you're assigned to clean. Good job!<br>";
         }
-
-/*         if ($resultTry) {
-            $count = 0;
-            while ($row = mysqli_fetch_array($resultTry)) {
-                $count++;
-            }
-            if ($count == 0) {
-                $sql = "INSERT INTO MaintHandling VALUES (\"$eSSN\",$fNo)";
-                $result = mysqli_query($conn, $sql);
-        
-                if ($result) {
-                    echo "Successfully documented this floor as one you're maintaining.<br>";
-                }
-                else {
-                    echo "Failed to documented this floor as one you're maintaining.<br>";
-                }
-            }
-            else {
-                echo "This is the floor you're assigned to clean. Good job!<br>";
-            }
-        } */
     }
 
     // Receptionist ednpoint: used to check guests in/out
@@ -146,6 +89,10 @@
                 echo "The room number cannot be negative.<br>";
                 return false;
             }
+            if ($iDate < date("Y-m-d")) {
+                echo "Cannot check a guest in/out on a past date.<br>";
+                return false;
+            }
 
             if ($oDate == NULL) {
                 $stmt = $conn->prepare("CALL checkIn(?,?,?,?)");
@@ -155,13 +102,15 @@
                 if ($stmt->affected_rows < 1) {
                     return false;
                 }
-/*                 $sql = "UPDATE Room SET CleanStatus = 0, GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = NULL, ChkOutDate = NULL WHERE FloorNo = $fNo AND RoomNo = $rNo";
-                $result = mysqli_query($conn, $sql); */
             }
             else {
                 $check3 = handleInputDate($oDate);
                 if (!$check3) {
                     throw new TypeError;
+                }
+                if (strtotime($iDate) > strtotime($oDate)) {
+                    echo "Check-in date cannot be after check-out date.<br>";
+                    return false;
                 }
                 $stmt = $conn->prepare("CALL checkOut(?,?,?,?,?)");
                 $stmt->bind_param("iisss",$fNo,$rNo,$gID,$iDate,$oDate);
@@ -170,15 +119,13 @@
                 if ($stmt->affected_rows < 1) {
                     return false;
                 }
-/*                 $sql = "UPDATE Room SET GCheckIn = \"$gID\", ChkInDate = \"$iDate\", GCheckOut = \"$gID\", ChkOutDate = \"$oDate\" WHERE FloorNo = $fNo AND RoomNo = $rNo";
-                $result = mysqli_query($conn, $sql); */
             }
             
             return true;
         }
         catch (TypeError $e) {
             echo "Please ensure that the floor number and room number are numbers.<br>
-                Please also ensure that the check-in date and check-out date are valid dates.<br>";
+                Please also ensure that the check-in date and check-out date are valid dates in yyyy-mm-dd format.<br>";
             return false;
         }
     }
@@ -219,18 +166,6 @@
             }
 
             return true;
-            
-/*             // Admin endpoint: used to create rooms
-            if ($func == 0) {
-                $sql = "INSERT INTO Room VALUES ($fNo,$rNo,$cost,$bed,TRUE,$rType,NULL,NULL,NULL,NULL)";
-            } */
-            // Admin endpoint: used to modify room details
-/*             else if ($func == 1) {
-                $sql = "UPDATE Room SET Cost = $cost, Beds = $bed, RoomType = $rType WHERE FloorNo = $fNo AND RoomNo = $rNo";
-            }
-            
-            $result = mysqli_query($conn, $sql);
-            return $result; */
 
         }
         catch (TypeError $e) {
@@ -238,13 +173,5 @@
             return false;
         }
     }
-
-/*     // Admin endpoint: used to delete a room record
-    function roomAdminDel($conn,$fNo,$rNo) {
-        $sql = "DELETE FROM Room WHERE FloorNo = $fNo AND RoomNo = $rNo";
-        $result = mysqli_query($conn,$sql);
-
-        return $result;
-    }  */
 
 ?>

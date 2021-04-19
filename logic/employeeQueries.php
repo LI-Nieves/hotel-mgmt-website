@@ -46,7 +46,7 @@
             if ($count == 0) {
                 return false;
             }
-            // setting this Admin's SSN as the current session's ID
+            // setting this Receptionist's SSN as the current session's ID
             setcookie("user", $currentID, 0, "/");
         }
         
@@ -72,7 +72,7 @@
             if ($count == 0) {
                 return false;
             }
-            // setting this Admin's SSN as the current session's ID
+            // setting this Employee's SSN as the current session's ID
             setcookie("user", $currentID, 0, "/");
         }
         
@@ -82,16 +82,12 @@
     // Employee endpoint: used when an employee views their own information
     function empEmpRead($conn) {
         $eSSN = assignCookie();
-/*         $sql = "SELECT * FROM Employee WHERE SSN = '$eSSN'";
-        $result = mysqli_query($conn, $sql); */
         $result = mysqli_query($conn, "CALL checkEmp($eSSN)");
         return $result;
     }
 
     // Admin endpoint; used when an admin views all employees
     function empAdminRead($conn) {
-/*         $sql = "SELECT * FROM Employee";
-        $result = mysqli_query($conn, $sql); */
         $result = mysqli_query($conn, "CALL empAdminRead()");
         return $result;
     }
@@ -137,6 +133,10 @@
                 echo "Invalid SSN.<br>";
                 return false;
             }
+            if ($eDOB > date('Y-m-d', mktime(0, 0, 0, date("m") , date("d"), date("Y")-14))) {
+                echo "Employee cannot be under 14 years old.<br>";
+                return false;
+            }
 
             // generate random password
             $ePass = rand(1000000000,9999999999);
@@ -157,9 +157,6 @@
                     return false;
                 }
                 return $ePass;
-
-/*                 $sql = "INSERT INTO Employee VALUES (\"$eSSN\",\"$eFname\",\"$eLname\",\"$eAddress\",\"$eSal\",\"$eSex\",\"$eDOB\",
-                    \"$eLogin\",\"$ePass\",\"$superSSN\",\"$rPhone\",\"$rEmail\",NULL,NULL,NULL,NULL,\"$rLogin\",\"$rPass\",\"Receptionist\")"; */
             }
             // For new employee that's maintenance
             else if ($func == 1) {
@@ -174,9 +171,6 @@
                     return false;
                 }
                 return $ePass;
-
-/*                 $sql = "INSERT INTO Employee VALUES (\"$eSSN\",\"$eFname\",\"$eLname\",\"$eAddress\",\"$eSal\",\"$eSex\",\"$eDOB\",
-                    \"$eLogin\",\"$ePass\",\"$superSSN\",NULL,NULL,\"$mRole\",\"$mHr\",NULL,NULL,NULL,NULL,\"Maintenance\")"; */
             }
             // For new employee that's other 
             else if ($func == 2) {
@@ -186,9 +180,7 @@
                 if ($stmt->affected_rows < 1) {
                     return false;
                 }    
-                return $ePass;
-/*                 $sql = "INSERT INTO Employee VALUES (\"$eSSN\",\"$eFname\",\"$eLname\",\"$eAddress\",\"$eSal\",\"$eSex\",\"$eDOB\",
-                    \"$eLogin\",\"$ePass\",\"$superSSN\",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,\"Other\")";       */          
+                return $ePass;        
             }
             // For new employee that's an admin
             if ($func == 3) {
@@ -204,8 +196,6 @@
                     return false;
                 }
                 return $ePass;
-/*                 $sql = "INSERT INTO Employee VALUES (\"$eSSN\",\"$eFname\",\"$eLname\",\"$eAddress\",\"$eSal\",\"$eSex\",\"$eDOB\",
-                    \"$eLogin\",\"$ePass\",\"$superSSN\",\"$rPhone\",\"$rEmail\",NULL,NULL,'$rLogin','$aPass',NULL,NULL,\"Admin\")"; */
             }
 
             // For modify employee that's a receptionist
@@ -221,9 +211,6 @@
                     return false;
                 }
                 return true;
-/*                 $sql = "UPDATE Employee SET Fname = \"$eFname\", Lname = \"$eLname\", Address = \"$eAddress\", Salary = \"$eSal\",
-                    Sex = \"$eSex\", DoB = \"$eDOB\", EmpLogin = \"$eLogin\", BusiPhone = \"$rPhone\", BusiEmail = \"$rEmail\", RecepLogin = \"$rLogin\",
-                    EmpFlag = \"Receptionist\" WHERE SSN = \"$eSSN\""; */
             }
             // For modify employee that's maintenance
             else if ($func == 5) {
@@ -237,10 +224,7 @@
                 if ($stmt->affected_rows < 1) {
                     return false;
                 }
-                return true;
-/*                 $sql = "UPDATE Employee SET Fname = \"$eFname\", Lname = \"$eLname\", Address = \"$eAddress\", Salary = \"$eSal\",
-                    Sex = \"$eSex\", DoB = \"$eDOB\", EmpLogin = \"$eLogin\", ERole = \"$mRole\", NumHrWeek = \"$mHr\" WHERE SSN = \"$eSSN\"";
- */            }
+                return true;            }
             // For modify employee that's other 
             else if ($func == 6) {
                 $stmt = $conn->prepare("CALL modOther(?,?,?,?,?,?,?,?)");
@@ -249,9 +233,7 @@
                 if ($stmt->affected_rows < 1) {
                     return false;
                 }    
-                return true;
-/*                 $sql = "UPDATE Employee SET Fname = \"$eFname\", Lname = \"$eLname\", Address = \"$eAddress\", Salary = \"$eSal\",
-                    Sex = \"$eSex\", DoB = \"$eDOB\", EmpLogin = \"$eLogin\" WHERE SSN = \"$eSSN\""; */              
+                return true;       
             }
             // For modify employee that's an admin
             if ($func == 7) {
@@ -266,38 +248,11 @@
                     return false;
                 }
                 return true;
-/*                 $sql = "UPDATE Employee SET Fname = \"$eFname\", Lname = \"$eLname\", Address = \"$eAddress\", Salary = \"$eSal\",
-                    Sex = \"$eSex\", DoB = \"$eDOB\", EmpLogin = \"$eLogin\", BusiPhone = \"$rPhone\", BusiEmail = \"$rEmail\", AdminLogin = \"$rLogin\",
-                    EmpFlag = \"Admin\" WHERE SSN = \"$eSSN\""; */
-            }
-
-/*             $result = mysqli_query($conn, $sql);
-
-            if ($result && ($func >= 0) && ($func <= 3)) {
-                echo "Successfully created new employee.<br>";
-
-                $sqlPass = "SELECT EmpPass FROM Employee WHERE SSN = '$eSSN'";
-                $resultPass = mysqli_query($conn,$sqlPass);
-
-                $rowNumber = 0;
-                $output = array();
-                $password = 0;
-
-                while ($row = mysqli_fetch_array($resultPass)) {
-                    $password = $row['EmpPass'];
-                    $rowNumber++;
-                }
-
-                echo "Here is the auto-generated password to the employee: $password.<br>";
-                
-            }
-
-            return $result; */
-                
+            }                
         }
         catch (TypeError $e) {
             echo "Please ensure that the Employee's SSN, the salary, and the number of hours per week (if entered) are valid numbers.<br>
-                Please also ensure that the date of birth is a valid date.<br>";
+                Please also ensure that the date of birth is a valid date in yyyy-mm-dd format.<br>";
             return false;
         }
     }
@@ -313,9 +268,6 @@
         }
 
         return true;
-/*         $sql = "DELETE FROM Employee WHERE SSN = $eSSN";
-        $result = mysqli_query($conn,$sql);
-        return $result; */
     } 
 
     // Employee endpoint: used when an employee changes their password
@@ -326,9 +278,6 @@
         }
 
         $eSSN = assignCookie();
-
-/*         // check to see what kind of Employee they are
-        $eType = checkEmpType($conn,$eSSN); */
 
         if ($eType == 'Admin') {
             if (empty($aPass)) {
@@ -356,15 +305,9 @@
         }
 
         return true;
-
-/*         $sql = "UPDATE Employee SET EmpPass = '$ePass', AdminPass = $aPass, RecepPass = $rPass WHERE SSN = $eSSN";
-        $result = mysqli_query($conn,$sql);
-
-        return $result; */
     } 
 
     function checkEmpType($conn,$eSSN) {
-        //$sql = "SELECT EmpFlag FROM Employee WHERE SSN = '$eSSN'";
         $result = mysqli_query($conn,"CALL checkEType($eSSN)");
 
         $returning = '';

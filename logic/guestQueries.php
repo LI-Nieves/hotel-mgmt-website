@@ -64,34 +64,6 @@
             }
 
             return $gID;
-
-            // SQL statement
-/*             $sql = "INSERT INTO Guest VALUES (\"$gID\",\"$gUser\",\"$gPass\",\"$gCredit\",\"$gPhone\",\"$gName\",\"$gAddress\")";
-            $result = mysqli_query($conn, $sql);
-
-            if ($result) {
-                echo "Successfully created account.<br>Here's your info:<br>";
-                $sql = "SELECT * FROM Guest WHERE GuestID = \"$gID\"";
-                $info = mysqli_query($conn, $sql);
-
-                header("Content-Type: JSON");
-                $rowNumber = 0;
-                $output = array();
-
-                while ($row = mysqli_fetch_array($info)) {
-                    $output[$rowNumber]['GuestID'] = $row['GuestID'];
-                    $output[$rowNumber]['GuestName'] = $row['GuestName'];
-                    $output[$rowNumber]['GuestLogin'] = $row['GuestLogin'];
-                    $output[$rowNumber]['GuestPass'] = $row['GuestPass'];
-                    $output[$rowNumber]['CreditCard'] = $row['CreditCard'];
-                    $output[$rowNumber]['PhoneNo'] = $row['PhoneNo'];
-                    $output[$rowNumber]['Address'] = $row['Address'];
-                    $rowNumber++;
-                }
-                echo json_encode($output, JSON_PRETTY_PRINT);
-            }
-
-            return $result; */
         }
         catch (TypeError $e) {
             echo "Please ensure that credit card and phone numbers are valid.<br>";
@@ -141,12 +113,6 @@
             }
 
             return true;
-
-/*             $sql = "UPDATE Guest SET GuestLogin = \"$gLogin\", CreditCard = $gCard, 
-                PhoneNo = $gPhone, GuestName = \"$gName\", Address = \"$gAddress\" WHERE GuestID = \"$gID\"";
-
-            $result = mysqli_query($conn, $sql);
-            return $result; */
                 
         }
         catch (TypeError $e) {
@@ -166,11 +132,6 @@
         }
 
         return true;
-
-/*         $sql = "DELETE FROM Guest WHERE GuestID = $gID";
-        $result = mysqli_query($conn,$sql);
-
-        return $result; */
     } 
 
 ?>

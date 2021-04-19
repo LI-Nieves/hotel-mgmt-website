@@ -16,19 +16,16 @@
             // Employee endpoint: 
             //      used when an employee views their own dependents...
             if ($func == 0) {
-/*                 $sql = "SELECT * FROM Dependent WHERE EmpSSN = \"$eSSN\""; */
                 $result = mysqli_query($conn, "CALL depEmpRead($eSSN)");
                 return $result;
             }
             //      ... and their benefits
             else if ($func == 3) {
-/*                 $sql = "SELECT * FROM DepBenefits WHERE EmpSSN = \"$eSSN\""; */
                 $result = mysqli_query($conn, "CALL depBenEmpRead($eSSN)");
                 return $result;
             }
             // Employee endpoint: used when an employee modifies their own dependents
             else if ($func == 1) {
-/*                 $sql = "UPDATE Dependent SET DepSSN = \"$dSSN\", DepName = \"$dName\" WHERE EmpSSN = \"$eSSN\" and DepSSN = \"$dSSN1\""; */
                 $stmt = $conn->prepare("CALL depWrite(?,?,?,?)");
                 $stmt->bind_param("ssss",$eSSN,$dSSN1,$dSSN,$dName);
                 $stmt->execute();
@@ -41,7 +38,6 @@
             }
             // Employee endpoint: used when an employee creates new dependents
             else if ($func == 2) {
-/*                 $sql = "INSERT INTO Dependent VALUES (\"$eSSN\",\"$dSSN\",\"$dName\")"; */
                 $stmt = $conn->prepare("CALL depNew(?,?,?)");
                 $stmt->bind_param("sss",$eSSN,$dSSN,$dName);
                 $stmt->execute();
@@ -51,11 +47,7 @@
                 }
 
                 return true;
-            }
-            
-/*             $result = mysqli_query($conn, $sql);
-            return $result; */
-               
+            }              
         }
         catch (TypeError $e) {
             echo "Ensure that the SSNs are valid.<br>";
@@ -67,13 +59,10 @@
     function depAdminRead($conn,$func) {
         if ($func == 0) {
             $result = mysqli_query($conn, "CALL depAdminRead()");
-/*             $sql = "SELECT * FROM Dependent"; */
         }
         else if ($func == 3) {
             $result = mysqli_query($conn, "CALL depBenAdminRead()");
-/*             $sql = "SELECT * FROM DepBenefits"; */
         }
-/*         $result = mysqli_query($conn, $sql); */
         return $result;
     }
 
@@ -88,7 +77,6 @@
 
             // Admin endpoint: used when an admin creates new dependents
             if ($func == 1) {
-/*                 $sql = "UPDATE Dependent SET DepSSN = \"$dSSN\", DepName = \"$dName\" WHERE EmpSSN = \"$eSSN\" and DepSSN = \"$dSSN1\""; */
                 $stmt = $conn->prepare("CALL depWrite(?,?,?,?)");
                 $stmt->bind_param("ssss",$eSSN,$dSSN1,$dSSN,$dName);
                 $stmt->execute();
@@ -101,7 +89,6 @@
             }
             // Admin endpoint: used when an admin modifies dependents
             else if ($func == 0) {
-/*                 $sql = "INSERT INTO Dependent VALUES (\"$eSSN\",\"$dSSN\",\"$dName\")"; */
                 $stmt = $conn->prepare("CALL depNew(?,?,?)");
                 $stmt->bind_param("sss",$eSSN,$dSSN,$dName);
                 $stmt->execute();
@@ -112,18 +99,6 @@
 
                 return true;
             }
-
-/*             // Admin endpoint: used when an admin creates new dependents
-            if ($func == 0) {
-                $sql = "INSERT INTO Dependent VALUES (\"$eSSN\",\"$dSSN\",\"$dName\")";
-            }
-            // Admin endpoint: used when an admin modifies dependents
-            else if ($func == 1) {
-                $sql = "UPDATE Dependent SET DepSSN = \"$dSSN\", DepName = \"$dName\" WHERE EmpSSN = \"$eSSN\" AND DepSSN = \"$dSSN1\"";
-            }
-
-            $result = mysqli_query($conn, $sql);
-            return $result; */
         }
         catch (TypeError $e) {
             echo "Ensure that  SSNs are valid.<br>";
@@ -150,14 +125,6 @@
             }
 
             return true;
-/*             for ($i = 0; $i < sizeof($dBen); $i++) {
-                $sql = "INSERT INTO DepBenefits VALUES (\"$eSSN\",\"$dSSN\",\"$dBen[$i]\")";
-                $result = mysqli_query($conn, $sql);
-                if (!$result) {
-                    echo "Failed to add Employee SSN: " .$eSSN. ", Dependent SSN: " .$dSSN. ", Benefit name: " .$dBen[$i]. " to the database.<br>";
-                }
-            }
-            return $result; */
         }
         catch (TypeError $e) {
             echo "Ensure that both SSNs are valid.<br>";
@@ -176,10 +143,6 @@
         }
 
         return true;
-/*         $sql = "DELETE FROM Dependent WHERE EmpSSN = $eSSN AND DepSSN = $dSSN";
-        $result = mysqli_query($conn,$sql);
-
-        return $result; */
     }  
 
     // Admin endpoint: used to remove benefit from dependent
@@ -193,10 +156,6 @@
         }
 
         return true;
-/*         $sql = "DELETE FROM DepBenefits WHERE EmpSSN = $eSSN AND DepSSN = $dSSN and DepBenefits = '$dBen'";
-        $result = mysqli_query($conn,$sql);
-
-        return $result; */
     }  
 
 ?>

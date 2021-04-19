@@ -39,23 +39,10 @@
             $result = $stmt->get_result();
 
             return $cID;
-
-/*             $sql = "INSERT INTO PhoneCall VALUES ($cID, $duration,'$pDate',$gID,$eSSN)";
-            $result1 = mysqli_query($conn, $sql);
-
-            if($result1) {
-                echo "Successfully created phone call record.<br>Here's the info:<br>";
-                $sql3 = "SELECT * FROM PhoneCall WHERE CallID = \"$cID\"";
-                $result = mysqli_query($conn, $sql3);
-                return $result;
-            }
-            else {
-                return false;
-            } */
         }
         catch (TypeError $e) {
             echo "Please ensure that the duration is a number.<br>
-                Please also ensure that the call date is a valid date.<br>";
+                Please also ensure that the call date is a valid date in yyyy-mm-dd format.<br>";
             return false;
         }
     }
@@ -71,10 +58,6 @@
         }
 
         return true;
-
-/*         $sql = "DELETE FROM PhoneCall WHERE CallID = $cID";
-        $result = mysqli_query($conn,$sql);
-        return $result; */
     }  
 
 ?>
