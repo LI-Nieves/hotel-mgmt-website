@@ -1,10 +1,28 @@
 # hotel-mgmt-website
 Group term project for CPSC471 (Introduction to Databases) as UCalgary.
 
-# Installing XAMPP
-This website and API were creating using the XAMPP development platform. 
-In order to run our website, you need to do the following:
-1. Navigate to the [XAMPP website](https://www.apachefriends.org/download.html) and download the latest version for your OS.
+# Installing software
+This website and API were creating using the XAMPP development platform. Thus, it uses Apache, MySQL, and PHP. 
+Before running the website, make sure to install:
+1. XAMPP from the [XAMPP website](https://www.apachefriends.org/download.html) and download the latest version for your OS.
+2. MySQL from the [MySQL website](https://dev.mysql.com/downloads/mysql/) and download the latest version for your OS.
+3. Postman from the [Postman website](https://www.postman.com/downloads/).
+
+# Starting XAMPP and MySQL
+1. Navigate to the XAMPP application and ***run it as administrator**.
+2. For the Apache module, click Start under Actions. The "Apache" name under Module should turn green if successful.
+3. For the MySQL module, click Start under Actions. The "MySQL" name under Module should turn green if successful. If this isn't successful...
+  1. [Make sure that xampp is being called in regedit](https://stackoverflow.com/questions/21279442/xampp-mysql-not-starting-attempting-to-start-mysql-service/41664326#:~:text=If%20my%20sql%20running%20But,.......&text=One%20of%20many%20reasons%20is,is%20run%20mySQL%20service%20manually.)
+  2. Make sure the MySQL service is running 
+  3. If MySQL service isn't running, open Services, go to Properties, and make sure that 
+    the mySQL service is set to run automatically.
+4. After both are running, you may safely start up a MySQL server.
+  1. Run MySQL.
+  2. Click your local server to run it.
+  3. A warning will appear that your port is currently being used by something else (it is, by XAMPP). Click "Continue Anyway".
+
+# Running the website
+1. Download the files from this repository and unzip it. 
 2. 
 
 # Sample data
