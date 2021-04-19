@@ -1,4 +1,4 @@
-# hotel-mgmt-website
+# Hotel Management System
 Group term project for CPSC471 (Introduction to Databases) as UCalgary.
 
 # Installing software
@@ -20,10 +20,29 @@ Before running the website, make sure to install:
    1. Run MySQL.
    2. Click your local server to run it.
    3. A warning will appear that your port is currently being used by something else (it is, by XAMPP). Click "Continue Anyway".
+ 
+# Setting up the database
+1. Open our project's .sql file, `hoteldb.sql`.
+2. Run the entire file. 
+   1. Lines 1-143 set up the tables of the database.
+   2. Lines 155-196 is sample data we highly recommend you use for testing.
+   3. **Lines 201-698 are stored procedures. It is imperative you run this in order for the functionalities and endpoints to work!**
 
 # Running the website
 1. Download the files from this repository and unzip it. 
-2. 
+2. Move those files to a folder called `C:\xampp\htdocs\Project`.
+3. Boot up your web browser and in the search bar, type `http://localhost/Project/frontend/login.php`. 
+4. Enjoy!
+
+# Testing in Postman
+1. Download the files from this repository and unzip it. 
+2. Move those files to a folder called `C:\xampp\htdocs\Project`.
+3. Take a look at [our public API documentation](https://documenter.getpostman.com/view/14987743/TzJrBeGY).
+4. Boot up Postman.
+5. Using the documentation as reference, run the sample cases.
+6. **IT IS ABSOLUTELY IMPERATIVE BEFORE YOU INITIATE A REQUEST THAT YOU ARE LOGGED INTO AN ACCOUNT THAT HAS THAT FUNCTIONALITY.**
+   1. Every request is preceded with "Guest", "Admin", "Recep", "Employee", and possibly "Admin/Recep". Please be sure you log into the appropriate account when sending that request or else it may not work as intended.
+   2. The 7 different logins are provided for this purpose at your convenience.
 
 # Sample data
 Here is some code you can run in MySQL that will populate the database and would prove useful when testing our website:
