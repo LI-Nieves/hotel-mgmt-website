@@ -9,7 +9,7 @@ Before running the website, make sure to install:
 3. Postman from the [Postman website](https://www.postman.com/downloads/).
 
 # Starting XAMPP and MySQL
-1. Navigate to the XAMPP application and ***run it as administrator**.
+1. Navigate to the XAMPP application and **run it as administrator**.
 2. For the Apache module, click Start under Actions. The "Apache" name under Module should turn green if successful.
 3. For the MySQL module, click Start under Actions. The "MySQL" name under Module should turn green if successful. If this isn't successful...
    1. [Make sure that xampp is being called in regedit](https://stackoverflow.com/questions/21279442/xampp-mysql-not-starting-attempting-to-start-mysql-service/41664326#:~:text=If%20my%20sql%20running%20But,.......&text=One%20of%20many%20reasons%20is,is%20run%20mySQL%20service%20manually.)
