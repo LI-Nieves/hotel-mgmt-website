@@ -1,7 +1,7 @@
 # hotel-mgmt-website
 Group term project for CPSC471 (Introduction to Databases) as UCalgary.
 
-#Sample data
+# Sample data
 Here is some code you can run in MySQL that will populate the database and would prove useful when testing our website:
 ```
 DELETE FROM Guest;
