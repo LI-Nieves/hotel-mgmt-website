@@ -120,7 +120,6 @@
             $stmt->execute();
 
             if ($stmt->affected_rows < 1) {
-                echo "sdf";
                 return false;
             }
 
