@@ -1,6 +1,12 @@
 # hotel-mgmt-website
 Group term project for CPSC471 (Introduction to Databases) as UCalgary.
 
+# Installing XAMPP
+This website and API were creating using the XAMPP development platform. 
+In order to run our website, you need to do the following:
+1. Navigate to the [XAMPP website](https://www.apachefriends.org/download.html) and download the latest version for your OS.
+2. 
+
 # Sample data
 Here is some code you can run in MySQL that will populate the database and would prove useful when testing our website:
 ```
