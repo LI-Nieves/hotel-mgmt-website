@@ -1,9 +1,4 @@
 <?php
-    // used to log out
-    function logOut() {
-        $currentID = 0;
-        session_destroy();
-    }
 
     // returns ID/SSN of the current user that's logged in
     function assignCookie() {
@@ -51,21 +46,6 @@
         catch (TypeError $e) {
             return false;
         }
-    }
-
-    // takes an SQL statement as input
-    // returns the number of records that SQL statement generates
-    function countEntries($conn,$stmt) {
-        $resultCheck = mysqli_query($conn,$stmt);
-        echo gettype($resultCheck);
-                    
-        $count = 0;
-
-        while ($row = mysqli_fetch_array($resultCheck)) {
-            $count++;
-        }
-
-        return $count;
     }
 
     // Checks if a username is unique for a certain table.

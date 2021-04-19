@@ -34,7 +34,7 @@
                 include_once 'C:\xampp\htdocs\Project\backend\database.php';
                 include_once 'C:\xampp\htdocs\Project\logic\employeeQueries.php';
                 include_once 'C:\xampp\htdocs\Project\logic\guestQueries.php';
-
+                
                 $guest = "g";
                 $employee = "e";
                 $admin = "a";
@@ -46,7 +46,6 @@
                 $aType = $_POST["loginType"] ??"";
 
                 $conn = connect();
-                
                 
                 if($aType =="g"){//login as guest
                     echo "login as guest";

@@ -5,7 +5,6 @@
     function resGuestRead($conn) {
         $guestID = assignCookie();
 
-/*         $sql = "SELECT * FROM Reservation WHERE GuestID = \"$guestID\""; */
         $result = mysqli_query($conn, "CALL resGuestRead($guestID)");
         return $result;
     }
@@ -24,10 +23,6 @@
         }
 
         return true;
-/*         $sql = "DELETE FROM Reservation WHERE ResID = $rID AND FloorNo = $floorNo AND RoomNo = $roomNo AND GuestID = $guestID";
-        $result = mysqli_query($conn,$sql);
-
-        return $result; */
     } 
 
     // Guest endpoint: used when a guest creates reservations for a room
@@ -45,6 +40,10 @@
             }
             if (strtotime($aDate) > strtotime($dDate)) {
                 echo "Arrival date cannot be after departure date.<br>";
+                return false;
+            }
+            if ($aDate < date("Y-m-d")) {
+                echo "Cannot create a reservation for a past date.<br>";
                 return false;
             }
 
@@ -74,32 +73,16 @@
             }
 
             return array($guestID,$assignFloor,$assignRoom,$rID);
-
-/*             $sql = "INSERT INTO Reservation VALUES (\"$guestID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",NULL)";
-            $result1 = mysqli_query($conn, $sql);
-
-            if($result1) {
-                echo "Successfully created reservation.<br>Here's the info:<br>";
-                $sql3 = "SELECT * FROM Reservation WHERE ResID = \"$rID\"";
-                $result = mysqli_query($conn, $sql3);
-                return $result;
-            }
-            else {
-                return false;
-            }
-            return false; */
         }
         catch (TypeError $e) {
             echo "Please ensure that the floor number, room number, and number of people staying are numbers.<br>
-                Please also ensure that the arrival date and departure date are valid dates.<br>";
+                Please also ensure that the arrival date and departure date are valid dates in yyyy-mm-dd format.<br>";
             return false;
         }
     } 
 
     // Admin/Receptionist endpoint: used to view all reservations
-    // missing..?
     function resEmpRead($conn) {
-/*         $sql = "SELECT * FROM Reservation"; */
         $result = mysqli_query($conn, "CALL resEmpRead()");
         return $result;
     }
@@ -147,31 +130,16 @@
             }
 
             return array($gID,$assignFloor,$assignRoom,$rID);
-
-/*             $sql = "INSERT INTO Reservation VALUES (\"$gID\",\"$assignFloor\",\"$assignRoom\",\"$rID\",\"$aDate\",\"$dDate\",\"$cNo\",\"$numPeople\",\"$eSSN\")";
-            $result1 = mysqli_query($conn, $sql);
-
-            if($result1) {
-                echo "Successfully created reservation.<br>Here's the info:<br>";
-                $sql3 = "SELECT * FROM Reservation WHERE ResID = \"$rID\"";
-                $result = mysqli_query($conn, $sql3);
-                return $result;
-            }
-            else {
-                return false;
-            } */
         }
         catch (TypeError $e) {
-            echo "Ensure that the floor number, room number, and number of people staying are numbers.<br>
-                Please also ensure that the arrival date and departure date are valid dates.<br>";
+            echo "Please ensure that the floor number, room number, and number of people staying are numbers.<br>
+                Please also ensure that the arrival date and departure date are valid dates in yyyy-mm-dd format.<br>";
             return false;
         }
     } 
 
     // Admin/Receptionist endpoint: used to cancel a reservation
     function resEmpDel($conn,$rID,$floorNo,$roomNo,$gID) {
-/*         $sql = "DELETE FROM Reservation WHERE ResID = $rID AND FloorNo = $floorNo AND RoomNo = $roomNo AND GuestID = $gID";
-        $result = mysqli_query($conn,$sql); */
 
         $stmt = $conn->prepare("CALL resDel(?,?,?,?)");
         $stmt->bind_param("siis",$rID,$floorNo,$roomNo,$gID);
