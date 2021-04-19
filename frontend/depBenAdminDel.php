@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Delete Dependent's Benefits</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "eSSN" placeholder = "SSN of Employee" /><br>
             <input type = "text" name = "dSSN" placeholder = "SSN of Dependent" /><br>

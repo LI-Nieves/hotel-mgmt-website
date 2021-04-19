@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Delete Reservation</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "rID" placeholder = "Reservation ID"/><br>
             <input type = "text" name = "floorNo" placeholder = "Floor number of reserved room"/><br>

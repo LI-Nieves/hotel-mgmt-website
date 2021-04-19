@@ -7,7 +7,7 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent2">
-
+        <h1>Delete Guest</h1>
         <form action = "<?php $_PHP_SELF ?>" method = "POST">
             <input type = "text" name = "gID" placeholder = "ID of Guest to delete" /><br>
             <input type = "submit" />
@@ -34,7 +34,7 @@
         <script>
         var btn= document.getElementById('back');
                     btn.addEventListener('click',function(){
-                        window.history.back();
+                        document.location.href ='adminMain.php';
                     }
                     );
         </script>
