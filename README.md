@@ -1,5 +1,6 @@
 # Hotel Management System
-Group term project for CPSC471 (Introduction to Databases) as UCalgary.
+Group term project for CPSC471 (Introduction to Databases) at UCalgary.
+Created by Lana Nieves and Nick Wasilewski.
 
 # Installing software
 This website and API were creating using the XAMPP development platform. Thus, it uses Apache, MySQL, and PHP. 
